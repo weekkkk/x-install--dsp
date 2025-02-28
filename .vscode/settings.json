@@ -11,5 +11,5 @@
     ["/\\*\\s?ui\\s?\\*/\\s*{([^;]*)}", ":\\s*[\"'`]([^\"'`]*).*?[\"'`]"]
   ],
   "tailwindCSS.classAttributes": ["class", "className", "ngClass", "ui"],
-  "tailwindCSS.rootFontSize": 20
+  "tailwindCSS.rootFontSize": 10
 }
