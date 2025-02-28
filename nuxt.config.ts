@@ -27,6 +27,16 @@ export default defineNuxtConfig({
       "./src/widgets/*/*/index.ts",
     ],
   },
+  app: {
+    head: {
+      link: [
+        {
+          rel: "stylesheet",
+          href: "/fonts/pp-neue-montreal/pp-neue-montreal.style.css",
+        },
+      ],
+    },
+  },
   components: {
     dirs: [
       {

@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    font-family: "sf-pro-display";
-    font-size: 1.041666666666667vw;
+    font-family: "pp-neue-montreal";
+    font-size: 0.5208333333333333vw;
   }
   body {
     @apply bg-black;
