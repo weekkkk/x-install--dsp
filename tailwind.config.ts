@@ -5,11 +5,13 @@ export default <Partial<Config>>{
     extend: {
       fontSize: {
         base: ["1rem", 1.2],
-        lg: ["1.4rem", 1.2],
-        xl: ["1.6rem", 1.2],
-        "2xl": ["2rem", 1.2],
-        "3xl": ["2.4rem", 1],
-        "4xl": ["3.5rem", 1.2],
+        lg: ["1.2rem", 1.2],
+        xl: ["1.4rem", 1.2],
+        "2xl": ["1.6rem", 1.2],
+        "3xl": ["2rem", 1.2],
+        "4xl": ["2.4rem", 1],
+        "5xl": ["2.5rem", 1],
+        "6xl": ["3.5rem", 1.2],
       },
     },
   },
