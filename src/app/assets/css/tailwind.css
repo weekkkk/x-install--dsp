@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    font-family: "sf-pro-display";
+    font-size: 1.041666666666667vw;
+  }
+  body {
+    @apply bg-black;
+  }
+}
+
+@layer components {
+}
