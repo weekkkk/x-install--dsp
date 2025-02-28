@@ -13,6 +13,17 @@ export default <Partial<Config>>{
         "5xl": ["2.5rem", 1],
         "6xl": ["3.5rem", 1.2],
       },
+      colors: {
+        primary: {
+          from: "#19F2C8",
+          to: "#6AE15F",
+        },
+        dark: {
+          100: "#000000",
+          50: "#0A0A0A",
+          0: "#1D1D1D",
+        },
+      },
     },
   },
 };
