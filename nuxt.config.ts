@@ -1,7 +1,7 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
-  modules: ["@nuxt/ui"],
+  modules: ["@nuxt/image", "@nuxt/ui"],
   tailwindcss: {
     cssPath: "~/src/app/assets/css/tailwind.css",
   },
@@ -10,6 +10,14 @@ export default defineNuxtConfig({
   },
   colorMode: {
     preference: "dark",
+  },
+  icon: {
+    customCollections: [
+      {
+        prefix: "xi-i",
+        dir: "./src/app/assets/icons",
+      },
+    ],
   },
   dir: {
     pages: "./src/app/routes",
