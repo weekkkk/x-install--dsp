@@ -4,6 +4,29 @@ const isAdmin = ref(true);
 const nickname = ref("1WIN Casino");
 const id = ref("1661R");
 const name = ref("A");
+
+import { sub, format, isSameDay, type Duration } from "date-fns";
+
+const ranges = [
+  { label: "Last 7 days", duration: { days: 7 } },
+  { label: "Last 14 days", duration: { days: 14 } },
+  { label: "Last 30 days", duration: { days: 30 } },
+  { label: "Last 3 months", duration: { months: 3 } },
+  { label: "Last 6 months", duration: { months: 6 } },
+  { label: "Last year", duration: { years: 1 } },
+];
+const selected = ref({ start: sub(new Date(), { days: 14 }), end: new Date() });
+
+function isRangeSelected(duration: Duration) {
+  return (
+    isSameDay(selected.value.start, sub(new Date(), duration)) &&
+    isSameDay(selected.value.end, new Date())
+  );
+}
+
+function selectRange(duration: Duration) {
+  selected.value = { start: sub(new Date(), duration), end: new Date() };
+}
 </script>
 
 <template>
@@ -12,8 +35,21 @@ const name = ref("A");
 
   <div class="h-screen flex flex-col">
     <header class="px-20 py-14 flex justify-between items-center">
-      <div class="w-full">
+      <div class="w-full flex items-center gap-[11.1rem]">
         <UIcon name="xi-i:logo" class="h-12 w-[4.2rem]" />
+
+        <div v-if="auntificated" class="flex gap-3">
+          <UPopover :popper="{ placement: 'bottom-start' }">
+            <UButton color="gray" class="w-[13.4rem]">
+              {{ format(selected.start, "dd.MM.yy") }} -
+              {{ format(selected.start, "dd.MM.yy") }}
+            </UButton>
+
+            <template #panel="{ close }">
+              <UiDatePicker v-model="selected" @close="close" />
+            </template>
+          </UPopover>
+        </div>
       </div>
 
       <div class="flex gap-8">

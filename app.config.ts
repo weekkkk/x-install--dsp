@@ -38,5 +38,10 @@ export default defineAppConfig({
         sm: "h-24 w-24 text-2xl",
       },
     },
+    popover: {
+      background: "dark:bg-dark-50",
+      ring: "ring-0",
+      rounded: "rounded-[3rem]",
+    },
   },
 });
