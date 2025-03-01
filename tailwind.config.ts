@@ -14,7 +14,7 @@ export default <Partial<Config>>{
         "6xl": ["3.5rem", 1.2],
       },
       colors: {
-        primary: {
+        brand: {
           from: "#19F2C8",
           to: "#6AE15F",
         },
