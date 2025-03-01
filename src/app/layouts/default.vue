@@ -27,6 +27,16 @@ function isRangeSelected(duration: Duration) {
 function selectRange(duration: Duration) {
   selected.value = { start: sub(new Date(), duration), end: new Date() };
 }
+
+const options = [
+  { id: 1, name: "By Day" },
+  { id: 2, name: "By Week" },
+  { id: 3, name: "By Month" },
+];
+const _selected = ref(options[1]);
+const _options = computed(() =>
+  options.filter(({ id }) => id !== _selected.value.id)
+);
 </script>
 
 <template>
@@ -49,6 +59,55 @@ function selectRange(duration: Duration) {
               <UiDatePicker v-model="selected" @close="close" />
             </template>
           </UPopover>
+
+          <USelectMenu
+            v-model="_selected"
+            :options="_options"
+            :popper="{ offsetDistance: 0 }"
+            variant="none"
+            :ui="{
+              padding: {
+                sm: 'p-0',
+              },
+              icon: {
+                base: 'hidden',
+                size: {
+                  sm: 'h-0 w-0',
+                },
+                trailing: {
+                  padding: {
+                    sm: 'p-0',
+                  },
+                },
+              },
+              trailing: {
+                padding: {
+                  sm: 'pe-0',
+                },
+              },
+            }"
+            :ui-menu="{
+              padding: 'p-0',
+              background: 'dark:bg-[transparent]',
+              ring: 'ring-0',
+              option: {
+                base: 'mt-2',
+                padding: 'p-0',
+                rounded: 'rounded-full',
+              },
+            }"
+          >
+            <template #label>
+              <UButton color="gray" class="w-32">
+                {{ _selected.name }}
+              </UButton>
+            </template>
+            <template #option="{ option: filter }">
+              <UButton color="gray" class="w-32">
+                {{ filter.name }}
+              </UButton>
+            </template>
+          </USelectMenu>
         </div>
       </div>
 
