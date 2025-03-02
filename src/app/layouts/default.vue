@@ -48,7 +48,7 @@ const _options = computed(() =>
       <div class="w-full flex items-center gap-[11.1rem]">
         <UIcon name="xi-i:logo" class="h-12 w-[4.2rem]" />
 
-        <div v-if="auntificated" class="flex gap-3">
+        <!-- <div v-if="auntificated" class="flex gap-3">
           <UPopover :popper="{ placement: 'bottom-start' }">
             <UButton color="gray" class="w-[13.4rem]">
               {{ format(selected.start, "dd.MM.yy") }} -
@@ -108,14 +108,15 @@ const _options = computed(() =>
               </UButton>
             </template>
           </USelectMenu>
+        </div> -->
+
+        <div v-if="auntificated" class="flex gap-3">
+          <StatDateRangeFilterWidget />
         </div>
       </div>
 
       <div class="flex gap-8">
-        <UButton class="w-32"> DSP </UButton>
-        <UButton color="white" variant="ghost" class="w-32">
-          DSP InApp
-        </UButton>
+        <StatTypeFilterWidget />
       </div>
 
       <div v-if="!auntificated">
