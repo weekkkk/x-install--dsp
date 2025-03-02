@@ -4,8 +4,12 @@
 
 @layer base {
   :root {
-    font-family: "pp-neue-montreal";
+    font-family: "pp-neue-montreal", "Times New Roman";
     font-size: 0.5208333333333333vw;
+    font-weight: 500;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    @apply max-md:text-[10px];
   }
   body {
     @apply bg-black;
