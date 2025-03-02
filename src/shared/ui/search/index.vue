@@ -1,0 +1,48 @@
+<script setup lang="ts">
+const expanded = ref(false);
+const onClick = () => (expanded.value = !expanded.value);
+</script>
+
+<template>
+  <div
+    class="transition-all overflow-hidden rounded-full w-full"
+    :class="{
+      'max-w-24': !expanded,
+      'max-w-[22.5rem] p-2 -m-2': expanded,
+    }"
+  >
+    <UInput
+      :ui="{
+        base: 'font-semibold',
+        rounded: 'rounded-full',
+        size: {
+          sm: 'text-xl',
+        },
+        padding: {
+          sm: 'py-[2.15rem] px-10',
+        },
+        leading: {
+          padding: {
+            sm: 'ps-24',
+          },
+        },
+        icon: {
+          leading: {
+            pointer: 'pointer-events-auto',
+            padding: {
+              sm: 'p-0',
+            },
+          },
+        },
+        color: {
+          white: { outline: 'dark:bg-dark-50 ring-0' },
+        },
+      }"
+      class="w-full"
+    >
+      <template #leading>
+        <UButton icon="xi-i:search" color="gray" @click="onClick" />
+      </template>
+    </UInput>
+  </div>
+</template>
