@@ -5,9 +5,9 @@ const onClick = () => (expanded.value = !expanded.value);
 
 <template>
   <div
-    class="transition-all overflow-hidden rounded-full w-full"
+    class="transition-all overflow-hidden rounded-full w-full min-w-24 max-md:min-w-20"
     :class="{
-      'max-w-24': !expanded,
+      'max-w-24 max-md:max-w-20': !expanded,
       'max-w-[22.5rem] p-2 -m-2': expanded,
     }"
   >
@@ -19,11 +19,11 @@ const onClick = () => (expanded.value = !expanded.value);
           sm: 'text-xl',
         },
         padding: {
-          sm: 'py-[2.15rem] px-10',
+          sm: 'py-[2.15rem] px-8 max-md:py-[1.65rem] max-md:px-6',
         },
         leading: {
           padding: {
-            sm: 'ps-24',
+            sm: 'ps-24 max-md:ps-20',
           },
         },
         icon: {

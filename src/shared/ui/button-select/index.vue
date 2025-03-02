@@ -9,6 +9,10 @@ const _options = computed(() =>
     ? props.options.filter(({ key }) => key !== model.value?.key)
     : props.options
 );
+
+const _selectedColor = computed(() =>
+  model.value ? props.selectedColor ?? "gray" : "gray"
+);
 </script>
 
 <template>
@@ -30,8 +34,8 @@ const _options = computed(() =>
     }"
     class="max-h-3"
   >
-    <UButton color="gray" class="w-32">
-      {{ model?.label }}
+    <UButton :color="_selectedColor" class="w-32">
+      {{ model?.label ?? "Select" }}
     </UButton>
     <template #option="{ option }">
       <UButton color="gray" class="w-32" v-if="!option.disabled">

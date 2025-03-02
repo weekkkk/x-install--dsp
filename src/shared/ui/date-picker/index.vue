@@ -116,10 +116,10 @@ function onDayClick(_: any, event: MouseEvent): void {
   @apply w-fit;
 }
 .vc-pane {
-  @apply min-w-[43.2rem];
+  @apply min-w-[43.2rem] max-md:min-w-[37.5rem];
 }
 .vc-weeks {
-  @apply min-w-[43.2rem] px-5 mx-auto pt-8 pb-[1.25rem];
+  @apply min-w-[43.2rem] max-md:min-w-[37.5rem] px-5 mx-auto pt-8 pb-[1.25rem];
 }
 .vc-weekday {
   @apply leading-[1.8rem] pb-[1.25rem] pt-0 font-medium;

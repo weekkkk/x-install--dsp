@@ -13,10 +13,11 @@ const emit = defineEmits<{
   ];
 }>();
 
-const range = ref<(typeof rangesConst)[number]>(rangesConst[0]);
+const range = ref<(typeof rangesConst)[number] | undefined>(rangesConst[0]);
 
 const dateRange = computed({
   get: () => {
+    if (!range.value) return;
     if ("getDates" in range.value) return range.value.getDates();
     return range.value.dates;
   },
@@ -33,7 +34,7 @@ watch(dateRange, (dates) => emit("change", dates));
 </script>
 
 <template>
-  <UPopover :popper="{ placement: 'bottom-start' }">
+  <UPopover :popper="{ placement: 'bottom-start', overflowPadding: 0 }">
     <UButton color="gray" class="w-[13.4rem]">
       <span v-if="dateRange">
         {{ format(dateRange.start, "dd.MM.yy") }} -

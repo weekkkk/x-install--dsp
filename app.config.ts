@@ -9,11 +9,11 @@ export default defineAppConfig({
       truncate: "text-center",
       inline: "justify-center",
       padding: {
-        sm: "py-[2.4rem]",
+        sm: "py-[2.4rem] max-md:py-[1.9rem]",
       },
       square: {
         xs: "p-0",
-        sm: "p-[1.8rem]",
+        sm: "p-[1.8rem] max-md:p-[1.3rem]",
       },
       icon: {
         size: {
@@ -35,7 +35,7 @@ export default defineAppConfig({
       placeholder: "font-semibold dark:text-dark-100",
       background: "dark:bg-gradient-to-r dark:from-brand-from dark:to-brand-to",
       size: {
-        sm: "h-24 w-24 text-2xl",
+        sm: "h-24 w-24 text-2xl max-md:h-20 max-md:w-20",
       },
     },
     popover: {

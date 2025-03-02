@@ -5,10 +5,16 @@ const nickname = ref("1WIN Casino");
 const id = ref("1661R");
 const name = ref("A");
 
-const { path } = useRoute();
+const route = useRoute();
 
-const isStat = computed(() => path === "/");
-const isUsers = computed(() => path === "/users");
+const isStat = computed(() => route.path === "/");
+const isUsers = computed(() => route.path === "/users");
+
+const push = async () => {
+  console.log("push");
+  if (isStat.value) await navigateTo({ path: "/users" });
+  else await navigateTo({ path: "/" });
+};
 </script>
 
 <template>
@@ -16,64 +22,159 @@ const isUsers = computed(() => path === "/users");
   <UToggle v-model="isAdmin" class="fixed bottom-0 right-0" size="xl" />
 
   <div class="h-screen flex flex-col">
-    <header class="px-20 py-14 flex justify-between items-center">
-      <div class="w-full flex items-center gap-[11.1rem]">
-        <UIcon name="xi-i:logo" class="h-12 w-[4.2rem]" />
-        <div v-if="isStat && auntificated" class="flex gap-3">
-          <StatDateRangeFilterWidget />
+    <header class="px-20 py-14 flex flex-col max-md:px-8 max-md:py-8">
+      <div class="flex justify-between items-center gap-8 max-md-gap-4">
+        <div class="w-full flex items-center gap-[11.1rem] max-md:w-auto">
+          <UIcon name="xi-i:logo" class="h-12 w-[4.2rem]" />
+          <Transition>
+            <div v-if="isStat && auntificated" class="flex gap-3 max-md:hidden">
+              <StatDateRangeFilterWidget />
+            </div>
+          </Transition>
+        </div>
+
+        <Transition>
+          <div v-if="isStat && auntificated" class="max-md:hidden w-[18rem]">
+            <StatTypeFilterWidget />
+          </div>
+        </Transition>
+
+        <div v-if="!auntificated">
+          <UButton class="w-[13.5rem] text-2xl h-24" color="gray">
+            Log in
+          </UButton>
+        </div>
+
+        <div v-else class="flex justify-end gap-8 w-full max-md:gap-4">
+          <Transition>
+            <div v-if="isUsers" class="flex gap-[inherit]">
+              <UiSearch />
+              <UButton class="max-md:hidden" icon="xi-i:trash" color="gray" />
+              <UButton class="max-md:hidden" icon="xi-i:plus" color="gray" />
+            </div>
+          </Transition>
+
+          <UButton
+            v-if="isAdmin"
+            class="max-md:hidden transition-all"
+            :class="{ 'rotate-45': isUsers }"
+            icon="xi-i:category"
+            color="gray"
+            @click="push"
+          />
+
+          <Transition name="w">
+            <div
+              v-if="isStat"
+              class="flex gap-[inherit] -ml-8 w-[25.4rem] max-md:-ml-4 max-md:w-[8rem]"
+            >
+              <UButton
+                v-if="isAdmin"
+                color="gray"
+                class="w-[13.4rem] max-md:hidden ml-8"
+              >
+                {{ nickname }}
+              </UButton>
+              <UButton color="gray" class="w-32"> Id: {{ id }} </UButton>
+            </div>
+          </Transition>
+
+          <UPopover
+            :ui="{
+              background: 'dark:bg-transparent',
+              ring: 'ring-0',
+              rounded: 'rounded-full',
+            }"
+          >
+            <UAvatar :alt="name" />
+
+            <template #panel="{ close }">
+              <UButton icon="xi-i:logout" color="gray" @click="close" />
+            </template>
+          </UPopover>
         </div>
       </div>
 
-      <div v-if="isStat && auntificated" class="flex gap-8">
-        <StatTypeFilterWidget />
-      </div>
-
-      <div v-if="!auntificated">
-        <UButton class="w-[13.5rem] text-2xl h-24" color="gray">
-          Log in
-        </UButton>
-      </div>
-
-      <div v-else class="flex justify-end gap-8 w-full">
-        <template v-if="isUsers">
-          <UiSearch />
-          <!-- <UButton icon="xi-i:search" color="gray" /> -->
-          <UButton icon="xi-i:trash" color="gray" />
-          <UButton icon="xi-i:plus" color="gray" />
-        </template>
-
-        <UButton
-          v-if="isAdmin"
-          :class="{ 'rotate-45': isUsers }"
-          icon="xi-i:category"
-          color="gray"
-        />
-
-        <template v-if="isStat">
-          <UButton v-if="isAdmin" color="gray" class="w-[13.4rem]">
-            {{ nickname }}
-          </UButton>
-          <UButton color="gray" class="w-32"> Id: {{ id }} </UButton>
-        </template>
-
-        <UPopover
-          :ui="{
-            background: 'dark:bg-transparent',
-            ring: 'ring-0',
-            rounded: 'rounded-full',
-          }"
+      <Transition name="h">
+        <div
+          v-if="isStat && auntificated"
+          class="md:hidden h-36 overflow-hidden flex flex-col"
         >
-          <UAvatar :alt="name" />
+          <div class="flex gap-4 justify-between mt-16">
+            <div class="flex gap-4">
+              <StatDateRangeFilterWidget />
+            </div>
 
-          <template #panel="{ close }">
-            <UButton icon="xi-i:logout" color="gray" @click="close" />
-          </template>
-        </UPopover>
-      </div>
+            <StatTypeFilterWidget />
+          </div>
+        </div>
+      </Transition>
     </header>
 
     <main class="px-4">
       <NuxtPage />
     </main>
+
+    <footer
+      v-if="isAdmin"
+      class="md:hidden flex justify-between gap-4 fixed inset-x-0 bottom-0 p-8"
+    >
+      <div class="flex gap-4">
+        <UButton
+          class="transition-all duration-500"
+          :class="{ 'rotate-45': isUsers }"
+          icon="xi-i:category"
+          @click="push"
+        />
+
+        <Transition>
+          <div v-if="isUsers" class="flex gap-[inherit]">
+            <UButton icon="xi-i:trash" />
+            <UButton icon="xi-i:plus" />
+          </div>
+        </Transition>
+      </div>
+
+      <Transition>
+        <UButton v-if="isStat" class="w-48">
+          {{ nickname }}
+        </UButton>
+      </Transition>
+    </footer>
   </div>
 </template>
+
+<style scoped>
+.h-enter-active,
+.h-leave-active {
+  transition: all 0.5s ease;
+}
+
+.h-enter-from,
+.h-leave-to {
+  opacity: 0;
+  scale: 0;
+  height: 0;
+}
+.w-enter-active,
+.w-leave-active {
+  transition: all 0.5s ease;
+}
+
+.w-enter-from,
+.w-leave-to {
+  opacity: 0;
+  scale: 0;
+  width: 0;
+}
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+  scale: 0;
+}
+</style>
