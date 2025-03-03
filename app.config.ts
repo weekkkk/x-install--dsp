@@ -45,6 +45,20 @@ export default defineAppConfig({
       ring: "ring-0",
       rounded: "rounded-[3rem]",
     },
+    table: {
+      divide: "dark:divide-dark-0",
+      tbody: "dark:divide-dark-0",
+      th: {
+        padding: "px-0 py-4",
+        size: "text-base",
+      },
+      td: {
+        padding: "px-0 py-4",
+        color: "dark:text-white",
+        font: "font-medium",
+        size: "text-ифыу",
+      },
+    },
     input: {
       base: "font-semibold",
       size: {
