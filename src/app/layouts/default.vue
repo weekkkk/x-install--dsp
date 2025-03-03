@@ -12,8 +12,22 @@ const isUsers = computed(() => route.path === "/users");
 
 const push = async () => {
   console.log("push");
-  if (isStat.value) await navigateTo({ path: "/users" });
-  else await navigateTo({ path: "/" });
+  if (isStat.value) {
+    await pushUsersToViewMode();
+  } else await navigateTo({ path: "/" });
+};
+
+const toggleUsersMode = () => {
+  route.query.mode === "del" ? pushUsersToViewMode() : pushUsersToDelMode();
+};
+
+const pushUsersToViewMode = async () => {
+  const query: TUsersPageQuery = { mode: "view" };
+  await navigateTo({ path: "/users", query });
+};
+const pushUsersToDelMode = async () => {
+  const query: TUsersPageQuery = { mode: "del" };
+  await navigateTo({ path: "/users", query });
 };
 </script>
 
@@ -49,7 +63,12 @@ const push = async () => {
           <Transition>
             <div v-if="isUsers" class="flex gap-[inherit]">
               <UiSearch />
-              <UButton class="max-md:hidden" icon="xi-i:trash" color="gray" />
+              <UButton
+                @click="toggleUsersMode"
+                class="max-md:hidden"
+                icon="xi-i:trash"
+                :color="route.query.mode === 'del' ? 'primary' : 'gray'"
+              />
               <UButton class="max-md:hidden" icon="xi-i:plus" color="gray" />
             </div>
           </Transition>
@@ -129,7 +148,11 @@ const push = async () => {
 
         <Transition>
           <div v-if="isUsers" class="flex gap-[inherit]">
-            <UButton icon="xi-i:trash" />
+            <UButton
+              @click="toggleUsersMode"
+              icon="xi-i:trash"
+              :color="route.query.mode === 'del' ? 'gray' : 'primary'"
+            />
             <UButton icon="xi-i:plus" />
           </div>
         </Transition>

@@ -3,7 +3,20 @@ import type { TUserTableProps } from "./types";
 
 const props = defineProps<TUserTableProps>();
 
-const model = defineModel<TUser["id"]>();
+const model = defineModel<TUser["id"] | undefined>();
+const multiModel = defineModel<TUser["id"][] | undefined>("multi");
+
+const multiModelValue = computed({
+  get: () =>
+    multiModel.value?.map((id) => {
+      const user = props.users.find(({ id: _id }) => _id === id);
+      if (!user) throw new Error();
+      return user;
+    }),
+  set: (v) => {
+    multiModel.value = v?.map(({ id }) => id);
+  },
+});
 
 const onChange = (row: TUser, key: keyof TUser, value: string) => {
   console.log({ row, key, value });
@@ -20,12 +33,14 @@ const onChangePanels = (
 
 <template>
   <UiTable
-    v-model="model"
-    radio
+    v-model:radio="model"
+    v-model:checkbox="multiModelValue"
+    :is-radio="selectable"
+    :is-checkbox="multiSelectable"
     by="id"
     :columns="[
-      { key: 'id' },
       { key: 'dateAdd', label: 'date add' },
+      { key: 'id' },
       { key: 'nickname' },
       { key: 'panels', label: 'unlocked' },
     ]"

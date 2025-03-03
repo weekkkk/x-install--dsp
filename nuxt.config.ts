@@ -31,6 +31,7 @@ export default defineNuxtConfig({
       "./src/entities/*/*/index.ts",
       "./src/features/*/*/index.ts",
       "./src/widgets/*/*/index.ts",
+      "./src/pages/*/*/index.ts",
     ],
   },
   app: {

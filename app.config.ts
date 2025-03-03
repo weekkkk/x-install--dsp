@@ -49,14 +49,35 @@ export default defineAppConfig({
       divide: "dark:divide-dark-0",
       tbody: "dark:divide-dark-0",
       th: {
-        padding: "px-0 py-4",
+        padding: "px-0 py-6 [&:not(:last-child)]:pr-[2.6rem]",
         size: "text-base",
       },
       td: {
-        padding: "px-0 py-4",
+        padding: "px-0 py-6 [&:not(:last-child)]:pr-[2.6rem]",
         color: "dark:text-white",
         font: "font-medium",
-        size: "text-ифыу",
+        size: "text-base",
+      },
+      checkbox: {
+        padding: "ps-0",
+      },
+      tr: {
+        selected: "dark:bg-[transparent]",
+      },
+    },
+    radio: {
+      base: "h-[2.4rem] w-[2.4rem] dark:checked:bg-gradient-to-r from-brand-from to-brand-to rounded-2xl",
+      background: "dark:bg-dark-50",
+      border: "border-none",
+    },
+    checkbox: {
+      base: "h-[1.2rem] w-[1.2rem] dark:checked:bg-gradient-to-r from-brand-from to-brand-to rounded-2xl",
+      background: "dark:bg-dark-50",
+      border: "border-none",
+    },
+    input: {
+      size: {
+        sm: "text-base",
       },
     },
     input: {

@@ -8,6 +8,7 @@ export type TUiTableProps<
   editableCols?: (keyof T)[];
   customizeCols?: (keyof T)[];
   readonly?: boolean;
-  radio?: boolean;
+  isRadio?: boolean;
+  isCheckbox?: boolean;
   by: keyof T;
 };
