@@ -21,6 +21,7 @@ export default <Partial<Config>>{
         dark: {
           100: "#000000",
           50: "#0A0A0A",
+          25: "#1F1F1F",
           0: "#1D1D1D",
         },
       },

@@ -8,8 +8,8 @@
 import type { TUiTableProps } from "./types";
 
 const props = withDefaults(defineProps<TUiTableProps<T>>(), {
-  customizeCols: [],
-  editableCols: [],
+  customizeCols: [] as any,
+  editableCols: [] as any,
 });
 
 const _columns = computed(() =>
@@ -47,7 +47,13 @@ const onBlur = ({ currentTarget }: FocusEvent, row: T, key: keyof T) => {
 </script>
 
 <template>
-  <UTable by="id" v-model="multiSelected" :columns="mapedColumns" :rows="rows">
+  <UTable
+    class="p-16 bg-dark-50 rounded-t-[2rem] grow"
+    by="id"
+    v-model="multiSelected"
+    :columns="mapedColumns"
+    :rows="rows"
+  >
     <template #radio-data="{ row }">
       <URadio v-model="radioSelected" :value="row[by]" />
     </template>
