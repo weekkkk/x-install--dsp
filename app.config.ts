@@ -76,8 +76,19 @@ export default defineAppConfig({
       border: "border-none",
     },
     input: {
+      base: "font-semibold",
       size: {
         sm: "text-base",
+        lg: "text-2xl",
+      },
+      padding: {
+        lg: "px-8 py-[2.54rem]",
+      },
+      rounded: "rounded-[2rem]",
+      color: {
+        white: {
+          outline: "ring-0 dark:bg-dark-50",
+        },
       },
     },
     input: {
