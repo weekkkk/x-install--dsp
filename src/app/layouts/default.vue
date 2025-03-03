@@ -130,7 +130,7 @@ const pushUsersToDelMode = async () => {
       </Transition>
     </header>
 
-    <main class="px-4">
+    <main class="px-4 grow flex flex-col">
       <NuxtPage />
     </main>
 

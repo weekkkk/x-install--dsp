@@ -49,7 +49,7 @@ export default defineAppConfig({
       divide: "dark:divide-dark-0",
       tbody: "dark:divide-dark-0",
       th: {
-        padding: "px-0 py-6 [&:not(:last-child)]:pr-[2.6rem]",
+        padding: "px-0 pt-0 pb-6 [&:not(:last-child)]:pr-[2.6rem]",
         size: "text-base",
       },
       td: {
@@ -67,12 +67,12 @@ export default defineAppConfig({
     },
     radio: {
       base: "h-[2.4rem] w-[2.4rem] dark:checked:bg-gradient-to-r from-brand-from to-brand-to rounded-2xl",
-      background: "dark:bg-dark-50",
+      background: "dark:bg-dark-25",
       border: "border-none",
     },
     checkbox: {
       base: "h-[1.2rem] w-[1.2rem] dark:checked:bg-gradient-to-r from-brand-from to-brand-to rounded-2xl",
-      background: "dark:bg-dark-50",
+      background: "dark:bg-dark-25",
       border: "border-none",
     },
     input: {
