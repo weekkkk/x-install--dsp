@@ -29,6 +29,10 @@ const pushUsersToDelMode = async () => {
   const query: TUsersPageQuery = { mode: "del" };
   await navigateTo({ path: "/users", query: { ...route.query, ...query } });
 };
+
+const pushToCreateUser = async () => {
+  await navigateTo({ path: "/create-user" });
+};
 </script>
 
 <template>
@@ -69,7 +73,12 @@ const pushUsersToDelMode = async () => {
                 icon="xi-i:trash"
                 :color="route.query.mode === 'del' ? 'primary' : 'gray'"
               />
-              <UButton class="max-md:hidden" icon="xi-i:plus" color="gray" />
+              <UButton
+                class="max-md:hidden"
+                icon="xi-i:plus"
+                @click="pushToCreateUser"
+                color="gray"
+              />
             </div>
           </Transition>
 
@@ -153,7 +162,7 @@ const pushUsersToDelMode = async () => {
               icon="xi-i:trash"
               :color="route.query.mode === 'del' ? 'gray' : 'primary'"
             />
-            <UButton icon="xi-i:plus" />
+            <UButton icon="xi-i:plus" @click="pushToCreateUser" />
           </div>
         </Transition>
       </div>
