@@ -25,7 +25,7 @@ const test: TUser[] = [
   },
 ];
 
-const userId = ref<TUser["id"]>();
+const userId = defineModel<TUser["id"]>();
 
 const userForDeleteIds = ref<TUser["id"][]>();
 

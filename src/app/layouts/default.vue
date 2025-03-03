@@ -23,11 +23,11 @@ const toggleUsersMode = () => {
 
 const pushUsersToViewMode = async () => {
   const query: TUsersPageQuery = { mode: "view" };
-  await navigateTo({ path: "/users", query });
+  await navigateTo({ path: "/users", query: { ...route.query, ...query } });
 };
 const pushUsersToDelMode = async () => {
   const query: TUsersPageQuery = { mode: "del" };
-  await navigateTo({ path: "/users", query });
+  await navigateTo({ path: "/users", query: { ...route.query, ...query } });
 };
 </script>
 
