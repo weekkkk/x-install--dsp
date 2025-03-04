@@ -59,7 +59,13 @@ export default defineAppConfig({
         white: {
           outline: "ring-0 dark:bg-dark-50",
         },
+        red: {
+          outline: "ring-1 dark:bg-dark-50 dark:ring-danger dark:text-danger",
+        },
       },
+    },
+    formGroup: {
+      error: "dark:text-danger",
     },
   },
 });
