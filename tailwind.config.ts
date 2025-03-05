@@ -18,6 +18,7 @@ export default <Partial<Config>>{
           from: "#19F2C8",
           to: "#6AE15F",
         },
+        danger: "#FF0000",
         dark: {
           100: "#000000",
           50: "#0A0A0A",

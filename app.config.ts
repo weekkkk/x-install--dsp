@@ -5,11 +5,13 @@ export default defineAppConfig({
       rounded: "rounded-full",
       size: {
         sm: "text-base",
+        lg: "text-2xl",
       },
       truncate: "text-center",
       inline: "justify-center",
       padding: {
-        sm: "py-[2.4rem] max-md:py-[1.9rem]",
+        sm: "py-[2.54rem] max-md:py-[1.9rem]",
+        lg: "py-[2.54rem]",
       },
       square: {
         xs: "p-0",
@@ -42,6 +44,28 @@ export default defineAppConfig({
       background: "dark:bg-dark-50",
       ring: "ring-0",
       rounded: "rounded-[3rem]",
+    },
+    input: {
+      base: "font-semibold",
+      size: {
+        sm: "text-base",
+        lg: "text-2xl",
+      },
+      padding: {
+        lg: "px-8 py-[2.54rem]",
+      },
+      rounded: "rounded-[2rem]",
+      color: {
+        white: {
+          outline: "ring-0 dark:bg-dark-50",
+        },
+        red: {
+          outline: "ring-1 dark:bg-dark-50 dark:ring-danger dark:text-danger",
+        },
+      },
+    },
+    formGroup: {
+      error: "dark:text-danger",
     },
   },
 });
