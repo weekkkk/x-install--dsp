@@ -1,3 +1,1 @@
-export type TUserTableWidgetProps = {
-  mode: "del" | "view";
-};
+export type TUserTableWidgetProps = {};

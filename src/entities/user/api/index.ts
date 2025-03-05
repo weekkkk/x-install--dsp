@@ -1,8 +1,2 @@
-export type TPanel = "dsp" | "dsp--in-app" | "dsp--banner";
-
-export type TUser = {
-  id: string;
-  dateAdd: string;
-  nickname?: string;
-  panels: Record<TPanel, boolean>;
-};
+export { UserApiService } from "./service";
+export type { UserResDto } from "./types";

@@ -2,12 +2,10 @@
 import type { TUsersPageProps } from "./types";
 import { usersPageQueryShema, type TUsersPageQuery } from "./shemes";
 
-// const props = defineProps<TUsersPageProps>();
-
 const route = useRoute();
-const query = computed(() => usersPageQueryShema.safeParse(route.query));
+const parsedQuery = computed(() => usersPageQueryShema.safeParse(route.query));
 watch(
-  query,
+  parsedQuery,
   ({ success }) => {
     if (success) return;
     const query: TUsersPageQuery = {
@@ -21,9 +19,12 @@ watch(
 
 <template>
   <UserTableWidget
-    v-if="query.data"
-    :model-value="query.data.user"
-    @update:model-value="navigateTo({ query: { ...query.data, user: $event } })"
-    :mode="query.data.mode"
+    v-if="parsedQuery.data"
+    :model-value="Number(parsedQuery.data.user)"
+    @update:model-value="
+      navigateTo({ query: { ...parsedQuery.data, user: $event } })
+    "
+    :mode="parsedQuery.data.mode"
+    @update:mode="navigateTo({ query: { ...parsedQuery.data, mode: $event } })"
   />
 </template>

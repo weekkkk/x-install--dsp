@@ -89,22 +89,6 @@ export default defineAppConfig({
         white: {
           outline: "ring-0 dark:bg-dark-50",
         },
-      },
-    },
-    input: {
-      base: "font-semibold",
-      size: {
-        sm: "text-base",
-        lg: "text-2xl",
-      },
-      padding: {
-        lg: "px-8 py-[2.54rem]",
-      },
-      rounded: "rounded-[2rem]",
-      color: {
-        white: {
-          outline: "ring-0 dark:bg-dark-50",
-        },
         red: {
           outline: "ring-1 dark:bg-dark-50 dark:ring-danger dark:text-danger",
         },

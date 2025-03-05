@@ -1,70 +1,112 @@
 <script setup lang="ts">
+import { format } from "date-fns";
 import type { TUserTableProps } from "./types";
 
 const props = defineProps<TUserTableProps>();
 
-const model = defineModel<TUser["id"] | undefined>();
-const multiModel = defineModel<TUser["id"][] | undefined>("multi");
+const model = defineModel<UserResDto["id"]>();
+const multiModel = defineModel<UserResDto["id"][]>("multi");
 
-const multiModelValue = computed({
-  get: () =>
-    multiModel.value?.map((id) => {
-      const user = props.users.find(({ id: _id }) => _id === id);
-      if (!user) throw new Error();
-      return user;
-    }),
-  set: (v) => {
-    multiModel.value = v?.map(({ id }) => id);
-  },
-});
+const emit = defineEmits<{
+  "change-name": [id: UserResDto["id"], name: string];
+  "change-flags": [
+    id: UserResDto["id"],
+    flags: Pick<UserResDto, "flag1" | "flag2" | "flag3">
+  ];
+}>();
 
-const onChange = (row: TUser, key: keyof TUser, value: string) => {
-  console.log({ row, key, value });
+const onChange = (row: UserResDto, key: keyof UserResDto, value: string) => {
+  if (key === "username") emit("change-name", row.id, value);
 };
 
+const rowFlags = ref<{
+  [id: number]: Pick<UserResDto, "flag1" | "flag2" | "flag3">;
+}>();
+
+watch(
+  () => props.users,
+  (v) => {
+    if (!v) {
+      rowFlags.value = {};
+      return;
+    }
+    rowFlags.value = v.reduce(
+      (obj, { id, flag1, flag2, flag3 }) => ({
+        ...obj,
+        [id]: { flag1, flag2, flag3 },
+      }),
+      {}
+    );
+  }
+);
+
 const onChangePanels = (
-  row: TUser,
-  key: keyof TUser["panels"],
+  row: UserResDto,
+  key: keyof Pick<UserResDto, "flag1" | "flag2" | "flag3">,
   value: boolean
 ) => {
-  console.log({ row, key, value });
+  if (!rowFlags.value) return;
+  rowFlags.value[row.id][key] = value;
+  const { flag1, flag2, flag3 } = rowFlags.value[row.id];
+
+  emit("change-flags", row.id, { flag1, flag2, flag3 });
+};
+
+const formatCreatedAt = (createdAt: string) => {
+  const date = new Date(createdAt);
+
+  return `${format(date, "dd.MM.yy")} ${format(date, "HH:mm:ss")}`;
 };
 </script>
 
 <template>
   <UiTable
+    v-memo="[users, multiModel?.length, loading]"
     v-model:radio="model"
-    v-model:checkbox="multiModelValue"
+    v-model:checkbox="multiModel"
     :is-radio="selectable"
     :is-checkbox="multiSelectable"
+    :readonly="readonly"
     by="id"
     :columns="[
-      { key: 'dateAdd', label: 'date add' },
+      { key: 'createdAt', label: 'date add' },
       { key: 'id' },
-      { key: 'nickname' },
+      { key: 'username' },
       { key: 'panels', label: 'unlocked' },
     ]"
     :rows="users"
-    :editable-cols="['nickname']"
-    :customize-cols="['panels']"
+    :editable-cols="['username']"
+    :customize-cols="['panels', 'createdAt']"
     @change="onChange($event.row, $event.key, $event.value)"
+    :loading="loading"
   >
+    <template #createdAt-data="{ row }">
+      <span class="flex gap-4">
+        <span v-for="part in formatCreatedAt(row.createdAt).split(' ')">
+          {{ part }}
+        </span>
+      </span>
+    </template>
+
     <template #panels-data="{ row }">
       <div class="flex gap-16">
         <UCheckbox
-          :model-value="row.panels['dsp']"
-          @change="onChangePanels(row, 'dsp', $event)"
+          :model-value="row.flag1"
+          @change="onChangePanels(row, 'flag1', $event)"
           label="DSP"
+          :disabled="readonly"
         />
         <UCheckbox
-          :model-value="row.panels['dsp--in-app']"
-          @change="onChangePanels(row, 'dsp--in-app', $event)"
+          :model-value="row.flag2"
+          @change="onChangePanels(row, 'flag2', $event)"
           label="DSP InApp"
+          :disabled="readonly"
         />
         <UCheckbox
-          :model-value="row.panels['dsp--banner']"
-          @change="onChangePanels(row, 'dsp--banner', $event)"
+          :model-value="row.flag3"
+          @change="onChangePanels(row, 'flag3', $event)"
           label="DSP Banner"
+          :disabled="readonly"
         />
       </div>
     </template>
