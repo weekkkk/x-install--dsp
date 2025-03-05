@@ -12,7 +12,11 @@ export class AuthApiService {
   }
 
   static async checkAuth() {
-    const data = await $fetch<AuthResDto>(`${AUTH_API_URL}/refresh`);
+    const data = await $fetch<AuthResDto>(`${AUTH_API_URL}/refresh`, {
+      method: "GET",
+      credentials: "include",
+    });
+
     localStorage.setItem("token", data.accessToken);
 
     return data;

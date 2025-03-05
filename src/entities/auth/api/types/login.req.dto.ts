@@ -1,4 +1,4 @@
 export type AuthLoginReqDto = {
-  email: string;
+  login: string;
   password: string;
 };

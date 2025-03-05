@@ -1,13 +1,13 @@
-export default defineNuxtRouteMiddleware(async (to, from) => {
-  if (to.path === "/login") return;
-  try {
-    await AuthApiService.checkAuth();
-    console.log("auth");
-  } catch (e) {
-    console.log(e);
+export default defineNuxtRouteMiddleware(async (to) => {
+  console.log("test middleware");
 
-    console.log("test");
+  const auth = useState("auth");
 
-    // return navigateTo("/login");
+  if (!auth.value) {
+    return navigateTo("/login");
+  }
+
+  if (to.path !== "/") {
+    return navigateTo("/");
   }
 });

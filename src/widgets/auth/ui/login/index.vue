@@ -4,11 +4,14 @@ const error = reactive<Partial<Record<keyof TAuthLoginFormData, string>>>({
   password: "",
 });
 
-const onSubmit = async ({ login: email, password }: TAuthLoginFormData) => {
+const onSubmit = async ({ login, password }: TAuthLoginFormData) => {
   try {
     await AuthApiService.login({
-      email,
+      login,
       password,
+    });
+    await navigateTo({
+      path: "/",
     });
   } catch (e) {
     if (!(e && typeof e === "object" && "data" in e)) return;
