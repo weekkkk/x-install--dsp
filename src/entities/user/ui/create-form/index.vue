@@ -1,7 +1,21 @@
 <script setup lang="ts">
 import { userCreateFormDataSchema, type TUserCreateFormData } from "./schemes";
 
-const state = reactive<Partial<TUserCreateFormData>>({});
+const state = reactive<TUserCreateFormData>({
+  id: 0,
+  login: "",
+  password: "",
+  name: "",
+});
+const form = ref<Form<TUserCreateFormData>>();
+
+const emit = defineEmits<{
+  submit: [data: TUserCreateFormData];
+}>();
+
+const onSubmit = () => {
+  emit("submit", state);
+};
 </script>
 
 <template>
@@ -10,17 +24,18 @@ const state = reactive<Partial<TUserCreateFormData>>({});
     class="space-y-4"
     :state="state"
     :validateOn="['submit']"
+    @submit="onSubmit"
   >
     <UFormGroup name="id">
-      <UInput v-model="state.id" readonly placeholder="Generate id" size="lg" />
-    </UFormGroup>
-    <UFormGroup name="login">
       <UInput
-        v-model="state.login"
-        readonly
-        placeholder="Generate login"
+        v-model="state.id"
+        type="number"
+        placeholder="Generate id"
         size="lg"
       />
+    </UFormGroup>
+    <UFormGroup name="login">
+      <UInput v-model="state.login" placeholder="Generate login" size="lg" />
     </UFormGroup>
     <UFormGroup name="password">
       <UInput v-model="state.password" placeholder="Input password" size="lg" />

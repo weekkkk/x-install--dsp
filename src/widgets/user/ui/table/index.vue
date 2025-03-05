@@ -9,12 +9,12 @@ const mode = defineModel<"view" | "del">("mode");
 
 const auth = useState<boolean>("auth");
 
-const { data, status } = await useAsyncData(
+const { data, status, refresh } = await useAsyncData(
   "users",
   async () => (auth.value ? await UserApiService.getAll() : []),
   {
     watch: [auth, mode],
-    immediate: false,
+    immediate: true,
   }
 );
 
@@ -41,17 +41,14 @@ const deleteUsers = async () => {
   if (!userForDeleteIds.value?.length) return;
   const ids = userForDeleteIds.value;
   loading.value = true;
-  if (userId.value && ids.includes(userId.value)) userId.value = undefined;
   await Promise.all(ids.map((id) => UserApiService.deleteOne(id)));
   loading.value = false;
-  console.log(userId.value && ids.includes(userId.value));
-  mode.value = "view";
+  if (userId.value && ids.includes(userId.value)) userId.value = undefined;
+  userForDeleteIds.value = [];
+  await refresh();
 };
 
-watch(
-  () => mode,
-  () => (userForDeleteIds.value = [])
-);
+watch(mode, () => (userForDeleteIds.value = []));
 </script>
 
 <template>

@@ -2,6 +2,7 @@ import { $user } from "./point";
 import type {
   UserChangeFlagsReqDto,
   UserChangeNameReqDto,
+  UserCreateReqDto,
   UserResDto,
 } from "./types";
 
@@ -31,6 +32,12 @@ export class UserApiService {
   static async deleteOne(id: number) {
     await $user(`/user/${id}`, {
       method: "DELETE",
+    });
+  }
+  static async create(body: UserCreateReqDto) {
+    await $user("/user", {
+      method: "POST",
+      body,
     });
   }
 }
