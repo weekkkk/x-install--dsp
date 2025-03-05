@@ -1,6 +1,7 @@
 export type TUserTableProps = {
-  users: TUser[];
+  users: UserResDto[];
   selectable?: boolean;
   multiSelectable?: boolean;
   readonly?: boolean;
+  loading?: boolean;
 };

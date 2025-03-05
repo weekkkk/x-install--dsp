@@ -20,14 +20,15 @@ const _columns = computed(() =>
 );
 
 const mapedColumns = computed(() => {
-  if (!props.isRadio) return _columns.value;
-  return [{ key: "radio" }, ..._columns.value];
+  const add = [];
+  if (props.isRadio) add.push({ key: "radio" });
+
+  if (props.isCheckbox) add.push({ key: "checkbox" });
+  return [...add, ..._columns.value];
 });
 
-const radioSelected = defineModel<string | undefined>("radio", {});
-const multiSelected = defineModel<T[] | undefined>("checkbox", {
-  get: (v) => (props.isCheckbox ? v || [] : undefined),
-});
+const radioSelected = defineModel<string | number | undefined>("radio");
+const multiSelected = defineModel<(string | number)[] | undefined>("checkbox");
 
 const emit = defineEmits<{
   change: [{ row: T; key: keyof T; value: string }];
@@ -50,25 +51,25 @@ const onBlur = ({ currentTarget }: FocusEvent, row: T, key: keyof T) => {
   <UTable
     class="p-16 bg-dark-50 rounded-t-[2rem] grow"
     by="id"
-    v-model="multiSelected"
     :columns="mapedColumns"
     :rows="rows"
+    :loading="loading"
   >
     <template #radio-data="{ row }">
-      <URadio v-model="radioSelected" :value="row[by]" />
-    </template>
-    <template #select-header="{ checked, change }">
-      <UCheckbox
-        :ui="{ base: 'h-[2.4rem] w-[2.4rem]', rounded: 'rounded-2xl' }"
-        :model-value="checked"
-        @update:model-value="change"
+      <URadio
+        class="h-[1.2rem]"
+        name="radio"
+        v-model="radioSelected"
+        :value="row[by]"
       />
     </template>
-    <template #select-data="{ checked, change }">
+    <template #checkbox-data="{ row }">
       <UCheckbox
+        class="h-[1.2rem]"
         :ui="{ base: 'h-[2.4rem] w-[2.4rem]', rounded: 'rounded-2xl' }"
-        :model-value="checked"
-        @update:model-value="change"
+        name="radio"
+        :value="row[by]"
+        v-model="multiSelected"
       />
     </template>
 
@@ -79,12 +80,12 @@ const onBlur = ({ currentTarget }: FocusEvent, row: T, key: keyof T) => {
     >
       <UInput
         :ui="{ padding: { sm: 'p-0 h-[4.2rem]' } }"
-        :key="row[by]"
         class="-my-6"
-        variant="none"
         :model-value="row[key]"
+        variant="none"
         @focus="onFocus"
         @blur="onBlur($event, row, key)"
+        :readonly="readonly"
       />
     </template>
 

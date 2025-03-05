@@ -6,10 +6,13 @@ export default defineAppConfig({
       size: {
         sm: "text-base",
         lg: "text-2xl",
+        lg: "text-2xl",
       },
       truncate: "text-center",
       inline: "justify-center",
       padding: {
+        sm: "py-[2.54rem] max-md:py-[1.9rem]",
+        lg: "py-[2.54rem]",
         sm: "py-[2.54rem] max-md:py-[1.9rem]",
         lg: "py-[2.54rem]",
       },

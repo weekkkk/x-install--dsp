@@ -24,7 +24,6 @@ export default defineNuxtConfig({
     layouts: "./src/app/layouts",
     assets: "./src/app/assets",
     middleware: "./src/app/middlewares",
-    app: "./src/app",
   },
   imports: {
     dirs: [
@@ -106,5 +105,14 @@ export default defineNuxtConfig({
         extensions: ["vue"],
       },
     ],
+  },
+  nitro: {
+    devProxy: {
+      "/api": {
+        target: "https://xinstallbotprofile-production.up.railway.app/api",
+        changeOrigin: true,
+        headers: { "Access-Control-Allow-Origin": "*" },
+      },
+    },
   },
 });
