@@ -1,22 +1,47 @@
 <script setup lang="ts">
-const auth = useState("auth", () => false);
+const isLoading = ref(true);
+const auth = useState<boolean>("auth");
+
+const route = useRoute();
 
 onMounted(() => {
-  console.log("test");
-
   AuthApiService.checkAuth()
-    .then(() => {
+    .then(async () => {
       auth.value = true;
+      if (route.path === "/login") await navigateTo("/");
     })
-    .catch((e) => {
-      console.log(e);
+    .catch(async () => {
+      await navigateTo("/login");
+    })
+    .finally(() => {
+      isLoading.value = false;
     });
 });
 </script>
 
 <template>
-  test
+  <Transition>
+    <div
+      class="bg-black flex items-center justify-center fixed inset-0 z-[9999]"
+      v-if="isLoading"
+    >
+      <UIcon name="xi-i:logo" class="animate-pulse text-9xl" />
+    </div>
+  </Transition>
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
 </template>
+
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+  transition-delay: 0.5s;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>

@@ -4,12 +4,16 @@ const error = reactive<Partial<Record<keyof TAuthLoginFormData, string>>>({
   password: "",
 });
 
+const auth = useState("auth");
+
 const onSubmit = async ({ login, password }: TAuthLoginFormData) => {
   try {
     await AuthApiService.login({
       login,
       password,
     });
+    auth.value = true;
+
     await navigateTo({
       path: "/",
     });
