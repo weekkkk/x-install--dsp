@@ -26,5 +26,6 @@ watch(
     "
     :mode="parsedQuery.data.mode"
     @update:mode="navigateTo({ query: { ...parsedQuery.data, mode: $event } })"
+    :search="parsedQuery.data.search"
   />
 </template>

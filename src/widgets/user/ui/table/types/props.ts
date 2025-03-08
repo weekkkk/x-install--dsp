@@ -1,1 +1,3 @@
-export type TUserTableWidgetProps = {};
+export type TUserTableWidgetProps = {
+  search?: string;
+};

@@ -1,13 +1,25 @@
 <script setup lang="ts">
-const createUser = async ({ id, name, login, password }: TUserCreateReqDto) => {
+const defaultState = ref<TUserCreateFormData>();
+
+const generateData = async () => {
+  const { nickname: name, id, ...rest } = await UserApiService.generateData();
+  defaultState.value = { id: id + "", name, ...rest };
+};
+
+const createUser = async ({
+  id,
+  name,
+  login,
+  password,
+}: TUserCreateFormData) => {
   try {
     await UserApiService.create({
-      userId: id,
+      userId: Number(id),
       login,
       password,
       username: name,
     });
-    await navidateTo({ path: "/users" });
+    await navigateTo({ path: "/users" });
   } catch (e) {
     console.log(e);
   }
@@ -15,5 +27,9 @@ const createUser = async ({ id, name, login, password }: TUserCreateReqDto) => {
 </script>
 
 <template>
-  <UserCreateForm @submit="createUser" />
+  <UserCreateForm
+    @generate="generateData"
+    :default-state="defaultState"
+    @submit="createUser"
+  />
 </template>

@@ -66,7 +66,7 @@ const pushToCreateUser = async () => {
         <div v-else class="flex justify-end gap-8 w-full max-md:gap-4">
           <Transition>
             <div v-if="isUsers" class="flex gap-[inherit]">
-              <UiSearch />
+              <UserSearchWidget />
               <UButton
                 @click="toggleUsersMode"
                 class="max-md:hidden"
@@ -143,11 +143,8 @@ const pushToCreateUser = async () => {
       <NuxtPage />
     </main>
 
-    <footer
-      v-if="isAdmin"
-      class="md:hidden flex justify-between gap-4 fixed inset-x-0 bottom-0 p-8"
-    >
-      <div class="flex gap-4">
+    <template>
+      <div class="md:hidden flex gap-4 fixed bottom-8 left-8">
         <UButton
           class="transition-all duration-500"
           :class="{ 'rotate-45': isUsers }"
@@ -168,11 +165,11 @@ const pushToCreateUser = async () => {
       </div>
 
       <Transition>
-        <UButton v-if="isStat" class="w-48">
+        <UButton v-if="isStat" class="w-48 fixed bottom-8 right-8">
           {{ nickname }}
         </UButton>
       </Transition>
-    </footer>
+    </template>
   </div>
 </template>
 

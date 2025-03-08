@@ -49,7 +49,7 @@ const onBlur = ({ currentTarget }: FocusEvent, row: T, key: keyof T) => {
 
 <template>
   <UTable
-    class="p-16 bg-dark-50 rounded-t-[2rem] grow"
+    class="p-16 bg-dark-50 rounded-t-[2rem] grow max-md:pb-40"
     by="id"
     :columns="mapedColumns"
     :rows="rows"

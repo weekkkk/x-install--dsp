@@ -4,6 +4,7 @@ import type {
   UserChangeNameReqDto,
   UserCreateReqDto,
   UserResDto,
+  UserGenerateResDto,
 } from "./types";
 
 export class UserApiService {
@@ -29,13 +30,17 @@ export class UserApiService {
       },
     });
   }
-  static async deleteOne(id: number) {
-    await $user(`/user/${id}`, {
+  static async deleteByIds(ids: number[]) {
+    await $user(`/deleteUsers`, {
       method: "DELETE",
+      body: ids,
     });
   }
+  static generateData() {
+    return $user<UserGenerateResDto>("/generateUserData");
+  }
   static async create(body: UserCreateReqDto) {
-    await $user("/user", {
+    await $user("/saveUserData", {
       method: "POST",
       body,
     });

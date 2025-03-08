@@ -11,7 +11,7 @@ const emit = defineEmits<{
   "change-name": [id: UserResDto["id"], name: string];
   "change-flags": [
     id: UserResDto["id"],
-    flags: Pick<UserResDto, "flag1" | "flag2" | "flag3">
+    flags: Pick<UserResDto, "isDsp" | "isDspInApp" | "isDspBanner">
   ];
 }>();
 
@@ -20,7 +20,7 @@ const onChange = (row: UserResDto, key: keyof UserResDto, value: string) => {
 };
 
 const rowFlags = ref<{
-  [id: number]: Pick<UserResDto, "flag1" | "flag2" | "flag3">;
+  [id: number]: Pick<UserResDto, "isDsp" | "isDspInApp" | "isDspBanner">;
 }>();
 
 watch(
@@ -31,9 +31,9 @@ watch(
       return;
     }
     rowFlags.value = v.reduce(
-      (obj, { id, flag1, flag2, flag3 }) => ({
+      (obj, { id, isDsp, isDspInApp, isDspBanner }) => ({
         ...obj,
-        [id]: { flag1, flag2, flag3 },
+        [id]: { isDsp, isDspInApp, isDspBanner },
       }),
       {}
     );
@@ -42,14 +42,14 @@ watch(
 
 const onChangePanels = (
   row: UserResDto,
-  key: keyof Pick<UserResDto, "flag1" | "flag2" | "flag3">,
+  key: keyof Pick<UserResDto, "isDsp" | "isDspInApp" | "isDspBanner">,
   value: boolean
 ) => {
   if (!rowFlags.value) return;
   rowFlags.value[row.id][key] = value;
-  const { flag1, flag2, flag3 } = rowFlags.value[row.id];
+  const { isDsp, isDspInApp, isDspBanner } = rowFlags.value[row.id];
 
-  emit("change-flags", row.id, { flag1, flag2, flag3 });
+  emit("change-flags", row.id, { isDsp, isDspInApp, isDspBanner });
 };
 
 const formatCreatedAt = (createdAt: string) => {
@@ -91,20 +91,20 @@ const formatCreatedAt = (createdAt: string) => {
     <template #panels-data="{ row }">
       <div class="flex gap-16">
         <UCheckbox
-          :model-value="row.flag1"
-          @change="onChangePanels(row, 'flag1', $event)"
+          :model-value="row.isDsp"
+          @change="onChangePanels(row, 'isDsp', $event)"
           label="DSP"
           :disabled="readonly"
         />
         <UCheckbox
-          :model-value="row.flag2"
-          @change="onChangePanels(row, 'flag2', $event)"
+          :model-value="row.isDspInApp"
+          @change="onChangePanels(row, 'isDspInApp', $event)"
           label="DSP InApp"
           :disabled="readonly"
         />
         <UCheckbox
-          :model-value="row.flag3"
-          @change="onChangePanels(row, 'flag3', $event)"
+          :model-value="row.isDspBanner"
+          @change="onChangePanels(row, 'isDspBanner', $event)"
           label="DSP Banner"
           :disabled="readonly"
         />
