@@ -45,6 +45,36 @@ export default defineAppConfig({
       ring: "ring-0",
       rounded: "rounded-[3rem]",
     },
+    table: {
+      divide: "dark:divide-dark-0",
+      tbody: "dark:divide-dark-0",
+      th: {
+        padding: "px-0 pt-0 pb-6 [&:not(:last-child)]:pr-[2.6rem]",
+        size: "text-base",
+      },
+      td: {
+        padding: "px-0 py-6 [&:not(:last-child)]:pr-[2.6rem]",
+        color: "dark:text-white",
+        font: "font-medium",
+        size: "text-base",
+      },
+      checkbox: {
+        padding: "ps-0",
+      },
+      tr: {
+        selected: "dark:bg-[transparent]",
+      },
+    },
+    radio: {
+      base: "h-[2.4rem] w-[2.4rem] dark:checked:bg-gradient-to-r from-brand-from to-brand-to rounded-2xl",
+      background: "dark:bg-dark-25",
+      border: "border-none",
+    },
+    checkbox: {
+      base: "h-[1.2rem] w-[1.2rem] dark:checked:bg-gradient-to-r from-brand-from to-brand-to rounded-2xl",
+      background: "dark:bg-dark-25",
+      border: "border-none",
+    },
     input: {
       base: "font-semibold",
       size: {
@@ -59,13 +89,7 @@ export default defineAppConfig({
         white: {
           outline: "ring-0 dark:bg-dark-50",
         },
-        red: {
-          outline: "ring-1 dark:bg-dark-50 dark:ring-danger dark:text-danger",
-        },
       },
-    },
-    formGroup: {
-      error: "dark:text-danger",
     },
   },
 });

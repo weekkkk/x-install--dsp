@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const expanded = ref(false);
 const onClick = () => (expanded.value = !expanded.value);
+
+const model = defineModel<string>();
 </script>
 
 <template>
@@ -12,6 +14,7 @@ const onClick = () => (expanded.value = !expanded.value);
     }"
   >
     <UInput
+      v-model="model"
       :ui="{
         base: 'font-semibold',
         rounded: 'rounded-full',

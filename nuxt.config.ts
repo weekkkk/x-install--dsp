@@ -31,6 +31,7 @@ export default defineNuxtConfig({
       "./src/entities/*/*/index.ts",
       "./src/features/*/*/index.ts",
       "./src/widgets/*/*/index.ts",
+      "./src/pages/*/*/index.ts",
     ],
   },
   app: {
@@ -104,11 +105,6 @@ export default defineNuxtConfig({
         extensions: ["vue"],
       },
     ],
-  },
-  runtimeConfig: {
-    public: {
-      apiBase: "/api",
-    },
   },
   nitro: {
     devProxy: {

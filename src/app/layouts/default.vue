@@ -12,8 +12,26 @@ const isUsers = computed(() => route.path === "/users");
 
 const push = async () => {
   console.log("push");
-  if (isStat.value) await navigateTo({ path: "/users" });
-  else await navigateTo({ path: "/" });
+  if (isStat.value) {
+    await pushUsersToViewMode();
+  } else await navigateTo({ path: "/" });
+};
+
+const toggleUsersMode = () => {
+  route.query.mode === "del" ? pushUsersToViewMode() : pushUsersToDelMode();
+};
+
+const pushUsersToViewMode = async () => {
+  const query: TUsersPageQuery = { mode: "view" };
+  await navigateTo({ path: "/users", query: { ...route.query, ...query } });
+};
+const pushUsersToDelMode = async () => {
+  const query: TUsersPageQuery = { mode: "del" };
+  await navigateTo({ path: "/users", query: { ...route.query, ...query } });
+};
+
+const pushToCreateUser = async () => {
+  await navigateTo({ path: "/create-user" });
 };
 </script>
 
@@ -48,9 +66,19 @@ const push = async () => {
         <div v-else class="flex justify-end gap-8 w-full max-md:gap-4">
           <Transition>
             <div v-if="isUsers" class="flex gap-[inherit]">
-              <UiSearch />
-              <UButton class="max-md:hidden" icon="xi-i:trash" color="gray" />
-              <UButton class="max-md:hidden" icon="xi-i:plus" color="gray" />
+              <UserSearchWidget />
+              <UButton
+                @click="toggleUsersMode"
+                class="max-md:hidden"
+                icon="xi-i:trash"
+                :color="route.query.mode === 'del' ? 'primary' : 'gray'"
+              />
+              <UButton
+                class="max-md:hidden"
+                icon="xi-i:plus"
+                @click="pushToCreateUser"
+                color="gray"
+              />
             </div>
           </Transition>
 
@@ -111,15 +139,12 @@ const push = async () => {
       </Transition>
     </header>
 
-    <main class="px-4">
+    <main class="px-4 grow flex flex-col">
       <NuxtPage />
     </main>
 
-    <footer
-      v-if="isAdmin"
-      class="md:hidden flex justify-between gap-4 fixed inset-x-0 bottom-0 p-8"
-    >
-      <div class="flex gap-4">
+    <template>
+      <div class="md:hidden flex gap-4 fixed bottom-8 left-8">
         <UButton
           class="transition-all duration-500"
           :class="{ 'rotate-45': isUsers }"
@@ -129,18 +154,22 @@ const push = async () => {
 
         <Transition>
           <div v-if="isUsers" class="flex gap-[inherit]">
-            <UButton icon="xi-i:trash" />
-            <UButton icon="xi-i:plus" />
+            <UButton
+              @click="toggleUsersMode"
+              icon="xi-i:trash"
+              :color="route.query.mode === 'del' ? 'gray' : 'primary'"
+            />
+            <UButton icon="xi-i:plus" @click="pushToCreateUser" />
           </div>
         </Transition>
       </div>
 
       <Transition>
-        <UButton v-if="isStat" class="w-48">
+        <UButton v-if="isStat" class="w-48 fixed bottom-8 right-8">
           {{ nickname }}
         </UButton>
       </Transition>
-    </footer>
+    </template>
   </div>
 </template>
 
