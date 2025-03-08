@@ -3,5 +3,5 @@ definePageMeta({});
 </script>
 
 <template>
-  <h1>test</h1>
+  <StatPage />
 </template>
