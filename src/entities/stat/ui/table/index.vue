@@ -8,7 +8,7 @@ const _rows = computed(
   () =>
     props.stats && [
       ...props.stats,
-      { id: -1 },
+      ...(props.readonly ? [] : [{ id: -1 }]),
       ...(props.footer ? [props.footer] : []),
     ]
 );

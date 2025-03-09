@@ -1,14 +1,16 @@
 <script setup lang="ts">
 const isLoading = ref(true);
 const auth = useState<boolean>("auth");
+const user = useState<AuthResDto["user"] | undefined>("user");
 
 const route = useRoute();
 
 onMounted(() => {
   AuthApiService.checkAuth()
-    .then(async () => {
+    .then(async (data) => {
       auth.value = true;
       if (route.path === "/login") await navigateTo("/");
+      user.value = data.user;
     })
     .catch(async () => {
       await navigateTo("/login");

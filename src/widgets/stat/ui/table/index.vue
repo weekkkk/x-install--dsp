@@ -3,12 +3,21 @@ const auth = useState<boolean>("auth");
 
 const route = useRoute();
 
+const user = useState<AuthResDto["user"] | undefined>("user");
+
 const { data, status, refresh } = await useAsyncData(
   "stats",
   async () =>
-    auth.value && route.query.start && route.query.end && route.query.panel
+    auth.value &&
+    route.query.start &&
+    route.query.end &&
+    route.query.panel &&
+    user.value
       ? await StatApiService.getAll({
-          UserId: Number(route.query.user),
+          UserId:
+            user.value.role === "Admin"
+              ? Number(route.query.user)
+              : user.value.id,
           IsDsp: route.query.panel === "dsp",
           IsDspInApp: route.query.panel === "dsp--in-app",
           IsDspBanner: route.query.panel === "dsp--banner",
@@ -19,6 +28,7 @@ const { data, status, refresh } = await useAsyncData(
   {
     watch: [
       auth,
+      user,
       () => route.query.user,
       () => route.query.start,
       () => route.query.end,
@@ -75,5 +85,6 @@ const onChange = async (id: number, key: keyof StatResDto, value: string) => {
     :footer="footer"
     @create="createStat"
     @change="onChange"
+    :readonly="user?.role !== 'Admin'"
   />
 </template>

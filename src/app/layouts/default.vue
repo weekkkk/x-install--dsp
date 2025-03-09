@@ -1,11 +1,28 @@
 <script setup lang="ts">
-const auntificated = ref(true);
-const isAdmin = ref(true);
-const nickname = ref("1WIN Casino");
-const id = ref("1661R");
-const name = ref("A");
+const user = useState<AuthResDto["user"] | undefined>("user");
 
 const route = useRoute();
+
+const auntificated = useState<boolean>("auth");
+const isAdmin = computed(() => user.value && user.value.role === "Admin");
+const nickname = computed(() => data.value && data.value.username);
+const id = computed(() => user.value?.id);
+const name = computed(() => user.value?.login.slice(0, 1));
+
+watchEffect(async () => {
+  if (isAdmin.value && !route.query.user) await navigateTo("/users");
+});
+
+const { data } = await useAsyncData(
+  "user",
+  async () =>
+    isAdmin.value && route.query.user
+      ? await UserApiService.getOne(Number(route.query.user))
+      : null,
+  {
+    watch: [isAdmin, () => route.query.user],
+  }
+);
 
 const isStat = computed(() => route.path === "/");
 const isUsers = computed(() => route.path === "/users");
@@ -44,6 +61,11 @@ const pushUsersToDelMode = async () => {
 
 const pushToCreateUser = async () => {
   await navigateTo({ path: "/create-user" });
+};
+
+const logout = async () => {
+  await AuthApiService.logout();
+  await navigateTo({ path: "/login" });
 };
 </script>
 
@@ -103,14 +125,16 @@ const pushToCreateUser = async () => {
           <Transition name="w">
             <div
               v-if="isStat"
-              class="flex gap-[inherit] -ml-8 w-[25.4rem] max-md:-ml-4 max-md:w-[8rem]"
+              class="flex gap-[inherit] -ml-8 w-[25.4rem] max-md:-ml-4 max-md:w-[8rem] justify-end"
             >
               <UButton
                 v-if="isAdmin"
                 color="gray"
-                class="w-[13.4rem] max-md:hidden ml-8"
+                class="w-[13.4rem] max-md:hidden ml-8 whitespace-nowrap overflow-hidden"
               >
-                {{ nickname }}
+                <span class="w-full overflow-hidden text-ellipsis">
+                  {{ nickname }}
+                </span>
               </UButton>
               <UButton color="gray" class="w-32"> Id: {{ id }} </UButton>
             </div>
@@ -126,7 +150,16 @@ const pushToCreateUser = async () => {
             <UAvatar :alt="name" />
 
             <template #panel="{ close }">
-              <UButton icon="xi-i:logout" color="gray" @click="close" />
+              <UButton
+                icon="xi-i:logout"
+                color="gray"
+                @click="
+                  () => {
+                    close();
+                    logout();
+                  }
+                "
+              />
             </template>
           </UPopover>
         </div>
