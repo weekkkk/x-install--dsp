@@ -1,4 +1,4 @@
-export const STAT_API_URL = "/api/admin/";
+export const STAT_API_URL = "/api";
 
 export const $stat = $fetch.create({
   baseURL: STAT_API_URL,

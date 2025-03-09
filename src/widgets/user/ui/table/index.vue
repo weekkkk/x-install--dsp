@@ -18,6 +18,32 @@ const { data, status, refresh } = await useAsyncData(
   }
 );
 
+const userId = defineModel<UserResDto["id"]>();
+
+const userForDeleteIds = ref<UserResDto["id"][]>([]);
+
+const deleteUsers = async () => {
+  if (!userForDeleteIds.value?.length) return;
+  const ids = userForDeleteIds.value;
+  loading.value = true;
+  await UserApiService.deleteByIds(ids);
+  loading.value = false;
+  if (userId.value && ids.includes(userId.value)) userId.value = undefined;
+  userForDeleteIds.value = [];
+  await refresh();
+};
+
+watch(mode, () => (userForDeleteIds.value = []));
+
+const users = computed(() => {
+  if (!data.value) return [];
+  const search = props.search || "";
+  if (!search) data.value;
+  return data.value.filter(({ username }) =>
+    username?.toLowerCase().includes(search.toLowerCase())
+  );
+});
+
 const onChangeName = async (id: UserResDto["id"], name: string) => {
   const user = users.value.find(({ id: _id }) => _id === id);
   if (!user) return;
@@ -44,32 +70,6 @@ const onChangeFlags = async (
   await UserApiService.changeFlags({ id, ...flags });
   loading.value = false;
 };
-
-const userId = defineModel<UserResDto["id"]>();
-
-const userForDeleteIds = ref<UserResDto["id"][]>([]);
-
-const deleteUsers = async () => {
-  if (!userForDeleteIds.value?.length) return;
-  const ids = userForDeleteIds.value;
-  loading.value = true;
-  await UserApiService.deleteByIds(ids);
-  loading.value = false;
-  if (userId.value && ids.includes(userId.value)) userId.value = undefined;
-  userForDeleteIds.value = [];
-  await refresh();
-};
-
-watch(mode, () => (userForDeleteIds.value = []));
-
-const users = computed(() => {
-  if (!data.value) return [];
-  const search = props.search || "";
-  if (!search) data.value;
-  return data.value.filter(({ username }) =>
-    username?.toLowerCase().includes(search.toLowerCase())
-  );
-});
 </script>
 
 <template>

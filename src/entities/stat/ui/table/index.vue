@@ -5,10 +5,29 @@ import type { TStatTableProps } from "./types";
 const props = defineProps<TStatTableProps>();
 
 const _rows = computed(() => props.stats && [...props.stats, { id: -1 }]);
+
+const emit = defineEmits<{
+  create: [key: keyof StatResDto, value: string];
+  change: [id: UserResDto["id"], key: keyof StatResDto, value: number];
+}>();
+
+const onChange = (row: StatResDto, key: keyof StatResDto, value: string) => {
+  if (row.id === -1) {
+    emit("create", key, value);
+    return;
+  }
+  emit("change", row.id, key, Number(value));
+};
+
+const formatDate = (date: string) => {
+  const _date = new Date(date);
+
+  return `${format(_date, "dd.MM.yy")} ${format(_date, "HH:mm:ss")}`;
+};
 </script>
 <template>
   <UiTable
-    v-memo="[]"
+    v-memo="[_rows, loading]"
     :readonly="readonly"
     by="id"
     :columns="[
@@ -26,7 +45,6 @@ const _rows = computed(() => props.stats && [...props.stats, { id: -1 }]);
     ]"
     :rows="_rows"
     :editable-cols="[
-      'date',
       'total',
       'ack',
       'win',
@@ -38,7 +56,17 @@ const _rows = computed(() => props.stats && [...props.stats, { id: -1 }]);
       'completesCount',
       'vtr',
     ]"
+    :customize-cols="['date']"
+    type="number"
     :loading="loading"
+    @change="onChange($event.row, $event.key, $event.value)"
   >
+    <template #date-data="{ row }">
+      <span class="flex gap-4" v-if="row.date">
+        <span v-for="part in formatDate(row.date).split(' ')">
+          {{ part }}
+        </span>
+      </span>
+    </template>
   </UiTable>
 </template>

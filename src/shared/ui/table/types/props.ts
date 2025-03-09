@@ -12,4 +12,5 @@ export type TUiTableProps<
   isCheckbox?: boolean;
   by: keyof T;
   loading?: boolean;
+  type?: string;
 };

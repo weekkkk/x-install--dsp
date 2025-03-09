@@ -1,4 +1,11 @@
-import { endOfMonth, endOfWeek, startOfMonth, startOfWeek } from "date-fns";
+import {
+  endOfMonth,
+  endOfWeek,
+  setDate,
+  setHours,
+  startOfMonth,
+  startOfWeek,
+} from "date-fns";
 
 export const rangesConst: TUiButtonSelectOption<
   | {
@@ -13,7 +20,13 @@ export const rangesConst: TUiButtonSelectOption<
     label: "By Day",
     getDates: () => {
       const date = new Date();
-      return { start: date, end: date };
+      const start = setHours(date, 0);
+      start.setMinutes(0);
+      start.setSeconds(0);
+      start.setMilliseconds(0);
+      const end = setDate(start, start.getDate() + 1);
+
+      return { start, end };
     },
   },
   {
