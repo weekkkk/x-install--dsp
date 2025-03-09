@@ -145,7 +145,7 @@ const pushToCreateUser = async () => {
       </Transition>
     </header>
 
-    <main class="px-4 grow flex flex-col">
+    <main class="px-4 max-md:px-0 grow flex flex-col">
       <NuxtPage />
     </main>
 

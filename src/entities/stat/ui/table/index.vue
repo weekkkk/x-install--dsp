@@ -4,11 +4,18 @@ import type { TStatTableProps } from "./types";
 
 const props = defineProps<TStatTableProps>();
 
-const _rows = computed(() => props.stats && [...props.stats, { id: -1 }]);
+const _rows = computed(
+  () =>
+    props.stats && [
+      ...props.stats,
+      { id: -1 },
+      ...(props.footer ? [props.footer] : []),
+    ]
+);
 
 const emit = defineEmits<{
   create: [key: keyof StatResDto, value: string];
-  change: [id: UserResDto["id"], key: keyof StatResDto, value: number];
+  change: [id: UserResDto["id"], key: keyof StatResDto, value: string];
 }>();
 
 const onChange = (row: StatResDto, key: keyof StatResDto, value: string) => {
@@ -16,18 +23,22 @@ const onChange = (row: StatResDto, key: keyof StatResDto, value: string) => {
     emit("create", key, value);
     return;
   }
-  emit("change", row.id, key, Number(value));
+  emit("change", row.id, key, value);
 };
 
 const formatDate = (date: string) => {
-  const _date = new Date(date);
+  try {
+    const _date = new Date(date);
 
-  return `${format(_date, "dd.MM.yy")} ${format(_date, "HH:mm:ss")}`;
+    return `${format(_date, "dd.MM.yy")} ${format(_date, "HH:mm:ss")}`;
+  } catch {
+    return date;
+  }
 };
 </script>
 <template>
   <UiTable
-    v-memo="[_rows, loading]"
+    v-memo="[_rows, loading, footer]"
     :readonly="readonly"
     by="id"
     :columns="[
@@ -59,6 +70,7 @@ const formatDate = (date: string) => {
     :customize-cols="['date']"
     type="number"
     :loading="loading"
+    :readonly-rows="footer && [footer.id]"
     @change="onChange($event.row, $event.key, $event.value)"
   >
     <template #date-data="{ row }">

@@ -13,4 +13,5 @@ export type TUiTableProps<
   by: keyof T;
   loading?: boolean;
   type?: string;
+  readonlyRows?: number[];
 };

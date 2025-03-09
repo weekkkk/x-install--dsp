@@ -15,7 +15,7 @@ const { data, status, refresh } = await useAsyncData(
           StartDate: route.query.start.toString(),
           EndDate: route.query.end.toString(),
         })
-      : { userStatistics: [] },
+      : null,
   {
     watch: [
       auth,
@@ -27,6 +27,17 @@ const { data, status, refresh } = await useAsyncData(
     immediate: true,
   }
 );
+
+const stats = computed(() => {
+  if (!data.value) return;
+  return data.value.userStatistics.toSorted(({ id: a }, { id: b }) => a - b);
+});
+
+const footer = computed(() => {
+  if (!data.value) return;
+  const stat: StatResDto = { id: -2, date: "Total", ...data.value.total };
+  return stat;
+});
 
 const createStat = async (key: keyof StatResDto, value: string) => {
   const userId = route.query.user;
@@ -41,25 +52,27 @@ const createStat = async (key: keyof StatResDto, value: string) => {
   await refresh();
 };
 
-const onChange = async (id: number, key: keyof StatResDto, value: number) => {
+const onChange = async (id: number, key: keyof StatResDto, value: string) => {
   if (!data.value || key === "date") return;
   const stat = data.value.userStatistics.find(({ id: _id }) => _id === id);
   if (!stat) return;
-  stat[key] = value;
+  stat[key] = Number(value.replaceAll(" ", ""));
 
   await StatApiService.change({
     id,
     key,
-    value,
+    value: Number(value.replaceAll(" ", "")),
   });
+  await refresh();
 };
 </script>
 
 <template>
   <StatTable
-    v-if="data"
+    v-if="stats"
     :loading="status === 'pending'"
-    :stats="data.userStatistics"
+    :stats="stats"
+    :footer="footer"
     @create="createStat"
     @change="onChange"
   />
