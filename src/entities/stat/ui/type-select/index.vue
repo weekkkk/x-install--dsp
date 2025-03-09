@@ -7,9 +7,35 @@ const onClick = (key: string) => {
   type.value = key as keyof typeof typesConst;
 };
 
-const options = computed((): TUiButtonSelectOption[] =>
-  Object.entries(typesConst).map(([key, { name: label }]) => ({ key, label }))
+const user = useState<AuthResDto["user"] | undefined>("user");
+
+const route = useRoute();
+
+const { data } = await useAsyncData(
+  "user",
+  async () =>
+    user.value?.role === "Admin" && route.query.user
+      ? await UserApiService.getOne(Number(route.query.user))
+      : null,
+  {
+    watch: [() => user.value?.role, () => route.query.user],
+    immediate: true,
+  }
 );
+
+const options = computed((): TUiButtonSelectOption[] => {
+  const u = data.value || user.value;
+  console.log(u);
+  if (!u) return [];
+
+  const arr: Partial<typeof typesConst> = {};
+
+  if (u.isDsp) arr.dsp = typesConst.dsp;
+  if (u.isDspInApp) arr["dsp--in-app"] = typesConst["dsp--in-app"];
+  if (u.isDspBanner) arr["dsp--banner"] = typesConst["dsp--banner"];
+
+  return Object.entries(arr).map(([key, { name: label }]) => ({ key, label }));
+});
 const typeOption = computed({
   get: () => options.value.find(({ key }) => key === type.value),
   set: (v) => {
@@ -21,13 +47,13 @@ const typeOption = computed({
 <template>
   <div class="max-md:hidden flex gap-8">
     <UButton
-      v-for="[key, { name }] in Object.entries(typesConst)"
+      v-for="{ key, label } in options"
       :key="key"
       class="w-32"
       v-bind="key === type ? {} : { color: 'white', variant: 'ghost' }"
       @click="onClick(key)"
     >
-      {{ name }}
+      {{ label }}
     </UButton>
   </div>
   <div class="md:hidden">

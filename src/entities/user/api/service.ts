@@ -8,6 +8,12 @@ import type {
 } from "./types";
 
 export class UserApiService {
+  static async getOne(id: number) {
+    const data = await $user<UserResDto>(`/user/${id}`, {
+      params: { userId: id },
+    });
+    return data;
+  }
   static async getAll() {
     const data = await $user<{ userResponse: UserResDto[] }>("/users");
     return data.userResponse.toSorted(({ id: a }, { id: b }) => a - b);

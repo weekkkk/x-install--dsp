@@ -1,3 +1,4 @@
 <template>
+  <StatTotalWidget />
   <StatTableWidget />
 </template>

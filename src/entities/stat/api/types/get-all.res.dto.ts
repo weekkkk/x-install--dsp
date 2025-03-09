@@ -1,5 +1,15 @@
 export type StatGetAllResDto = {
-  averages: any;
-  total: any;
+  averages: Pick<StatResDto, "ctr" | "showRate">;
+  total: Pick<
+    StatResDto,
+    | "total"
+    | "ack"
+    | "clicksCount"
+    | "completesCount"
+    | "impsCount"
+    | "startsCount"
+    | "win"
+  >;
+  totalAllTime: number;
   userStatistics: StatResDto[];
 };

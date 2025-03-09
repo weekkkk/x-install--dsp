@@ -21,4 +21,13 @@ export class AuthApiService {
 
     return data;
   }
+
+  static async logout() {
+    await $fetch(`${AUTH_API_URL}/logout`, {
+      method: "POST",
+      credentials: "include",
+    });
+
+    localStorage.setItem("token", "");
+  }
 }

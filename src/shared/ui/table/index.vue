@@ -6,11 +6,36 @@
 }"
 >
 import type { TUiTableProps } from "./types";
+import IMask from "imask";
 
 const props = withDefaults(defineProps<TUiTableProps<T>>(), {
   customizeCols: [] as any,
   editableCols: [] as any,
+  readonlyRows: [] as any,
   type: "text",
+});
+onMounted(() => {
+  {
+    if (props.type === "text") return;
+
+    const els = document.querySelectorAll(".ui_table input");
+
+    els.forEach((el) => {
+      IMask(el as HTMLInputElement, { mask: Number, thousandsSeparator: " " });
+    });
+  }
+});
+
+onUpdated(() => {
+  {
+    if (props.type === "text") return;
+
+    const els = document.querySelectorAll(".ui_table input");
+
+    els.forEach((el) => {
+      IMask(el as HTMLInputElement, { mask: Number, thousandsSeparator: " " });
+    });
+  }
 });
 
 const _columns = computed(() =>
@@ -44,13 +69,17 @@ const onBlur = ({ currentTarget }: FocusEvent, row: T, key: keyof T) => {
   if (!currentTarget) return;
   const value = (currentTarget as HTMLInputElement).value;
   if (oldValue.value === value) return;
-  emit("change", { row, key, value });
+  emit("change", {
+    row,
+    key,
+    value,
+  });
 };
 </script>
 
 <template>
   <UTable
-    class="p-16 bg-dark-50 rounded-t-[2rem] grow max-md:pb-40"
+    class="ui_table p-16 bg-dark-50 rounded-t-[2rem] grow max-md:pb-40"
     by="id"
     :columns="mapedColumns"
     :rows="rows"
@@ -80,14 +109,14 @@ const onBlur = ({ currentTarget }: FocusEvent, row: T, key: keyof T) => {
       v-slot:[`${key.toString()}-data`]="{ row }"
     >
       <UInput
+        :key="`${row.id}-${key.toString()}`"
         :ui="{ padding: { sm: 'p-0 h-[4.2rem] leading-8 ' } }"
         class="-my-6 min-w-24"
         :model-value="row[key]"
         variant="none"
         @focus="onFocus"
         @blur="onBlur($event, row, key)"
-        :readonly="readonly"
-        :type="type"
+        :readonly="readonly || readonlyRows?.includes(row[by])"
       />
     </template>
 

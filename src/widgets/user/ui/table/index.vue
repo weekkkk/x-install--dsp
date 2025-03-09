@@ -39,8 +39,10 @@ const users = computed(() => {
   if (!data.value) return [];
   const search = props.search || "";
   if (!search) data.value;
-  return data.value.filter(({ username }) =>
-    username?.toLowerCase().includes(search.toLowerCase())
+  return data.value.filter(
+    ({ username }) =>
+      username === null ||
+      username?.toLowerCase().includes(search.toLowerCase())
   );
 });
 
