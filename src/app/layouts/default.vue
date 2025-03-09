@@ -14,7 +14,13 @@ const push = async () => {
   console.log("push");
   if (isStat.value) {
     await pushUsersToViewMode();
-  } else await navigateTo({ path: "/" });
+  } else
+    await navigateTo({
+      path: "/",
+      query: {
+        user: route.query.user,
+      },
+    });
 };
 
 const toggleUsersMode = () => {
@@ -23,11 +29,17 @@ const toggleUsersMode = () => {
 
 const pushUsersToViewMode = async () => {
   const query: TUsersPageQuery = { mode: "view" };
-  await navigateTo({ path: "/users", query: { ...route.query, ...query } });
+  await navigateTo({
+    path: "/users",
+    query: { user: route.query.user, ...query },
+  });
 };
 const pushUsersToDelMode = async () => {
   const query: TUsersPageQuery = { mode: "del" };
-  await navigateTo({ path: "/users", query: { ...route.query, ...query } });
+  await navigateTo({
+    path: "/users",
+    query: { user: route.query.user, ...query },
+  });
 };
 
 const pushToCreateUser = async () => {
@@ -36,9 +48,6 @@ const pushToCreateUser = async () => {
 </script>
 
 <template>
-  <UToggle v-model="auntificated" class="fixed bottom-0 left-0" size="xl" />
-  <UToggle v-model="isAdmin" class="fixed bottom-0 right-0" size="xl" />
-
   <div class="h-screen flex flex-col">
     <header class="px-20 py-14 flex flex-col max-md:px-8 max-md:py-8">
       <div class="flex justify-between items-center gap-8 max-md-gap-4">
@@ -52,7 +61,7 @@ const pushToCreateUser = async () => {
         </div>
 
         <Transition>
-          <div v-if="isStat && auntificated" class="max-md:hidden w-[18rem]">
+          <div v-if="isStat && auntificated" class="max-md:hidden">
             <StatTypeFilterWidget />
           </div>
         </Transition>
@@ -124,10 +133,7 @@ const pushToCreateUser = async () => {
       </div>
 
       <Transition name="h">
-        <div
-          v-if="isStat && auntificated"
-          class="md:hidden h-36 overflow-hidden flex flex-col"
-        >
+        <div v-if="isStat && auntificated" class="md:hidden h-36 flex flex-col">
           <div class="flex gap-4 justify-between mt-16">
             <div class="flex gap-4">
               <StatDateRangeFilterWidget />
@@ -143,33 +149,34 @@ const pushToCreateUser = async () => {
       <NuxtPage />
     </main>
 
-    <template>
-      <div class="md:hidden flex gap-4 fixed bottom-8 left-8">
-        <UButton
-          class="transition-all duration-500"
-          :class="{ 'rotate-45': isUsers }"
-          icon="xi-i:category"
-          @click="push"
-        />
-
-        <Transition>
-          <div v-if="isUsers" class="flex gap-[inherit]">
-            <UButton
-              @click="toggleUsersMode"
-              icon="xi-i:trash"
-              :color="route.query.mode === 'del' ? 'gray' : 'primary'"
-            />
-            <UButton icon="xi-i:plus" @click="pushToCreateUser" />
-          </div>
-        </Transition>
-      </div>
+    <div v-if="isAdmin" class="md:hidden flex gap-4 fixed bottom-8 left-8">
+      <UButton
+        class="transition-all duration-500"
+        :class="{ 'rotate-45': isUsers }"
+        icon="xi-i:category"
+        @click="push"
+      />
 
       <Transition>
-        <UButton v-if="isStat" class="w-48 fixed bottom-8 right-8">
-          {{ nickname }}
-        </UButton>
+        <div v-if="isUsers" class="flex gap-[inherit]">
+          <UButton
+            @click="toggleUsersMode"
+            icon="xi-i:trash"
+            :color="route.query.mode === 'del' ? 'gray' : 'primary'"
+          />
+          <UButton icon="xi-i:plus" @click="pushToCreateUser" />
+        </div>
       </Transition>
-    </template>
+    </div>
+
+    <Transition>
+      <UButton
+        v-if="isAdmin && isStat"
+        class="md:hidden w-48 fixed bottom-8 right-8"
+      >
+        {{ nickname }}
+      </UButton>
+    </Transition>
   </div>
 </template>
 

@@ -1,5 +1,7 @@
 <script setup lang="ts">
-definePageMeta({});
+definePageMeta({
+  middleware: "user",
+});
 </script>
 
 <template>

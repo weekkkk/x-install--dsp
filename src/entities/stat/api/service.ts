@@ -1,8 +1,36 @@
-// import { $stat } from "./point";
-// import type { StatResDto } from "./types";
+import { $stat } from "./point";
+import type {
+  StatCreateReqDto,
+  StatGetAllReqDto,
+  StatGetAllResDto,
+  StatResDto,
+  StatChangeReqDto,
+} from "./types";
 
 export class StatApiService {
-  static async getAll() {
-    return [{ id: 1 }];
+  static async getAll(params: StatGetAllReqDto) {
+    return $stat<StatGetAllResDto>("/Statistic/statistic", {
+      params,
+    });
+  }
+
+  static async create({ userId: UserId, ...body }: StatCreateReqDto) {
+    return $stat<StatResDto[]>("/admin/createUserRecord", {
+      method: "POST",
+      body,
+      params: {
+        UserId,
+      },
+    });
+  }
+
+  static async change({ id, ...rest }: StatChangeReqDto) {
+    return $stat<StatResDto[]>(`/admin/statistic/${id}`, {
+      method: "PATCH",
+      body: {
+        id,
+        ...rest,
+      },
+    });
   }
 }

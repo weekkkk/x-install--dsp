@@ -30,9 +30,8 @@ const _selectedColor = computed(() =>
         padding: 'p-0',
         rounded: 'rounded-full',
       },
-      height: 'max-h-80',
+      height: 'max-h-96',
     }"
-    class="max-h-3"
   >
     <UButton :color="_selectedColor" class="w-32">
       {{ model?.label ?? "Select" }}

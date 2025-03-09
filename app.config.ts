@@ -50,7 +50,7 @@ export default defineAppConfig({
       tbody: "dark:divide-dark-0",
       th: {
         padding: "px-0 pt-0 pb-6 [&:not(:last-child)]:pr-[2.6rem]",
-        size: "text-base",
+        size: "text-base whitespace-nowrap",
       },
       td: {
         padding: "px-0 py-6 [&:not(:last-child)]:pr-[2.6rem]",

@@ -10,6 +10,7 @@ import type { TUiTableProps } from "./types";
 const props = withDefaults(defineProps<TUiTableProps<T>>(), {
   customizeCols: [] as any,
   editableCols: [] as any,
+  type: "text",
 });
 
 const _columns = computed(() =>
@@ -79,13 +80,14 @@ const onBlur = ({ currentTarget }: FocusEvent, row: T, key: keyof T) => {
       v-slot:[`${key.toString()}-data`]="{ row }"
     >
       <UInput
-        :ui="{ padding: { sm: 'p-0 h-[4.2rem]' } }"
-        class="-my-6"
+        :ui="{ padding: { sm: 'p-0 h-[4.2rem] leading-8 ' } }"
+        class="-my-6 min-w-24"
         :model-value="row[key]"
         variant="none"
         @focus="onFocus"
         @blur="onBlur($event, row, key)"
         :readonly="readonly"
+        :type="type"
       />
     </template>
 

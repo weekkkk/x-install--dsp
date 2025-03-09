@@ -1,8 +1,11 @@
 export const typesConst = {
-  dps: {
+  dsp: {
     name: "DSP",
   },
-  "dps--in-app": {
+  "dsp--in-app": {
     name: "DSP InApp",
+  },
+  "dsp--banner": {
+    name: "DSP Banner",
   },
 };

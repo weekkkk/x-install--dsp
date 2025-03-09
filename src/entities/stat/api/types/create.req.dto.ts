@@ -1,5 +1,4 @@
-export type StatResDto = {
-  id: number;
+export type StatCreateReqDto = {
   date?: string;
   total?: number;
   ack?: number;
@@ -12,4 +11,8 @@ export type StatResDto = {
   completesCount?: number;
   vtr?: number;
   typeId?: number;
+  userId: number;
+  IsDsp?: boolean;
+  IsDspInApp?: boolean;
+  IsDspBanner?: boolean;
 };
