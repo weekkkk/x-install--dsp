@@ -5,8 +5,6 @@ const user = useState<AuthResDto["user"] | undefined>("user");
 
 const route = useRoute();
 
-console.log("test");
-
 onMounted(() => {
   AuthApiService.checkAuth()
     .then(async (data) => {
