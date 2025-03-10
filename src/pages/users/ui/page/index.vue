@@ -8,10 +8,11 @@ watch(
   parsedQuery,
   ({ success }) => {
     if (success) return;
+    console.log("test");
     const query: TUsersPageQuery = {
       mode: "view",
     };
-    navigateTo({ query, replace: true });
+    navigateTo({ query });
   },
   { immediate: true }
 );
