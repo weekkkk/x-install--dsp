@@ -30,7 +30,9 @@ const isUsers = computed(() => route.path === "/users");
 const push = async () => {
   console.log("push");
   if (isStat.value) {
-    await pushUsersToViewMode();
+    await await navigateTo({
+      path: "/users",
+    });
   } else
     await navigateTo({
       path: "/",
