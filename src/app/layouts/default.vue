@@ -103,12 +103,12 @@ const logout = async () => {
               <UButton
                 @click="toggleUsersMode"
                 class="max-md:hidden"
-                icon="xi-i-trash"
+                icon="i-xi-i-trash"
                 :color="route.query.mode === 'del' ? 'primary' : 'gray'"
               />
               <UButton
                 class="max-md:hidden"
-                icon="xi-i-plus"
+                icon="i-xi-i-plus"
                 @click="pushToCreateUser"
                 color="gray"
               />
@@ -119,7 +119,7 @@ const logout = async () => {
             v-if="isAdmin"
             class="max-md:hidden transition-all"
             :class="{ 'rotate-45': isUsers }"
-            icon="xi-i-category"
+            icon="i-xi-i-category"
             color="gray"
             @click="push"
           />
@@ -153,7 +153,7 @@ const logout = async () => {
 
             <template #panel="{ close }">
               <UButton
-                icon="xi-i-logout"
+                icon="i-xi-i-logout"
                 color="gray"
                 @click="
                   () => {
@@ -188,7 +188,7 @@ const logout = async () => {
       <UButton
         class="transition-all duration-500"
         :class="{ 'rotate-45': isUsers }"
-        icon="xi-i-category"
+        icon="i-xi-i-category"
         @click="push"
       />
 
@@ -196,10 +196,10 @@ const logout = async () => {
         <div v-if="isUsers" class="flex gap-[inherit]">
           <UButton
             @click="toggleUsersMode"
-            icon="xi-i-trash"
+            icon="i-xi-i-trash"
             :color="route.query.mode === 'del' ? 'gray' : 'primary'"
           />
-          <UButton icon="xi-i-plus" @click="pushToCreateUser" />
+          <UButton icon="i-xi-i-plus" @click="pushToCreateUser" />
         </div>
       </Transition>
     </div>
