@@ -1,21 +1,20 @@
 <script setup lang="ts">
-import type { TUsersPageProps } from "./types";
 import { usersPageQueryShema, type TUsersPageQuery } from "./shemes";
 
 const route = useRoute();
 const parsedQuery = computed(() => usersPageQueryShema.safeParse(route.query));
-// watch(
-//   parsedQuery,
-//   ({ success }) => {
-//     if (success) return;
-//     console.log("test");
-//     const query: TUsersPageQuery = {
-//       mode: "view",
-//     };
-//     navigateTo({ path: "/users", query });
-//   },
-//   { immediate: true }
-// );
+watch(
+  parsedQuery,
+  ({ success }) => {
+    if (success) return;
+    console.log("test");
+    const query: TUsersPageQuery = {
+      mode: "view",
+    };
+    navigateTo({ path: "/users", query });
+  },
+  { immediate: true }
+);
 </script>
 
 <template>

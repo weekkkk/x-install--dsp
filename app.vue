@@ -11,8 +11,18 @@ onMounted(() => {
   AuthApiService.checkAuth()
     .then(async (data) => {
       auth.value = true;
-      if (route.path === "/login") await navigateTo("/");
       user.value = data.user;
+      console.log(route.path === "/login");
+      if (route.path === "/login") await navigateTo("/");
+      console.log(
+        user.value.role === "Admin" && route.path === "/" && !route.query.user
+      );
+      if (
+        user.value.role === "Admin" &&
+        route.path === "/" &&
+        !route.query.user
+      )
+        await navigateTo("/users");
     })
     .catch(async () => {
       await navigateTo("/login");

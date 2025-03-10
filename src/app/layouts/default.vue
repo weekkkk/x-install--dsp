@@ -9,10 +9,6 @@ const nickname = computed(() => data.value && data.value.username);
 const id = computed(() => user.value?.id);
 const name = computed(() => user.value?.login.slice(0, 1));
 
-watchEffect(async () => {
-  if (isAdmin.value && !route.query.user) await navigateTo("/users");
-});
-
 const { data } = await useAsyncData(
   "user",
   async () =>
@@ -30,9 +26,7 @@ const isUsers = computed(() => route.path === "/users");
 const push = async () => {
   console.log("push");
   if (isStat.value) {
-    await navigateTo({
-      path: "/users",
-    });
+    await pushUsersToViewMode();
   } else
     await navigateTo({
       path: "/",
