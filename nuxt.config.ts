@@ -106,13 +106,13 @@ export default defineNuxtConfig({
       },
     ],
   },
-  nitro: {
-    devProxy: {
-      "/api": {
-        target: "https://xinstallbotprofile-production.up.railway.app/api",
-        changeOrigin: true,
-        headers: { "Access-Control-Allow-Origin": "*" },
-      },
-    },
-  },
+  // nitro: {
+  //   devProxy: {
+  //     "/api": {
+  //       target: "https://xinstallbotprofile-production.up.railway.app/api",
+  //       changeOrigin: true,
+  //       headers: { "Access-Control-Allow-Origin": "*" },
+  //     },
+  //   },
+  // },
 });

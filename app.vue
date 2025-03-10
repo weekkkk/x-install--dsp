@@ -29,7 +29,7 @@ onMounted(() => {
       class="bg-black flex items-center justify-center fixed inset-0 z-[9999]"
       v-if="isLoading"
     >
-      <UIcon name="xi-i:logo" class="animate-pulse text-9xl" />
+      <UIcon name="xi-i-logo" class="animate-pulse text-9xl" />
     </div>
   </Transition>
   <NuxtLayout>
