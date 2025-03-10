@@ -44,7 +44,7 @@ const model = defineModel<string>();
       class="w-full"
     >
       <template #leading>
-        <UButton icon="i-xi-i-search" color="gray" @click="onClick" />
+        <UButton icon="i-xi-search" color="gray" @click="onClick" />
       </template>
     </UInput>
   </div>

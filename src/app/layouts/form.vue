@@ -1,7 +1,7 @@
 <template>
   <div class="h-screen flex flex-col justify-center items-center">
     <header class="fixed inset-x-0 top-0 p-20">
-      <UButton icon="i-xi-i-back" size="xs" variant="link" color="white" />
+      <UButton icon="i-xi-back" size="xs" variant="link" color="white" />
     </header>
     <main class="w-[32.5rem]">
       <NuxtPage />

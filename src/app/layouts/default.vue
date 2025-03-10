@@ -76,7 +76,7 @@ const logout = async () => {
     <header class="px-20 py-14 flex flex-col max-md:px-8 max-md:py-8">
       <div class="flex justify-between items-center gap-8 max-md-gap-4">
         <div class="w-full flex items-center gap-[11.1rem] max-md:w-auto">
-          <UIcon name="xi-i-logo" class="h-12 w-[4.2rem]" />
+          <UIcon name="xi-logo" class="h-12 w-[4.2rem]" />
           <Transition>
             <div v-if="isStat && auntificated" class="flex gap-3 max-md:hidden">
               <StatDateRangeFilterWidget />
@@ -103,12 +103,12 @@ const logout = async () => {
               <UButton
                 @click="toggleUsersMode"
                 class="max-md:hidden"
-                icon="i-xi-i-trash"
+                icon="i-xi-trash"
                 :color="route.query.mode === 'del' ? 'primary' : 'gray'"
               />
               <UButton
                 class="max-md:hidden"
-                icon="i-xi-i-plus"
+                icon="i-xi-plus"
                 @click="pushToCreateUser"
                 color="gray"
               />
@@ -119,7 +119,7 @@ const logout = async () => {
             v-if="isAdmin"
             class="max-md:hidden transition-all"
             :class="{ 'rotate-45': isUsers }"
-            icon="i-xi-i-category"
+            icon="i-xi-category"
             color="gray"
             @click="push"
           />
@@ -153,7 +153,7 @@ const logout = async () => {
 
             <template #panel="{ close }">
               <UButton
-                icon="i-xi-i-logout"
+                icon="i-xi-logout"
                 color="gray"
                 @click="
                   () => {
@@ -188,7 +188,7 @@ const logout = async () => {
       <UButton
         class="transition-all duration-500"
         :class="{ 'rotate-45': isUsers }"
-        icon="i-xi-i-category"
+        icon="i-xi-category"
         @click="push"
       />
 
@@ -196,10 +196,10 @@ const logout = async () => {
         <div v-if="isUsers" class="flex gap-[inherit]">
           <UButton
             @click="toggleUsersMode"
-            icon="i-xi-i-trash"
+            icon="i-xi-trash"
             :color="route.query.mode === 'del' ? 'gray' : 'primary'"
           />
-          <UButton icon="i-xi-i-plus" @click="pushToCreateUser" />
+          <UButton icon="i-xi-plus" @click="pushToCreateUser" />
         </div>
       </Transition>
     </div>
