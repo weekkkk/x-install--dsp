@@ -1,5 +1,7 @@
 export const STAT_API_URL =
-  "https://xinstallbotprofile-production.up.railway.app/api";
+  process.env.NODE_ENV === "production"
+    ? "https://xinstallbotprofile-production.up.railway.app/api"
+    : "/server";
 
 export const $stat = $fetch.create({
   baseURL: STAT_API_URL,

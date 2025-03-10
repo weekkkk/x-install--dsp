@@ -39,7 +39,7 @@ export default defineNuxtConfig({
       link: [
         {
           rel: "stylesheet",
-          href: "/x-install--dsp/fonts/pp-neue-montreal/pp-neue-montreal.style.css",
+          href: "/fonts/pp-neue-montreal/pp-neue-montreal.style.css",
         },
       ],
     },
@@ -106,13 +106,13 @@ export default defineNuxtConfig({
       },
     ],
   },
-  // nitro: {
-  //   devProxy: {
-  //     "/api": {
-  //       target: "https://xinstallbotprofile-production.up.railway.app/api",
-  //       changeOrigin: true,
-  //       headers: { "Access-Control-Allow-Origin": "*" },
-  //     },
-  //   },
-  // },
+  nitro: {
+    devProxy: {
+      "/server": {
+        target: "https://xinstallbotprofile-production.up.railway.app/api",
+        changeOrigin: true,
+        headers: { "Access-Control-Allow-Origin": "*" },
+      },
+    },
+  },
 });

@@ -25,6 +25,7 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "@parcel/watcher",
+      "core-js-pure",
       "esbuild",
       "sharp"
     ]
