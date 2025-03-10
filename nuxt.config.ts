@@ -39,7 +39,7 @@ export default defineNuxtConfig({
       link: [
         {
           rel: "stylesheet",
-          href: "/fonts/pp-neue-montreal/pp-neue-montreal.style.css",
+          href: "/x-install--dsp/fonts/pp-neue-montreal/pp-neue-montreal.style.css",
         },
       ],
     },
