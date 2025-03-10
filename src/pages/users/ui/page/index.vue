@@ -12,7 +12,7 @@ watch(
     const query: TUsersPageQuery = {
       mode: "view",
     };
-    navigateTo({ query });
+    navigateTo({ path: "/users", query });
   },
   { immediate: true }
 );
