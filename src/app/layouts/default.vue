@@ -30,7 +30,7 @@ const isUsers = computed(() => route.path === "/users");
 const push = async () => {
   console.log("push");
   if (isStat.value) {
-    await await navigateTo({
+    await navigateTo({
       path: "/users",
     });
   } else
