@@ -1,4 +1,5 @@
-export const AUTH_API_URL = "/api/admin/";
+export const AUTH_API_URL =
+  "https://xinstallbotprofile-production.up.railway.app/api/admin/";
 
 export const $user = $fetch.create({
   baseURL: AUTH_API_URL,
