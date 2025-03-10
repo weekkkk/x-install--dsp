@@ -5,7 +5,7 @@ const props = defineProps<TUserTableWidgetProps>();
 
 const loading = ref(false);
 
-const mode = defineModel<"view" | "del">("mode");
+const mode = defineModel<"view" | "del">("mode", { default: "view" });
 
 const auth = useState<boolean>("auth");
 
