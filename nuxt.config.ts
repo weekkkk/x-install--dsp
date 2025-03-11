@@ -106,6 +106,12 @@ export default defineNuxtConfig({
       },
     ],
   },
+  generate: {
+    routes: [
+      "/users?mode=view",
+      "/users?mode=del",
+    ],
+  },
   nitro: {
     devProxy: {
       "/server": {
