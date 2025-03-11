@@ -72,27 +72,27 @@ const logout = async () => {
         <div class="w-full flex items-center gap-[11.1rem] max-md:w-auto">
           <UIcon name="xi:logo" class="h-12 w-[4.2rem]" />
           <Transition>
-            <div v-if="isStat && auntificated" class="flex gap-3 max-md:hidden">
+            <div v-show="isStat && auntificated" class="flex gap-3 max-md:hidden">
               <StatDateRangeFilterWidget />
             </div>
           </Transition>
         </div>
 
         <Transition>
-          <div v-if="isStat && auntificated" class="max-md:hidden">
+          <div v-show="isStat && auntificated" class="max-md:hidden">
             <StatTypeFilterWidget />
           </div>
         </Transition>
 
-        <div v-if="!auntificated">
+        <div v-show="!auntificated">
           <UButton class="w-[13.5rem] text-2xl h-24" color="gray">
             Log in
           </UButton>
         </div>
 
-        <div v-else class="flex justify-end gap-8 w-full max-md:gap-4">
+        <div v-show="auntificated" class="flex justify-end gap-8 w-full max-md:gap-4">
           <Transition>
-            <div v-if="isUsers" class="flex gap-[inherit]">
+            <div v-show="isUsers" class="flex gap-[inherit]">
               <UserSearchWidget />
               <UButton
                 @click="toggleUsersMode"
@@ -110,7 +110,7 @@ const logout = async () => {
           </Transition>
 
           <UButton
-            v-if="isAdmin"
+            v-show="isAdmin"
             class="max-md:hidden transition-all"
             :class="{ 'rotate-45': isUsers }"
             icon="xi:category"
@@ -120,11 +120,11 @@ const logout = async () => {
 
           <Transition name="w">
             <div
-              v-if="isStat"
+              v-show="isStat"
               class="flex gap-[inherit] -ml-8 w-[25.4rem] max-md:-ml-4 max-md:w-[8rem] justify-end"
             >
               <UButton
-                v-if="isAdmin"
+                v-show="isAdmin"
                 color="gray"
                 class="w-[13.4rem] max-md:hidden ml-8 whitespace-nowrap overflow-hidden"
               >
@@ -162,7 +162,7 @@ const logout = async () => {
       </div>
 
       <Transition name="h">
-        <div v-if="isStat && auntificated" class="md:hidden h-36 flex flex-col">
+        <div v-show="isStat && auntificated" class="md:hidden h-36 flex flex-col">
           <div class="flex gap-4 justify-between mt-16">
             <div class="flex gap-4">
               <StatDateRangeFilterWidget />
@@ -178,7 +178,7 @@ const logout = async () => {
       <NuxtPage />
     </main>
 
-    <div v-if="isAdmin" class="md:hidden flex gap-4 fixed bottom-8 left-8">
+    <div v-show="isAdmin" class="md:hidden flex gap-4 fixed bottom-8 left-8">
       <UButton
         class="transition-all duration-500"
         :class="{ 'rotate-45': isUsers }"
@@ -187,7 +187,7 @@ const logout = async () => {
       />
 
       <Transition>
-        <div v-if="isUsers" class="flex gap-[inherit]">
+        <div v-show="isUsers" class="flex gap-[inherit]">
           <UButton
             @click="toggleUsersMode"
             icon="xi:trash"
@@ -200,7 +200,7 @@ const logout = async () => {
 
     <Transition>
       <UButton
-        v-if="isAdmin && isStat"
+        v-show="isAdmin && isStat"
         class="md:hidden w-48 fixed bottom-8 right-8"
       >
         {{ nickname }}
