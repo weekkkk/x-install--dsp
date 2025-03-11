@@ -15,13 +15,14 @@ export default defineNuxtConfig({
     customCollections: [
       {
         prefix: "xi",
-        dir: "~/assets/icons",
+        dir: "./src/app/assets/icons",
       },
     ],
   },
   dir: {
     pages: "./src/app/routes",
     layouts: "./src/app/layouts",
+    assets: "./src/app/assets",
     middleware: "./src/app/middlewares",
   },
   imports: {
