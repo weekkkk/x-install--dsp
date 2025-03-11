@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { rangesConst } from "~/src/entities/stat/ui/date-range-picker/consts";
 
+const user = useState<AuthResDto['user'] | undefined>()
+
 const route = useRoute();
 
 onMounted(() => {
+  if(user.value?.role === 'Admin' && !route.query.user) return
   if (range.value) return;
   const r = rangesConst[0];
   if (!("getDates" in r)) return;

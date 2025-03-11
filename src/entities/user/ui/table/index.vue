@@ -84,7 +84,7 @@ const formatCreatedAt = (createdAt: string) => {
     :loading="loading"
   >
     <template #createdAt-data="{ row }">
-      <span class="flex gap-4">
+      <span class="flex gap-4 justify-end">
         <span v-for="part in formatCreatedAt(row.createdAt).split(' ')">
           {{ part }}
         </span>
@@ -92,7 +92,7 @@ const formatCreatedAt = (createdAt: string) => {
     </template>
 
     <template #panels-data="{ row }">
-      <div class="flex gap-16">
+      <div class="flex gap-16 justify-end">
         <UCheckbox
           :model-value="row.isDsp"
           @change="onChangePanels(row, 'isDsp', $event)"

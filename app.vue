@@ -12,7 +12,6 @@ onMounted(() => {
     .then(async (data) => {
       auth.value = true;
       user.value = data.user;
-      console.log(route.path === "/login");
       if (route.path === "/login") await navigateTo("/");
       console.log(
         user.value.role === "Admin" && route.path === "/" && !route.query.user
@@ -23,6 +22,11 @@ onMounted(() => {
         !route.query.user
       )
         await navigateTo("/users");
+      if (
+        user.value.role !== "Admin" &&
+        route.path === "/users"
+      )
+        await navigateTo("/");
     })
     .catch(async () => {
       await navigateTo("/login");

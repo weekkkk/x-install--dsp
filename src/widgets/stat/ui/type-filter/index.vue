@@ -7,6 +7,7 @@ const type = computed({
   },
   set: (v) => {
     navigateTo({
+      path: "/",
       query: {
         ...route.query,
         panel: v,

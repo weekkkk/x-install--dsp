@@ -110,7 +110,7 @@ const onBlur = ({ currentTarget }: FocusEvent, row: T, key: keyof T) => {
     >
       <UInput
         :key="`${row.id}-${key.toString()}`"
-        :ui="{ padding: { sm: 'p-0 h-[4.2rem] leading-8 ' } }"
+        :ui="{ padding: { sm: 'p-0 h-[4.2rem] leading-8' } }"
         class="-my-6 min-w-24"
         :model-value="row[key]"
         variant="none"

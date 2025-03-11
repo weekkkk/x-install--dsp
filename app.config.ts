@@ -49,10 +49,12 @@ export default defineAppConfig({
       divide: "dark:divide-dark-0",
       tbody: "dark:divide-dark-0",
       th: {
+        base: "[&:not(:first-child)]:text-right",
         padding: "px-0 pt-0 pb-6 [&:not(:last-child)]:pr-[2.6rem]",
         size: "text-base whitespace-nowrap",
       },
       td: {
+        base: "[&:not(:first-child)]:text-right",
         padding: "px-0 py-6 [&:not(:last-child)]:pr-[2.6rem]",
         color: "dark:text-white",
         font: "font-medium",

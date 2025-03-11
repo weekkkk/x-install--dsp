@@ -17,4 +17,7 @@
 }
 
 @layer components {
+  td input {
+    text-align: inherit;
+  }
 }
