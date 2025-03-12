@@ -72,7 +72,7 @@ const logout = async () => {
         <div class="w-full flex items-center gap-[11.1rem] max-md:w-auto">
           <UIcon name="xi:logo" class="h-12 w-[4.2rem]" />
           <Transition>
-            <div v-show="isStat && auntificated" class="flex gap-3 max-md:hidden">
+            <div v-if="isStat && auntificated" class="flex gap-3 max-md:hidden">
               <StatDateRangeFilterWidget />
             </div>
           </Transition>

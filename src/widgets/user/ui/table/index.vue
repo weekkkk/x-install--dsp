@@ -15,9 +15,13 @@ const { data, status, refresh } = await useAsyncData(
   "users",
   async () => (auth.value ? await UserApiService.getAll() : []),
   {
-    watch: [auth, mode, () => route.path],
+    watch: [auth, mode],
   }
 );
+
+onMounted(() => {
+  refresh()
+})
 
 const userId = defineModel<UserResDto["id"]>();
 

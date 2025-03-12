@@ -37,6 +37,11 @@ const { data, status, refresh } = await useAsyncData(
   }
 );
 
+onMounted(() => {
+  refresh()
+})
+
+
 const stats = computed(() => {
   if (!data.value) return;
   return data.value.userStatistics.toSorted(({ id: a }, { id: b }) => a - b);
