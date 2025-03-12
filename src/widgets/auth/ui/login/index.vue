@@ -16,9 +16,17 @@ const onSubmit = async ({ login, password }: TAuthLoginFormData) => {
     auth.value = true;
     user.value = data.user;
 
-    await navigateTo({
-      path: "/",
-    });
+    if (user.value.role === "Admin")
+      await navigateTo({
+        path: "/users",
+        query: {
+          mode: "view",
+        },
+      });
+    else
+      await navigateTo({
+        path: "/",
+      });
   } catch (e) {
     if (!(e && typeof e === "object" && "data" in e)) return;
     error.login = e.data + "";
