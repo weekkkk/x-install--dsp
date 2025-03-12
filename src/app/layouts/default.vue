@@ -63,6 +63,12 @@ const logout = async () => {
   await AuthApiService.logout();
   await navigateTo({ path: "/login" });
 };
+
+const open = ref(true)
+
+onMounted(() => {
+  open.value = false
+})
 </script>
 
 <template>
@@ -142,6 +148,7 @@ const logout = async () => {
               ring: 'ring-0',
               rounded: 'rounded-full',
             }"
+            :open="open"
           >
             <UAvatar :alt="name" />
 
