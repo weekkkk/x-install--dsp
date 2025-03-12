@@ -6,8 +6,6 @@ const user = useState<AuthResDto['user'] | undefined>("user")
 const route = useRoute();
 
 onMounted(() => {
-  console.log("test", user.value);
-  
   if(!user.value) return
   if(user.value.role === 'Admin' && !route.query.user) return
   if (range.value) return;
