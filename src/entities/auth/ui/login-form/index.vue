@@ -28,7 +28,7 @@ const emit = defineEmits<{
     <UFormGroup name="login" :error="!!error?.login || undefined">
       <UInput
         v-model="state.login"
-        placeholder="Input login"
+        placeholder="Login"
         size="lg"
         @blur="emit('blur', 'login')"
       />
@@ -36,7 +36,7 @@ const emit = defineEmits<{
     <UFormGroup name="password" :error="!!error?.password || undefined">
       <UInput
         v-model="state.password"
-        placeholder="Input password"
+        placeholder="Password"
         size="lg"
         @blur="emit('blur', 'password')"
       />
