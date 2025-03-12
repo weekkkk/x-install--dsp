@@ -63,12 +63,6 @@ const logout = async () => {
   await AuthApiService.logout();
   await navigateTo({ path: "/login" });
 };
-
-const open = ref(true)
-
-onMounted(() => {
-  open.value = false
-})
 </script>
 
 <template>
@@ -78,7 +72,10 @@ onMounted(() => {
         <div class="w-full flex items-center gap-[11.1rem] max-md:w-auto">
           <UIcon name="xi:logo" class="h-12 w-[4.2rem]" />
           <Transition>
-            <div v-if="isStat && auntificated === true" class="flex gap-3 max-md:hidden">
+            <div
+              v-if="isStat && auntificated === true"
+              class="flex gap-3 max-md:hidden"
+            >
               <StatDateRangeFilterWidget />
             </div>
           </Transition>
@@ -96,7 +93,10 @@ onMounted(() => {
           </UButton>
         </div>
 
-        <div v-show="auntificated" class="flex justify-end gap-8 w-full max-md:gap-4">
+        <div
+          v-show="auntificated"
+          class="flex justify-end gap-8 w-full max-md:gap-4"
+        >
           <Transition>
             <div v-show="isUsers" class="flex gap-[inherit]">
               <UserSearchWidget />
@@ -148,13 +148,11 @@ onMounted(() => {
               ring: 'ring-0',
               rounded: 'rounded-full',
             }"
-            open
           >
             <UAvatar :alt="name" />
 
             <template #panel="{ close }">
               <UButton
-                icon="xi:logout"
                 color="gray"
                 @click="
                   () => {
@@ -162,14 +160,22 @@ onMounted(() => {
                     logout();
                   }
                 "
-              />
+                class="w-24 h-24 max-md:w-20 max-md:h-20"
+              >
+                <template #leading>
+                  <NuxtImg class="w-[2.4rem] h-[2.4rem] max-md:w-[1.6rem] max-md:h-[1.6rem]" src="/icons/logout.svg" />
+                </template>
+              </UButton>
             </template>
           </UPopover>
         </div>
       </div>
 
       <Transition name="h">
-        <div v-if="isStat && auntificated === true" class="md:hidden h-36 flex flex-col">
+        <div
+          v-if="isStat && auntificated === true"
+          class="md:hidden h-36 flex flex-col"
+        >
           <div class="flex gap-4 justify-between mt-16">
             <div class="flex gap-4">
               <StatDateRangeFilterWidget />
