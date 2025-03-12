@@ -170,6 +170,8 @@ const logout = async () => {
           </UPopover>
         </div>
       </div>
+      <NuxtImg v-show="false" class="w-[2.4rem] h-[2.4rem] max-md:w-[1.6rem] max-md:h-[1.6rem]" src="/icons/logout.svg" />
+
 
       <Transition name="h">
         <div
