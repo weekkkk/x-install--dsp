@@ -148,7 +148,7 @@ onMounted(() => {
               ring: 'ring-0',
               rounded: 'rounded-full',
             }"
-            :open="open"
+            open
           >
             <UAvatar :alt="name" />
 
