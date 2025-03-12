@@ -39,7 +39,9 @@ export default defineNuxtConfig({
       link: [
         {
           rel: "stylesheet",
-          href: "/fonts/pp-neue-montreal/pp-neue-montreal.style.css",
+          href: `${
+            process.env.NODE_ENV === "production" ? "/x-install--dsp" : ""
+          }/fonts/pp-neue-montreal/pp-neue-montreal.style.css`,
         },
       ],
     },
@@ -107,10 +109,7 @@ export default defineNuxtConfig({
     ],
   },
   generate: {
-    routes: [
-      "/users?mode=view",
-      "/users?mode=del",
-    ],
+    routes: ["/users?mode=view", "/users?mode=del"],
   },
   nitro: {
     devProxy: {
