@@ -34,7 +34,6 @@ const { data, status, refresh } = await useAsyncData(
       () => route.query.end,
       () => route.query.panel,
     ],
-    immediate: true,
   }
 );
 

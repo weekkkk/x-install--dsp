@@ -16,7 +16,6 @@ const { data, status, refresh } = await useAsyncData(
   async () => (auth.value ? await UserApiService.getAll() : []),
   {
     watch: [auth, mode, () => route.path],
-    immediate: true,
   }
 );
 
