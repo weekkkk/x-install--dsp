@@ -22,10 +22,10 @@ const parsedQuery = computed(() => usersPageQueryShema.safeParse(route.query));
     v-if="parsedQuery.data"
     :model-value="Number(parsedQuery.data.user)"
     @update:model-value="
-      navigateTo({ query: { ...parsedQuery.data, user: $event } })
+      navigateTo({ path: '/users', query: { mode: 'view', user: $event } })
     "
     :mode="parsedQuery.data.mode"
-    @update:mode="navigateTo({ query: { ...parsedQuery.data, mode: $event } })"
+    @update:mode="navigateTo({ query: { user: parsedQuery.data.user, mode: $event } })"
     :search="parsedQuery.data.search"
   />
 </template>

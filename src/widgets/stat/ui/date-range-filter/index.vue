@@ -6,14 +6,15 @@ const user = useState<AuthResDto['user'] | undefined>()
 const route = useRoute();
 
 onMounted(() => {
-  if(user.value?.role === 'Admin' && !route.query.user) return
+  if(!user.value) return
+  if(user.value.role === 'Admin' && !route.query.user) return
   if (range.value) return;
   const r = rangesConst[0];
   if (!("getDates" in r)) return;
   const dates = r.getDates();
   navigateTo({
+    path: "/",
     query: {
-      ...route.query,
       key: r.key,
       start: dates.start.toISOString(),
       end: dates.end.toISOString(),
