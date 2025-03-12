@@ -1,30 +1,13 @@
 <script setup lang="ts">
 import { rangesConst } from "~/src/entities/stat/ui/date-range-picker/consts";
 
-const user = useState<AuthResDto['user'] | undefined>()
+const user = useState<AuthResDto['user'] | undefined>("user")
 
 const route = useRoute();
 
-watch(user, () => {
-  if(!user.value) return
-  if(user.value.role === 'Admin' && !route.query.user) return
-  if (range.value) return;
-  const r = rangesConst[0];
-  if (!("getDates" in r)) return;
-  const dates = r.getDates();
-  navigateTo({
-    path: "/",
-    query: {
-      user: route.query.user,
-      key: r.key,
-      start: dates.start.toISOString(),
-      end: dates.end.toISOString(),
-      panel: "dsp",
-    },
-  });
-})
-
 onMounted(() => {
+  console.log("test", user.value);
+  
   if(!user.value) return
   if(user.value.role === 'Admin' && !route.query.user) return
   if (range.value) return;
@@ -62,6 +45,7 @@ const range = computed({
   },
   set: (v) => {
     navigateTo({
+      path: "",
       query: {
         ...route.query,
         key: v?.key,
