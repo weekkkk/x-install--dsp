@@ -21,11 +21,8 @@ onMounted(() => {
         route.path === "/" &&
         !route.query.user
       )
-        await navigateTo("/users");
-      if (
-        user.value.role !== "Admin" &&
-        route.path === "/users"
-      )
+        await navigateTo({ path: "/users", query: { mode: "view" } });
+      if (user.value.role !== "Admin" && route.path === "/users")
         await navigateTo("/");
     })
     .catch(async () => {
