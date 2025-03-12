@@ -19,7 +19,7 @@ const createUser = async ({
       password,
       username: name,
     });
-    await navigateTo({ path: "/users" });
+    await navigateTo({ path: "/users", query: { mode: "view" } });
   } catch (e) {
     console.log(e);
   }
