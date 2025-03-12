@@ -9,11 +9,13 @@ const mode = defineModel<"view" | "del">("mode", { default: "view" });
 
 const auth = useState<boolean>("auth");
 
+const route = useRoute()
+
 const { data, status, refresh } = await useAsyncData(
   "users",
   async () => (auth.value ? await UserApiService.getAll() : []),
   {
-    watch: [auth, mode],
+    watch: [auth, mode, () => route.path],
     immediate: true,
   }
 );
