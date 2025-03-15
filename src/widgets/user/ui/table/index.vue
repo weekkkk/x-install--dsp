@@ -9,7 +9,7 @@ const mode = defineModel<"view" | "del">("mode", { default: "view" });
 
 const auth = useState<boolean>("auth");
 
-const route = useRoute()
+const route = useRoute();
 
 const { data, status, refresh } = await useAsyncData(
   "users",
@@ -20,8 +20,8 @@ const { data, status, refresh } = await useAsyncData(
 );
 
 onMounted(() => {
-  refresh()
-})
+  refresh();
+});
 
 const userId = defineModel<UserResDto["id"]>();
 
@@ -95,9 +95,8 @@ const onChangeFlags = async (
   <div
     class="z-50 fixed bottom-0 left-1/2 -translate-x-1/2 pb-20 max-md:pb-8 max-md:pr-8 max-md:right-0 max-md:left-auto max-md:translate-x-0"
   >
-    <UButton
+    <!-- <UButton
       class="w-[13.4rem]"
-      v-if="mode === 'view'"
       :ui="{
         icon: {
           size: {
@@ -108,8 +107,9 @@ const onChangeFlags = async (
       :loading="loading"
     >
       Save
-    </UButton>
+    </UButton> -->
     <UButton
+      v-show="mode === 'del'"
       :ui="{
         icon: {
           size: {
@@ -118,7 +118,6 @@ const onChangeFlags = async (
         },
       }"
       class="w-[13.4rem]"
-      v-else-if="mode === 'del'"
       @click="deleteUsers"
       :loading="loading"
     >

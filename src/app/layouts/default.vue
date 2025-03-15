@@ -216,9 +216,12 @@ const logout = async () => {
     <Transition>
       <UButton
         v-show="isAdmin && isStat"
-        class="md:hidden w-48 fixed bottom-8 right-8"
+        class="md:hidden w-48 fixed bottom-8 right-8 whitespace-nowrap"
       >
+      <span class="w-full overflow-hidden text-ellipsis">
+
         {{ nickname }}
+      </span>
       </UButton>
     </Transition>
   </div>

@@ -7,6 +7,7 @@ export type TUiTableProps<
   rows: T[];
   editableCols?: (keyof T)[];
   customizeCols?: (keyof T | string)[];
+  procentCols?: (keyof T | string)[];
   readonly?: boolean;
   isRadio?: boolean;
   isCheckbox?: boolean;
@@ -14,4 +15,6 @@ export type TUiTableProps<
   loading?: boolean;
   type?: string;
   readonlyRows?: number[];
+  customUi?: any
+  hideEmpty?: boolean
 };

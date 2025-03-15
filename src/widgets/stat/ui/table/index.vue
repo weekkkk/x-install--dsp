@@ -38,9 +38,8 @@ const { data, status, refresh } = await useAsyncData(
 );
 
 onMounted(() => {
-  refresh()
-})
-
+  refresh();
+});
 
 const stats = computed(() => {
   if (!data.value) return;
@@ -49,19 +48,31 @@ const stats = computed(() => {
 
 const footer = computed(() => {
   if (!data.value) return;
-  const stat: StatResDto = { id: -2, date: "Total", ...data.value.total };
+  const stat: StatResDto = { id: -2, date: "Total", ...data.value.total, showRate: undefined, ctr: undefined, vtr: undefined };
   return stat;
 });
 
-const createStat = async (key: keyof StatResDto, value: string) => {
+const createStat = async (stat: StatResDto) => {
   const userId = route.query.user;
   if (!userId) return;
   await StatApiService.create({
+    ...stat,
     userId: Number(userId),
     IsDsp: route.query.panel === "dsp",
     IsDspInApp: route.query.panel === "dsp--in-app",
     IsDspBanner: route.query.panel === "dsp--banner",
-    [key]: key === "date" ? value : Number(value),
+  });
+  Object.assign(stat, {
+    total: undefined,
+    ack: undefined,
+    win: undefined,
+    impsCount: undefined,
+    showRate: undefined,
+    clicksCount: undefined,
+    ctr: undefined,
+    startsCount: undefined,
+    completesCount: undefined,
+    vtr: undefined,
   });
   await refresh();
 };

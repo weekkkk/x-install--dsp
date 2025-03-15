@@ -12,6 +12,7 @@ const props = withDefaults(defineProps<TUiTableProps<T>>(), {
   customizeCols: [] as any,
   editableCols: [] as any,
   readonlyRows: [] as any,
+  procentCols: [] as any,
   type: "text",
 });
 onMounted(() => {
@@ -79,11 +80,12 @@ const onBlur = ({ currentTarget }: FocusEvent, row: T, key: keyof T) => {
 
 <template>
   <UTable
-    class="ui_table p-16 bg-dark-50 rounded-t-[2rem] grow max-md:pb-40"
+    class="ui_table min-w-fit"
     by="id"
     :columns="mapedColumns"
     :rows="rows"
     :loading="loading"
+    :ui="customUi"
   >
     <template #radio-data="{ row }">
       <URadio
@@ -96,7 +98,10 @@ const onBlur = ({ currentTarget }: FocusEvent, row: T, key: keyof T) => {
     <template #checkbox-data="{ row }">
       <UCheckbox
         class="h-[1.2rem]"
-        :ui="{ base: 'h-[2.4rem] w-[2.4rem]', rounded: 'rounded-2xl' }"
+        :ui="{
+          base: 'h-[2.4rem] w-[2.4rem] dark:checked:bg-gradient-to-r from-[#F21919] to-[#B50000]',
+          rounded: 'rounded-2xl',
+        }"
         name="radio"
         :value="row[by]"
         v-model="multiSelected"
@@ -108,16 +113,30 @@ const onBlur = ({ currentTarget }: FocusEvent, row: T, key: keyof T) => {
       :key="key"
       v-slot:[`${key.toString()}-data`]="{ row }"
     >
-      <UInput
-        :key="`${row.id}-${key.toString()}`"
-        :ui="{ padding: { sm: 'p-0 h-[4.2rem] leading-8' } }"
-        class="-my-6 min-w-24"
-        :model-value="row[key]"
-        variant="none"
-        @focus="onFocus"
-        @blur="onBlur($event, row, key)"
-        :readonly="readonly || readonlyRows?.includes(row[by])"
-      />
+      <div class="flex gap-2 items-center w-full min-w-24" :class="{'opacity-0': hideEmpty && !(row[key] || row[key] === 0)}">
+        <UInput
+          :key="`${row.id}-${key.toString()}`"
+          :ui="{ padding: { sm: 'p-0 h-[4.2rem] leading-8' } }"
+          class="-my-6 flex-grow"
+          :model-value="row[key]"
+          variant="none"
+          @focus="onFocus"
+          @blur="onBlur($event, row, key)"
+          :readonly="readonly || readonlyRows?.includes(row[by])"
+          :placeholder="
+            key
+              .toString()
+              .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+              .toLowerCase()
+          "
+        />
+        <span
+          v-show="procentCols.includes(key)"
+          class="font-semibold"
+        >
+          %
+        </span>
+      </div>
     </template>
 
     <template
@@ -126,6 +145,13 @@ const onBlur = ({ currentTarget }: FocusEvent, row: T, key: keyof T) => {
       v-slot:[`${key.toString()}-data`]="{ row }"
     >
       <slot :name="`${key.toString()}-data`" :row="row" />
+    </template>
+    <template
+      v-for="key in customizeCols"
+      :key="key"
+      v-slot:[`${key.toString()}-header`]="{ row }"
+    >
+      <slot :name="`${key.toString()}-header`" :row="row" />
     </template>
   </UTable>
 </template>

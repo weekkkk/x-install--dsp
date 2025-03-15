@@ -10,8 +10,8 @@ export default defineAppConfig({
       truncate: "text-center",
       inline: "justify-center",
       padding: {
-        sm: "py-[2.54rem] max-md:py-[1.9rem]",
-        lg: "py-[2.54rem]",
+        sm: "py-[2.1rem] max-md:py-[1.9rem]",
+        lg: "py-[2.1rem]",
       },
       square: {
         xs: "p-0",
@@ -49,12 +49,12 @@ export default defineAppConfig({
       divide: "dark:divide-dark-0",
       tbody: "dark:divide-dark-0",
       th: {
-        base: "[&:not(:first-child)]:text-right",
+        base: "[&:not(:first-child)]:text-right [&:has(input[type='radio'])]:text-left",
         padding: "px-0 pt-0 pb-6 [&:not(:last-child)]:pr-[2.6rem]",
         size: "text-base whitespace-nowrap",
       },
       td: {
-        base: "[&:not(:first-child)]:text-right",
+        base: "[&:not(:first-child)]:text-right [&:has(input[type=radio])+td]:text-left",
         padding: "px-0 py-6 [&:not(:last-child)]:pr-[2.6rem]",
         color: "dark:text-white",
         font: "font-medium",
