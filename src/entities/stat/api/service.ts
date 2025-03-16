@@ -25,7 +25,7 @@ export class StatApiService {
   }
 
   static async change({ id, ...rest }: StatChangeReqDto) {
-    return $stat<StatResDto[]>(`/admin/statistic/${id}`, {
+    return $stat<StatResDto[]>(`/admin/statistic`, {
       method: "PATCH",
       body: {
         id,
