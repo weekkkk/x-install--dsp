@@ -48,7 +48,14 @@ const stats = computed(() => {
 
 const footer = computed(() => {
   if (!data.value) return;
-  const stat: StatResDto = { id: -2, date: "Total", ...data.value.total, showRate: undefined, ctr: undefined, vtr: undefined };
+  const stat: StatResDto = {
+    id: -2,
+    date: "Total",
+    ...data.value.total,
+    showRate: undefined,
+    ctr: undefined,
+    vtr: undefined,
+  };
   return stat;
 });
 
@@ -78,27 +85,53 @@ const createStat = async (stat: StatResDto) => {
 };
 
 const onChange = async (id: number, key: keyof StatResDto, value: string) => {
-  if (!data.value || key === "date") return;
+  if (!data.value) return;
   const stat = data.value.userStatistics.find(({ id: _id }) => _id === id);
   if (!stat) return;
-  stat[key] = Number(value.replaceAll(" ", ""));
+  if (key !== "date") {
+    stat[key] = Number(value.replaceAll(" ", ""));
 
-  await StatApiService.change({
-    id,
-    key,
-    value: Number(value.replaceAll(" ", "")),
-  });
+    await StatApiService.change({
+      id,
+      key,
+      value: value.replaceAll(" ", ""),
+    });
+  } else {
+    stat[key] = value;
+    await StatApiService.change({
+      id,
+      key,
+      value,
+    });
+  }
   await refresh();
+};
+
+const statForDeleteIds = ref<StatResDto["id"][]>([]);
+
+watch(
+  () => route.query.mode,
+  () => (statForDeleteIds.value = [])
+);
+
+const onDelete = async () => {
+  if (!statForDeleteIds.value.length) return;
+  await StatApiService.deleteByIds(statForDeleteIds.value);
+  await refresh();
+  statForDeleteIds.value = [];
 };
 </script>
 
 <template>
   <StatTable
     v-if="stats"
+    :mode="route.query.mode as 'del' | 'view'"
+    v-model:multi="statForDeleteIds"
     :loading="status === 'pending'"
     :stats="stats"
     :footer="footer"
     @create="createStat"
+    @delete="onDelete"
     @change="onChange"
     :readonly="user?.role !== 'Admin'"
   />

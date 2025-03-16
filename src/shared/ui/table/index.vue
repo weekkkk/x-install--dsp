@@ -97,6 +97,7 @@ const onBlur = ({ currentTarget }: FocusEvent, row: T, key: keyof T) => {
     </template>
     <template #checkbox-data="{ row }">
       <UCheckbox
+        v-if="row[by] !== -1"
         class="h-[1.2rem]"
         :ui="{
           base: 'h-[2.4rem] w-[2.4rem] dark:checked:bg-gradient-to-r from-[#F21919] to-[#B50000]',
@@ -113,7 +114,10 @@ const onBlur = ({ currentTarget }: FocusEvent, row: T, key: keyof T) => {
       :key="key"
       v-slot:[`${key.toString()}-data`]="{ row }"
     >
-      <div class="flex gap-2 items-center w-full min-w-24" :class="{'opacity-0': hideEmpty && !(row[key] || row[key] === 0)}">
+      <div
+        class="flex gap-2 items-center w-full min-w-24"
+        :class="{ 'opacity-0': hideEmpty && !(row[key] || row[key] === 0) }"
+      >
         <UInput
           :key="`${row.id}-${key.toString()}`"
           :ui="{ padding: { sm: 'p-0 h-[4.2rem] leading-8' } }"
@@ -130,10 +134,7 @@ const onBlur = ({ currentTarget }: FocusEvent, row: T, key: keyof T) => {
               .toLowerCase()
           "
         />
-        <span
-          v-show="procentCols.includes(key)"
-          class="font-semibold"
-        >
+        <span v-show="procentCols.includes(key)" class="font-semibold">
           %
         </span>
       </div>

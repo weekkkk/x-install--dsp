@@ -36,6 +36,19 @@ const push = async () => {
     });
 };
 
+const toggleMode = () => {
+  if (isUsers.value) toggleUsersMode();
+  else {
+    navigateTo({
+      path: "/",
+      query: {
+        ...route.query,
+        mode: route.query.mode === "del" ? "view" : "del",
+      },
+    });
+  }
+};
+
 const toggleUsersMode = () => {
   route.query.mode === "del" ? pushUsersToViewMode() : pushUsersToDelMode();
 };
@@ -97,15 +110,17 @@ const logout = async () => {
           v-show="auntificated"
           class="flex justify-end gap-8 w-full max-md:gap-4"
         >
+          <UButton
+            v-show="isAdmin"
+            @click="toggleMode"
+            class="max-md:hidden"
+            icon="xi:trash"
+            :color="route.query.mode === 'del' ? 'primary' : 'gray'"
+          />
           <Transition>
             <div v-show="isUsers" class="flex gap-[inherit]">
               <UserSearchWidget />
-              <UButton
-                @click="toggleUsersMode"
-                class="max-md:hidden"
-                icon="xi:trash"
-                :color="route.query.mode === 'del' ? 'primary' : 'gray'"
-              />
+
               <UButton
                 class="max-md:hidden"
                 icon="xi:plus"
@@ -163,15 +178,21 @@ const logout = async () => {
                 class="w-24 h-24 max-md:w-20 max-md:h-20"
               >
                 <template #leading>
-                  <NuxtImg class="w-[2.4rem] h-[2.4rem] max-md:w-[1.6rem] max-md:h-[1.6rem]" src="/icons/logout.svg" />
+                  <NuxtImg
+                    class="w-[2.4rem] h-[2.4rem] max-md:w-[1.6rem] max-md:h-[1.6rem]"
+                    src="/icons/logout.svg"
+                  />
                 </template>
               </UButton>
             </template>
           </UPopover>
         </div>
       </div>
-      <NuxtImg v-show="false" class="w-[2.4rem] h-[2.4rem] max-md:w-[1.6rem] max-md:h-[1.6rem]" src="/icons/logout.svg" />
-
+      <NuxtImg
+        v-show="false"
+        class="w-[2.4rem] h-[2.4rem] max-md:w-[1.6rem] max-md:h-[1.6rem]"
+        src="/icons/logout.svg"
+      />
 
       <Transition name="h">
         <div
@@ -201,16 +222,14 @@ const logout = async () => {
         @click="push"
       />
 
-      <Transition>
-        <div v-show="isUsers" class="flex gap-[inherit]">
-          <UButton
-            @click="toggleUsersMode"
-            icon="xi:trash"
-            :color="route.query.mode === 'del' ? 'gray' : 'primary'"
-          />
-          <UButton icon="xi:plus" @click="pushToCreateUser" />
-        </div>
-      </Transition>
+      <div class="flex gap-[inherit]">
+        <UButton
+          @click="toggleUsersMode"
+          icon="xi:trash"
+          :color="route.query.mode === 'del' ? 'gray' : 'primary'"
+        />
+        <UButton icon="xi:plus" @click="pushToCreateUser" />
+      </div>
     </div>
 
     <Transition>
@@ -218,10 +237,9 @@ const logout = async () => {
         v-show="isAdmin && isStat"
         class="md:hidden w-48 fixed bottom-8 right-8 whitespace-nowrap"
       >
-      <span class="w-full overflow-hidden text-ellipsis">
-
-        {{ nickname }}
-      </span>
+        <span class="w-full overflow-hidden text-ellipsis">
+          {{ nickname }}
+        </span>
       </UButton>
     </Transition>
   </div>

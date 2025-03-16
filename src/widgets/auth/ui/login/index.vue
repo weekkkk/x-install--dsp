@@ -36,9 +36,15 @@ const onSubmit = async ({ login, password }: TAuthLoginFormData) => {
 </script>
 
 <template>
-  <AuthLoginForm
-    @submit="onSubmit"
-    @blur="(key) => (error[key] = '')"
-    :error="error"
-  />
+  <div class="flex flex-col gap-[7.5rem] items-center">
+    <UIcon name="xi:logo" class="text-[3rem]" />
+    <span class="text-5xl font-semibold">Welcome</span>
+
+    <AuthLoginForm
+      class="w-full"
+      @submit="onSubmit"
+      @blur="(key) => (error[key] = '')"
+      :error="error"
+    />
+  </div>
 </template>

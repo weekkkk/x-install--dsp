@@ -89,7 +89,7 @@ export default defineAppConfig({
       rounded: "rounded-[2rem]",
       color: {
         white: {
-          outline: "ring-0 dark:bg-dark-50",
+          outline: "ring-1 focus:ring-1 dark:ring-primary-500 dark:bg-dark-50",
         },
       },
     },
