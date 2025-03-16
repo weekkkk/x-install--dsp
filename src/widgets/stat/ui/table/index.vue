@@ -70,6 +70,7 @@ const createStat = async (stat: StatResDto) => {
     IsDspBanner: route.query.panel === "dsp--banner",
   });
   Object.assign(stat, {
+    date: undefined,
     total: undefined,
     ack: undefined,
     win: undefined,
