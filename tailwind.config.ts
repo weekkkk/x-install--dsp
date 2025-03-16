@@ -4,7 +4,7 @@ export default <Partial<Config>>{
   theme: {
     extend: {
       fontSize: {
-        base: ["1rem", 1.2],
+        base: ["1.5rem", 1.2],
         lg: ["1.2rem", 1.2],
         xl: ["1.4rem", 1.2],
         "2xl": ["1.6rem", 1.2],

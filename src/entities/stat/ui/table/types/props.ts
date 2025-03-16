@@ -3,4 +3,5 @@ export type TStatTableProps = {
   footer?: StatResDto;
   readonly?: boolean;
   loading?: boolean;
+  mode?: "view" | "del";
 };

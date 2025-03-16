@@ -33,4 +33,11 @@ export class StatApiService {
       },
     });
   }
+
+  static async deleteByIds(ids: Number[]) {
+    return $stat<StatResDto[]>(`/admin/deleteUserRecord`, {
+      method: "DELETE",
+      body: ids,
+    });
+  }
 }

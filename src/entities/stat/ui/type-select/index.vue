@@ -49,7 +49,7 @@ const typeOption = computed({
     <UButton
       v-for="{ key, label } in options"
       :key="key"
-      class="w-32"
+      class="w-40"
       v-bind="key === type ? {} : { color: 'white', variant: 'ghost' }"
       @click="onClick(key)"
     >

@@ -43,7 +43,7 @@ const dates = computed({
 
 <template>
   <UPopover :popper="{ placement: 'bottom-start', overflowPadding: 0 }">
-    <UButton color="gray" class="w-[13.4rem]">
+    <UButton color="gray" class="w-64">
       <span v-if="dates">
         {{ format(dates.start, "dd.MM.yy") }} -
         {{ format(dates.end, "dd.MM.yy") }}
