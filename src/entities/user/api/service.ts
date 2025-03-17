@@ -16,7 +16,7 @@ export class UserApiService {
   }
   static async getAll() {
     const data = await $user<{ userResponse: UserResDto[] }>("/users");
-    return data.userResponse.toSorted(({ id: a }, { id: b }) => a - b);
+    return data.userResponse.toSorted(({ id: a }, { id: b }) => b - a);
   }
   static async changeName({ id, name }: UserChangeNameReqDto) {
     await $user(`/user/${id}/username`, {
