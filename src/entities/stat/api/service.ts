@@ -40,4 +40,16 @@ export class StatApiService {
       body: ids,
     });
   }
+  static async exportExcel(params: StatGetAllReqDto) {
+    return $stat<Blob>("/Statistic/export-excel", {
+      method: 'POST',
+      params,
+    });
+  }
+  static async exportPdf(params: StatGetAllReqDto) {
+    return $stat<Blob>("/Statistic/export-pdf", {
+      method: 'POST',
+      params,
+    });
+  }
 }

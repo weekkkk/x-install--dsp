@@ -76,6 +76,35 @@ const logout = async () => {
   await AuthApiService.logout();
   await navigateTo({ path: "/login" });
 };
+
+const exportStat = async ({ key }: any) => {
+  if (
+    !user.value ||
+    !route.query.start ||
+    !route.query.end ||
+    !route.query.panel
+  )
+    return;
+  const blob = await StatApiService[
+    key === "excel" ? "exportExcel" : "exportPdf"
+  ]({
+    UserId:
+      user.value.role === "Admin" ? Number(route.query.user) : user.value.id,
+    IsDsp: route.query.panel === "dsp",
+    IsDspInApp: route.query.panel === "dsp--in-app",
+    IsDspBanner: route.query.panel === "dsp--banner",
+    StartDate: route.query.start.toString(),
+    EndDate: route.query.end.toString(),
+  });
+
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = key === "excel" ? "Excel.xlsx" : "PDF.pdf"; // Укажи нужное имя файла
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(link.href); // Освобождаем память
+};
 </script>
 
 <template>
@@ -142,12 +171,23 @@ const logout = async () => {
           <Transition name="w">
             <div
               v-show="isStat"
-              class="flex gap-[inherit] -ml-8 w-[25.4rem] max-md:-ml-4 max-md:w-[8rem] justify-end"
+              class="flex gap-[inherit] -ml-8 w-[35.2rem] max-md:-ml-4 max-md:w-[8rem] justify-end"
             >
+              <UiButtonSelect
+                :model-value="{ key: 'export', label: 'Export' }"
+                @update:model-value="exportStat"
+                :options="[
+                  { key: 'export', label: 'Export' },
+                  { key: 'excel', label: 'Excel' },
+                  { key: 'pdf', label: 'PDF' },
+                ]"
+                class="ml-8"
+                selected-color="primary"
+              />
               <UButton
                 v-show="isAdmin"
                 color="gray"
-                class="w-[13.4rem] max-md:hidden ml-8 whitespace-nowrap overflow-hidden"
+                class="w-[13.4rem] max-md:hidden whitespace-nowrap overflow-hidden"
               >
                 <span class="w-full overflow-hidden text-ellipsis">
                   {{ nickname }}
