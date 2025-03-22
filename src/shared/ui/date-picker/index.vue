@@ -61,6 +61,11 @@ function onDayClick(_: any, event: MouseEvent): void {
     v-model="date"
     title-position="left"
     v-bind="{ ...attrs, ...$attrs }"
+    :locale="{
+      id: 'en',
+      firstDayOfWeek: 2,
+      masks: { weekdays: 'WWW', title: 'MMM YYYY' },
+    }"
     @dayclick="onDayClick"
   />
 </template>
