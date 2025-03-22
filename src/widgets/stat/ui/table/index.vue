@@ -43,7 +43,10 @@ onMounted(() => {
 
 const stats = computed(() => {
   if (!data.value) return;
-  return data.value.userStatistics.toSorted(({ id: a }, { id: b }) => a - b);
+  return data.value.userStatistics.toSorted(
+    ({ date: a }, { date: b }) =>
+      ((b && new Date(b).getTime()) || 0) - ((a && new Date(a).getTime()) || 0)
+  );
 });
 
 const footer = computed(() => {
@@ -62,8 +65,21 @@ const footer = computed(() => {
 const createStat = async (stat: StatResDto) => {
   const userId = route.query.user;
   if (!userId) return;
+  const _stat = Object.entries(stat).reduce(
+    (calc, [key, value]) =>
+      key === "date"
+        ? { ...calc, [key]: value }
+        : {
+            ...calc,
+            [key]:
+              (value && Number(value.toString().replaceAll(" ", ""))) ||
+              undefined,
+          },
+    {} as any
+  );
   await StatApiService.create({
-    ...stat,
+    ..._stat,
+    date: _stat.date || new Date().toISOString(),
     userId: Number(userId),
     IsDsp: route.query.panel === "dsp",
     IsDspInApp: route.query.panel === "dsp--in-app",

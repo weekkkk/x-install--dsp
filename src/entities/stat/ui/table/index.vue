@@ -88,7 +88,7 @@ const formatDate = (date: string) => {
                 {{ part }}
               </span>
             </span>
-            <span v-else class="text-gray-500"> date </span>
+            <span v-else class="text-gray-500 font-semibold"> date </span>
             <template #panel>
               <UiDatePicker
                 :model-value="new Date(row.date)"
