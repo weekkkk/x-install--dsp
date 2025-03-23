@@ -8,7 +8,7 @@ const addedRow: StatResDto = { id: -1 };
 const multiModel = defineModel<StatResDto["id"][]>("multi");
 
 const _rows = computed(
-  () => props.stats && [...props.stats, ...(props.readonly ? [] : [addedRow])]
+  () => props.stats && [...(props.readonly ? [] : [addedRow]), ...props.stats]
 );
 
 const emit = defineEmits<{
@@ -38,8 +38,7 @@ const formatDate = (date: string) => {
 </script>
 <template>
   <div
-    class="p-16 bg-dark-50 rounded-t-[2rem] grow max-md:pb-40 relative overflow-auto flex flex-col"
-    :class="{ 'pb-48': !readonly }"
+    class="p-16 bg-dark-50 rounded-t-[2rem] grow pb-0 relative overflow-auto flex flex-col"
   >
     <div class="w-fit grow">
       <UiTable
