@@ -40,7 +40,7 @@ const formatDate = (date: string) => {
   <div
     class="p-16 bg-dark-50 rounded-t-[2rem] grow pb-0 relative overflow-auto flex flex-col"
   >
-    <div class="w-fit grow">
+    <div class="w-fit grow flex flex-col" :class="{'gap-28': !readonly}">
       <UiTable
         v-memo="[_rows, loading, footer, mode, multiModel?.length]"
         :is-checkbox="mode === 'del'"
