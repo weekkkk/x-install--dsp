@@ -5,4 +5,5 @@ export type UserResDto = {
   isDsp: boolean;
   isDspInApp: boolean;
   isDspBanner: boolean;
+  password: string;
 };

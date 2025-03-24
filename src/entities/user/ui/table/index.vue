@@ -78,6 +78,7 @@ const formatCreatedAt = (createdAt: string) => {
         { key: 'createdAt', label: 'date add' },
         { key: 'id' },
         { key: 'username' },
+        { key: 'password' },
         { key: 'panels', label: 'unlocked' },
       ]"
       :rows="users"
