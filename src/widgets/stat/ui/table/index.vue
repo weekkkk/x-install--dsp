@@ -77,9 +77,14 @@ const createStat = async (stat: StatResDto) => {
           },
     {} as any
   );
+  const date = new Date();
+  date.setHours(0);
+  date.setMinutes(0);
+  date.setSeconds(0);
+  date.setMilliseconds(0);
   await StatApiService.create({
     ..._stat,
-    date: _stat.date || new Date().toISOString(),
+    date: _stat.date || date.toISOString(),
     userId: Number(userId),
     IsDsp: route.query.panel === "dsp",
     IsDspInApp: route.query.panel === "dsp--in-app",
