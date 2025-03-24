@@ -117,7 +117,7 @@ const exportStat = async ({ key }: any) => {
           <UIcon name="xi:logo" class="h-12 w-[4.2rem]" />
           <Transition>
             <div
-              v-show="isStat && auntificated === true"
+              v-if="isStat && auntificated === true"
               class="flex gap-3 max-md:hidden"
             >
               <StatDateRangeFilterWidget />
@@ -126,7 +126,7 @@ const exportStat = async ({ key }: any) => {
         </div>
 
         <Transition>
-          <div v-show="isStat && auntificated" class="max-md:hidden">
+          <div v-if="isStat && auntificated" class="max-md:hidden">
             <StatTypeFilterWidget />
           </div>
         </Transition>
