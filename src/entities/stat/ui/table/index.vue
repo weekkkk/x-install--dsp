@@ -40,7 +40,7 @@ const formatDate = (date: string) => {
   <div
     class="p-16 bg-dark-50 rounded-t-[2rem] grow pb-0 relative overflow-auto flex flex-col"
   >
-    <div class="w-fit grow flex flex-col" :class="{'gap-28': !readonly}">
+    <div class="w-fit grow flex flex-col" :class="{ 'gap-28': !readonly }">
       <UiTable
         v-memo="[_rows, loading, footer, mode, multiModel?.length]"
         :is-checkbox="mode === 'del'"
@@ -155,11 +155,11 @@ const formatDate = (date: string) => {
 
   <div
     v-show="!readonly"
-    class="z-50 fixed bottom-0 left-1/2 -translate-x-1/2 pb-20 max-md:pb-8 max-md:pr-8 max-md:right-60 max-md:left-auto max-md:translate-x-0"
+    class="z-50 fixed bottom-0 left-1/2 pb-20 max-md:pb-8 max-md:pr-8 max-md:left-[20rem] max-md:right-[13rem] max-md:translate-x-0"
   >
     <UButton
       v-show="mode === 'view'"
-      class="w-[13.4rem]"
+      class="w-full"
       :ui="{
         icon: {
           size: {
