@@ -159,7 +159,7 @@ const formatDate = (date: string) => {
   >
     <UButton
       v-show="mode === 'view'"
-      class="w-full"
+      class="w-[13.4rem] max-md:w-full"
       :ui="{
         icon: {
           size: {

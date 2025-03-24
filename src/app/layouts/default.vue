@@ -126,7 +126,7 @@ const exportStat = async ({ key }: any) => {
         </div>
 
         <Transition>
-          <div v-if="isStat && auntificated" class="max-md:hidden">
+          <div v-show="isStat && auntificated" class="max-md:hidden">
             <StatTypeFilterWidget />
           </div>
         </Transition>
