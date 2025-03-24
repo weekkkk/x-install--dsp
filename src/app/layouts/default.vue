@@ -5,7 +5,9 @@ const route = useRoute();
 
 const auntificated = useState<boolean>("auth");
 const isAdmin = computed(() => user.value && user.value.role === "Admin");
-const nickname = computed(() => data.value && data.value.username);
+const nickname = computed(
+  () => (data.value && data.value.username) || "username"
+);
 const id = computed(() => user.value?.id);
 const name = computed(() => user.value?.login.slice(0, 1));
 
