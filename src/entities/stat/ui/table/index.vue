@@ -30,7 +30,7 @@ const formatDate = (date: string) => {
   try {
     const _date = new Date(date);
 
-    return `${format(_date, "dd.MM.yy")} ${format(_date, "HH:mm:ss")}`;
+    return `${format(_date, "dd.MM.yy")}`;
   } catch {
     return date;
   }
