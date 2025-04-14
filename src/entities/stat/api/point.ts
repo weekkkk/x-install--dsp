@@ -1,6 +1,6 @@
 export const STAT_API_URL =
   process.env.NODE_ENV === "production"
-    ? "https://xinstallbotprofile-production.up.railway.app/api"
+    ? "https://xinstallbotprofile.onrender.com/api"
     : "/server";
 
 export const $stat = $fetch.create({

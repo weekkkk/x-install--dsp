@@ -1,6 +1,6 @@
 export const AUTH_API_URL =
   process.env.NODE_ENV === "production"
-    ? "https://xinstallbotprofile-production.up.railway.app/api/admin"
+    ? "https://xinstallbotprofile.onrender.com/api/admin"
     : "/server/admin";
 
 export const $user = $fetch.create({

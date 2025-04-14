@@ -1,6 +1,6 @@
 export const AUTH_API_URL =
   process.env.NODE_ENV === "production"
-    ? "https://xinstallbotprofile-production.up.railway.app/api/Auth"
+    ? "https://xinstallbotprofile.onrender.com/api/Auth"
     : "/server/Auth";
 
 export const $auth = $fetch.create({
