@@ -1,13 +1,9 @@
 <script setup lang="ts">
-definePageMeta({
-  layout: "form",
-});
-
 useSeoMeta({
-  title: "Login",
+  title: "Panels",
 });
 </script>
 
 <template>
-  <LoginPage />
+  <PanelPage />
 </template>

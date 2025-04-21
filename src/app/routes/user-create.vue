@@ -1,13 +1,9 @@
 <script setup lang="ts">
-definePageMeta({
-  layout: "form",
-});
-
 useSeoMeta({
-  title: "Login",
+  title: "User Create",
 });
 </script>
 
 <template>
-  <LoginPage />
+  <UserCreatePage />
 </template>

@@ -1,2 +1,3 @@
+export type { AuthLoginReqDto } from "./schemes";
+export { authLoginReqDtoScheme } from "./schemes";
 export { AuthApiService } from "./service";
-export type { AuthResDto } from "./types";

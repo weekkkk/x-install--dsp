@@ -1,12 +1,15 @@
+import type { AuthResDto } from "./interfaces";
+import type { AuthLoginReqDto } from "./schemes";
 import { $auth, AUTH_API_URL } from "./point";
-import type { AuthLoginReqDto, AuthResDto } from "./types";
+
 export class AuthApiService {
   static async login(body: AuthLoginReqDto) {
     const data = await $auth<AuthResDto>("/login", {
       method: "POST",
       body,
     });
-    localStorage.setItem("token", data.accessToken);
+    const accessToken = useCookie("accessToken");
+    accessToken.value = data.accessToken;
 
     return data;
   }
@@ -15,9 +18,19 @@ export class AuthApiService {
     const data = await $fetch<AuthResDto>(`${AUTH_API_URL}/refresh`, {
       method: "GET",
       credentials: "include",
-    });
+      onRequest: ({ options }) => {
+        console.log("import.meta.env.SSR", import.meta.env.SSR);
+        console.log(useCookie("refreshToken").value);
 
-    localStorage.setItem("token", data.accessToken);
+        if (import.meta.env.SSR)
+          options.headers.set("Cookie", `refreshToken=${useCookie("refreshToken").value}`);
+      },
+      onResponse({ options }) {
+        console.log(options.headers.getSetCookie());
+      },
+    });
+    const accessToken = useCookie("accessToken");
+    accessToken.value = data.accessToken;
 
     return data;
   }
@@ -27,7 +40,7 @@ export class AuthApiService {
       method: "POST",
       credentials: "include",
     });
-
-    localStorage.setItem("token", "");
+    const accessToken = useCookie("accessToken");
+    accessToken.value = "";
   }
 }
