@@ -1,4 +1,9 @@
 <script setup lang="ts">
+definePageMeta({
+  layout: "form",
+  middleware: "admin",
+});
+
 useSeoMeta({
   title: "User Create",
 });

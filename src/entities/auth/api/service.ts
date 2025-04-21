@@ -11,6 +11,9 @@ export class AuthApiService {
     const accessToken = useCookie("accessToken");
     accessToken.value = data.accessToken;
 
+    const user = useAuthApiUser();
+    user.value = data.user;
+
     return data;
   }
 
@@ -30,7 +33,11 @@ export class AuthApiService {
       method: "POST",
       credentials: "include",
     });
+
     const accessToken = useCookie("accessToken");
     accessToken.value = "";
+
+    const user = useAuthApiUser();
+    user.value = undefined;
   }
 }

@@ -8,6 +8,7 @@ export default defineAppConfig({
         size: {
           md: {
             base: "px-6.25 py-6.25 text-base gap-1.5",
+            leadingIcon: "size-6",
           },
         },
       },
@@ -16,6 +17,11 @@ export default defineAppConfig({
           color: "primary",
           variant: "solid",
           class: "text-black bg-linear-to-r from-(--ui-secondary) to-(--ui-primary)",
+        },
+        {
+          size: "md",
+          square: true,
+          class: "p-4.5",
         },
       ],
     },

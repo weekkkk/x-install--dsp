@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from "@nuxt/ui";
+import type { AuthLoginWidgetEmits } from "./interfaces";
+
+const emit = defineEmits<AuthLoginWidgetEmits>();
 
 const state = reactive<Partial<AuthLoginReqDto>>({});
 
 async function onSubmit(event: FormSubmitEvent<AuthLoginReqDto>) {
   await AuthApiService.login(event.data);
+  await new Promise(r => emit("success", () => r("")));
 }
 </script>
 
@@ -22,7 +26,4 @@ async function onSubmit(event: FormSubmitEvent<AuthLoginReqDto>) {
       Continue
     </UButton>
   </UForm>
-  <UButton loading-auto class="w-full mt-2.5" @click="AuthApiService.checkAuth()">
-    Refresh
-  </UButton>
 </template>

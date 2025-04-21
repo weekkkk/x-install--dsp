@@ -64,8 +64,14 @@
   --ui-color-neutral-800: #1D1D1D;
   --ui-color-neutral-900: #0A0A0A;
 
+  --ui-bg-inverted: var(--ui-color-neutral-800);
+
   --ui-bg: #000000;
 }
+input:-webkit-autofill,
+  input:-webkit-autofill:focus {
+    transition: background-color 0s 600000s, color 0s 600000s !important;
+  }
 
 ::-webkit-scrollbar {
   width: 0;
