@@ -122,7 +122,7 @@ const onBlur = ({ currentTarget }: FocusEvent, row: T, key: keyof T) => {
           :key="`${row.id}-${key.toString()}`"
           :ui="{ padding: { sm: 'p-0 h-[4.2rem] leading-8' } }"
           class="-my-6 flex-grow"
-          :model-value="row[key]"
+          :model-value="row[key]?.toString().replace('.', ',')"
           variant="none"
           @focus="onFocus"
           @blur="onBlur($event, row, key)"

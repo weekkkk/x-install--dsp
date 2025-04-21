@@ -111,12 +111,12 @@ const onChange = async (id: number, key: keyof StatResDto, value: string) => {
   const stat = data.value.userStatistics.find(({ id: _id }) => _id === id);
   if (!stat) return;
   if (key !== "date") {
-    stat[key] = Number(value.replaceAll(" ", ""));
+    stat[key] = Number(value.replaceAll(" ", "").replaceAll(",", "."));
 
     await StatApiService.change({
       id,
       key,
-      value: value.replaceAll(" ", ""),
+      value: JSON.stringify(stat[key]),
     });
   } else {
     stat[key] = value;

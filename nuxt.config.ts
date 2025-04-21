@@ -114,7 +114,7 @@ export default defineNuxtConfig({
   nitro: {
     devProxy: {
       "/server": {
-        target: "https://xinstallbotprofile-production.up.railway.app/api",
+        target: "https://xinstallbotprofile.onrender.com/api",
         changeOrigin: true,
         headers: { "Access-Control-Allow-Origin": "*" },
       },
