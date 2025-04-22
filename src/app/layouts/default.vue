@@ -1,13 +1,11 @@
 <script setup lang="ts">
-async function onLogout(resolve: () => void) {
+async function goToLogin(resolve: () => void) {
   await navigateTo("/login");
   resolve();
 }
 </script>
 
 <template>
-  <div>
-    <AuthLogoutFeature @success="onLogout" />
-  </div>
+  <LayoutHeaderWidget @login="goToLogin" @logout="goToLogin" />
   <NuxtPage />
 </template>

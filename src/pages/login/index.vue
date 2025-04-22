@@ -1,6 +1,6 @@
 <script setup lang="ts">
 async function onSuccess(resolve: () => void) {
-  await navigateTo("/panel");
+  await navigateTo("/");
   resolve();
 }
 </script>

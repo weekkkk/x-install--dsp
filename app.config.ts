@@ -19,6 +19,11 @@ export default defineAppConfig({
           class: "text-black bg-linear-to-r from-(--ui-secondary) to-(--ui-primary)",
         },
         {
+          color: "neutral",
+          variant: "solid",
+          class: "text-white",
+        },
+        {
           size: "md",
           square: true,
           class: "p-4.5",
@@ -38,6 +43,15 @@ export default defineAppConfig({
         },
         variant: {
           outline: "bg-(--ui-color-neutral-900) ring-(--ui-color-primary-400)",
+        },
+      },
+    },
+    avatar: {
+      variants: {
+        size: {
+          md: {
+            root: "size-15",
+          },
         },
       },
     },

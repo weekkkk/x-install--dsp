@@ -2,8 +2,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const user = useAuthApiUser();
 
   if (!import.meta.env.SSR || user.value) {
-    if ((!user.value || user.value.role !== "Admin") && to.path !== "/panel")
-      return navigateTo("/panel");
+    if ((!user.value || user.value.role !== "Admin") && to.path !== "/")
+      return navigateTo("/");
 
     return;
   }
@@ -33,8 +33,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
     user.value = data.user;
 
-    if (to.path === "/login" || (to.path !== "/panel" && user.value.role !== "Admin"))
-      return navigateTo("/panel");
+    if (to.path === "/login" || (to.path !== "/" && user.value.role !== "Admin"))
+      return navigateTo("/");
   }
   catch (err) {
     user.value = undefined;
