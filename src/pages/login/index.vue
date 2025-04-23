@@ -1,7 +1,6 @@
 <script setup lang="ts">
-async function onSuccess(resolve: () => void) {
+async function onSuccess() {
   await navigateTo("/");
-  resolve();
 }
 </script>
 

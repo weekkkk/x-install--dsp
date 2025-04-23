@@ -1,4 +1,4 @@
 export interface AuthAvatarFeatureEmits {
-  login: [resolve: () => void];
-  logout: [resolve: () => void];
+  login: [];
+  logout: [];
 }

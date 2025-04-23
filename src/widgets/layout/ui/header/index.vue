@@ -9,7 +9,7 @@ withDefaults(defineProps<LayoutHeaderWidgetProps>(), {
 const emit = defineEmits<LayoutHeaderWidgetEmits>();
 
 async function onAction(action: LayoutHeaderWidgetAction) {
-  await new Promise(r => emit(action, () => r("")));
+  emit(action);
 };
 </script>
 
@@ -39,7 +39,7 @@ async function onAction(action: LayoutHeaderWidgetAction) {
         <UserIdFeature :id="userId" />
       </template>
 
-      <AuthUserAvatarFeature @login="(resolve) => emit('login', resolve)" @logout="(resolve) => emit('logout', resolve)" />
+      <AuthUserAvatarFeature @login="emit('login')" @logout="emit('logout')" />
     </div>
   </header>
 </template>

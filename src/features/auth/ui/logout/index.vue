@@ -5,7 +5,7 @@ const emit = defineEmits<AuthLogoutFeatureEmits>();
 
 async function onClick() {
   await AuthApiService.logout();
-  await new Promise(r => emit("success", () => r("")));
+  emit("success");
 }
 </script>
 

@@ -37,8 +37,5 @@ export class AuthApiService {
 
     const accessToken = useCookie("accessToken");
     accessToken.value = undefined;
-
-    const user = useAuthApiUser();
-    user.value = undefined;
   }
 }

@@ -8,7 +8,7 @@ const state = reactive<Partial<AuthLoginReqDto>>({});
 
 async function onSubmit(event: FormSubmitEvent<AuthLoginReqDto>) {
   await AuthApiService.login(event.data);
-  await new Promise(r => emit("success", () => r("")));
+  emit("success");
 }
 </script>
 
