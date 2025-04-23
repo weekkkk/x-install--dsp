@@ -1,6 +1,8 @@
 <script setup lang="ts">
 definePageMeta({
   middleware: "admin",
+  actions: ["search", "delete", "add", "toggle"] as LayoutHeaderWidgetProps["actions"],
+  toggleValue: true,
 });
 
 useSeoMeta({
@@ -9,5 +11,5 @@ useSeoMeta({
 </script>
 
 <template>
-  <UserListPage />
+  <h1>User List</h1>
 </template>

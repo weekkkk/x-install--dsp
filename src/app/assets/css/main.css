@@ -64,7 +64,7 @@
   --ui-color-neutral-800: #1D1D1D;
   --ui-color-neutral-900: #0A0A0A;
 
-  --ui-bg-inverted: var(--ui-color-neutral-800);
+  --ui-bg-inverted: var(--ui-color-neutral-900);
 
   --ui-bg: #000000;
 }
@@ -76,8 +76,11 @@ input:-webkit-autofill,
 ::-webkit-scrollbar {
   width: 0;
 }
+* {
+  outline: none;
+}
 body {
-  @apply py-12.5 px-25 max-md:py-4 max-md:px-5;
+  /* @apply py-12.5 px-25 max-md:py-4 max-md:px-5; */
 }
 
 :root {

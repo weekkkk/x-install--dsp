@@ -18,18 +18,9 @@ export class AuthApiService {
   }
 
   static async checkAuth() {
-    const refreshToken = useCookie("refreshToken");
-
     const data = await $fetch<AuthResDto>(`${AUTH_API_URL}/refresh`, {
       method: "GET",
-      onRequest: ({ options }) => {
-        options.headers.append("cookie", `refreshToken=${refreshToken.value}`);
-      },
-      onResponse: ({ response }) => {
-        console.log(
-          response.headers.getSetCookie(),
-        );
-      },
+      credentials: "include",
     });
 
     const accessToken = useCookie("accessToken");
@@ -45,7 +36,7 @@ export class AuthApiService {
     });
 
     const accessToken = useCookie("accessToken");
-    accessToken.value = "";
+    accessToken.value = undefined;
 
     const user = useAuthApiUser();
     user.value = undefined;

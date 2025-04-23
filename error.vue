@@ -15,7 +15,7 @@ const handleError = () => clearError({ redirect: "/" });
       Ops, This page <br class="md:hidden"> not found
     </h2>
     <UButton
-      class="text-xl max-md:text-base font-medium py-5 px-21 max-md:py-5.25 max-md:px-13.5 cursor-pointer mt-12.5 max-md:mt-6"
+      class="mt-12.5 max-md:mt-6 w-40"
       @click="handleError"
     >
       Home

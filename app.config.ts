@@ -6,6 +6,10 @@ export default defineAppConfig({
       },
       variants: {
         size: {
+          sm: {
+            base: "px-5.25 py-5.25 text-base-sm gap-1.5",
+            leadingIcon: "size-6",
+          },
           md: {
             base: "px-6.25 py-6.25 text-base gap-1.5",
             leadingIcon: "size-6",
@@ -25,6 +29,11 @@ export default defineAppConfig({
         },
         {
           size: "md",
+          square: true,
+          class: "p-4.5",
+        },
+        {
+          size: "sm",
           square: true,
           class: "p-4.5",
         },
@@ -50,7 +59,7 @@ export default defineAppConfig({
       variants: {
         size: {
           md: {
-            root: "size-15",
+            root: "size-15 text-base",
           },
         },
       },
