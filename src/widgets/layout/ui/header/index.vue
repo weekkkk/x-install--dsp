@@ -15,7 +15,7 @@ async function onAction(action: LayoutHeaderWidgetAction) {
 </script>
 
 <template>
-  <header class="flex justify-between mx-12.5 mt-8.75 max-md:mx-5 max-md:mt-5">
+  <header class="flex justify-between mx-12.5 mt-8.75 mb-10 max-md:mx-5 max-md:mt-5">
     <div class="w-full flex justify-start">
       <UButton
         to="/" variant="ghost" :ui="{
@@ -46,7 +46,7 @@ async function onAction(action: LayoutHeaderWidgetAction) {
 
   <UButton
     v-if="action"
-    class="max-md:hidden fixed left-1/2 bottom-0 -translate-1/2"
+    class="max-md:hidden fixed left-1/2 bottom-0 -translate-x-1/2 mb-12.5 z-30"
     size="sm"
     @click="onAction(action)"
   >

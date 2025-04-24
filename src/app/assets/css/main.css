@@ -38,8 +38,8 @@
   /* --text-6xl: 4rem;
   --text-6xl--line-height: 4.375rem; */
 
-  /* 20px */
-  --radius-2xl: 1.25rem;
+  --radius-xl: 2.5rem;/* 10px */
+  /* --radius-2xl: 1.25rem; */
   /* rounded - 40px */
   /* --radius-5xl: 2.5rem; */
 }

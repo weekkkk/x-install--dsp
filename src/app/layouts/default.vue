@@ -29,7 +29,7 @@ const toggleValue = computed((): LayoutHeaderWidgetProps["toggleValue"] => {
 
 <template>
   <LayoutHeaderWidget :user-id="userId" :actions="actions" :action="action" :md-actions="mdActions" :toggle-value="toggleValue" @login="goToLogin()" @logout="goToLogin()" />
-  <main class="px-2.5 max-md:px-0">
+  <main class="px-2.5 max-md:px-0 grow">
     <NuxtPage />
   </main>
 </template>

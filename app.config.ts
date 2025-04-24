@@ -64,5 +64,22 @@ export default defineAppConfig({
         },
       },
     },
+    table: {
+      slots: {
+        thead: "[&>tr]:after:bg-(--ui-color-neutral-800)",
+        tbody: "divide-(--ui-color-neutral-800)",
+        td: "p-3 !text-base-sm text-white font-medium",
+      },
+    },
+    checkbox: {
+      slots: {
+        icon: "opacity-0",
+      },
+      variants: {
+        color: {
+          primary: "bg-linear-to-r from-(--ui-secondary) to-(--ui-primary)",
+        },
+      },
+    },
   },
 });
