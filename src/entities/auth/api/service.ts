@@ -1,12 +1,18 @@
+import type { AuthResDto } from "./interfaces";
+import type { AuthLoginReqDto } from "./schemes";
 import { $auth, AUTH_API_URL } from "./point";
-import type { AuthLoginReqDto, AuthResDto } from "./types";
+
 export class AuthApiService {
   static async login(body: AuthLoginReqDto) {
     const data = await $auth<AuthResDto>("/login", {
       method: "POST",
       body,
     });
-    localStorage.setItem("token", data.accessToken);
+    const accessToken = useCookie("accessToken");
+    accessToken.value = data.accessToken;
+
+    const user = useAuthApiUser();
+    user.value = data.user;
 
     return data;
   }
@@ -17,7 +23,8 @@ export class AuthApiService {
       credentials: "include",
     });
 
-    localStorage.setItem("token", data.accessToken);
+    const accessToken = useCookie("accessToken");
+    accessToken.value = data.accessToken;
 
     return data;
   }
@@ -28,6 +35,7 @@ export class AuthApiService {
       credentials: "include",
     });
 
-    localStorage.setItem("token", "");
+    const accessToken = useCookie("accessToken");
+    accessToken.value = undefined;
   }
 }

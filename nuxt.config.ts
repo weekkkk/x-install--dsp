@@ -1,29 +1,71 @@
+// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: "2024-11-01",
-  devtools: { enabled: true },
-  modules: ["@nuxt/image", "@nuxt/ui"],
-  tailwindcss: {
-    cssPath: "~/src/app/assets/css/tailwind.css",
-  },
-  ui: {
-    global: true,
-  },
-  colorMode: {
-    preference: "dark",
-  },
-  icon: {
-    customCollections: [
+  modules: ["@nuxt/image", "@nuxt/ui", "@nuxt/eslint"],
+  components: {
+    dirs: [
       {
-        prefix: "xi",
-        dir: "./src/app/assets/icons",
+        path: "~/src/shared",
+        extendComponent(component) {
+          const { pascalName } = component;
+          component.pascalName = `Ui${pascalName.replaceAll("Ui", "")}`;
+          return component;
+        },
+        pattern: "**/*index.vue",
+        extensions: ["vue"],
+      },
+      {
+        path: "~/src/entities",
+        extendComponent(component) {
+          component.pascalName = component.pascalName.replaceAll("Ui", "");
+          return component;
+        },
+        pattern: "**/*index.vue",
+        extensions: ["vue"],
+      },
+      {
+        path: "~/src/entities",
+        extendComponent(component) {
+          const { pascalName } = component;
+          component.pascalName = `${pascalName.replaceAll("Ui", "")}Feature`;
+          return component;
+        },
+        pattern: "**/*index.vue",
+        extensions: ["vue"],
+      },
+      {
+        path: "~/src/features",
+        extendComponent(component) {
+          const { pascalName } = component;
+          component.pascalName = `${pascalName.replaceAll("Ui", "")}Feature`;
+          return component;
+        },
+        pattern: "**/*index.vue",
+        extensions: ["vue"],
+      },
+      {
+        path: "~/src/widgets",
+        extendComponent(component) {
+          const { pascalName } = component;
+          component.pascalName = `${pascalName.replaceAll("Ui", "")}Widget`;
+          return component;
+        },
+        pattern: "**/*index.vue",
+        extensions: ["vue"],
+      },
+      {
+        path: "~/src/pages",
+        extendComponent(component) {
+          const { pascalName } = component;
+          if (pascalName.includes("Ui"))
+            component.pascalName = pascalName.replace("Ui", "Page").replaceAll("Ui", "");
+          else
+            component.pascalName = `${pascalName}Page`;
+          return component;
+        },
+        pattern: "**/*index.vue",
+        extensions: ["vue"],
       },
     ],
-  },
-  dir: {
-    pages: "./src/app/routes",
-    layouts: "./src/app/layouts",
-    assets: "./src/app/assets",
-    middleware: "./src/app/middlewares",
   },
   imports: {
     dirs: [
@@ -34,82 +76,41 @@ export default defineNuxtConfig({
       "./src/pages/*/*/index.ts",
     ],
   },
-  app: {
-    head: {
-      link: [
-        {
-          rel: "stylesheet",
-          href: `${
-            process.env.NODE_ENV === "production" ? "/x-install--dsp" : ""
-          }/fonts/pp-neue-montreal/pp-neue-montreal.style.css`,
-        },
-      ],
-    },
+  devtools: { enabled: true },
+  css: ["~/src/app/assets/css/main.css"],
+  colorMode: {
+    preference: "dark",
   },
-  components: {
-    dirs: [
+  icon: {
+    customCollections: [
       {
-        path: "~/src/shared",
-        extendComponent(component) {
-          component.pascalName = component.pascalName.replaceAll("Ui", "");
-          component.pascalName = "Ui" + component.pascalName;
-          return component;
-        },
-        pattern: "**/*index.vue",
-        extensions: ["vue"],
-      },
-      {
-        path: "~/src/entities",
-        extendComponent(component) {
-          component.pascalName = component.pascalName.replaceAll("Ui", "");
-          return component;
-        },
-        pattern: "**/*index.vue",
-        extensions: ["vue"],
-      },
-      {
-        path: "~/src/entities",
-        extendComponent(component) {
-          component.pascalName = component.pascalName.replaceAll("Ui", "");
-          component.pascalName = component.pascalName + "Feature";
-          return component;
-        },
-        pattern: "**/*index.vue",
-        extensions: ["vue"],
-      },
-      {
-        path: "~/src/features",
-        extendComponent(component) {
-          component.pascalName = component.pascalName.replaceAll("Ui", "");
-          component.pascalName = component.pascalName + "Feature";
-          return component;
-        },
-        pattern: "**/*index.vue",
-        extensions: ["vue"],
-      },
-      {
-        path: "~/src/widgets",
-        extendComponent(component) {
-          component.pascalName = component.pascalName.replaceAll("Ui", "");
-          component.pascalName = component.pascalName + "Widget";
-          return component;
-        },
-        pattern: "**/*index.vue",
-        extensions: ["vue"],
-      },
-      {
-        path: "~/src/pages",
-        extendComponent(component) {
-          component.pascalName = component.pascalName.replaceAll("Ui", "");
-          return component;
-        },
-        pattern: "**/*index.vue",
-        extensions: ["vue"],
+        prefix: "xii",
+        dir: "./src/app/assets/icons",
       },
     ],
+
   },
-  generate: {
-    routes: ["/users?mode=view", "/users?mode=del"],
+  fonts: {
+    families: [{ name: "pp-neue-montreal", provider: "local", global: true }],
+  },
+  dir: {
+    pages: "./src/app/routes",
+    layouts: "./src/app/layouts",
+    assets: "./src/app/assets",
+    middleware: "./src/app/middlewares",
+    app: "./src/app/app",
+  },
+  compatibilityDate: "2024-11-01",
+  eslint: {
+    config: {
+      standalone: false,
+    },
+  },
+  app: {
+    head: {
+      title: "Default",
+      titleTemplate: "%s | X-Install DSP",
+    },
   },
   nitro: {
     devProxy: {

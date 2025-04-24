@@ -1,7 +1,12 @@
 <script setup lang="ts">
-definePageMeta({});
+definePageMeta({
+});
+
+useSeoMeta({
+  title: "Index",
+});
 </script>
 
 <template>
-  <StatPage />
+  <h1>Index</h1>
 </template>
