@@ -1,6 +1,9 @@
 export default defineNuxtRouteMiddleware(async () => {
   const user = useAuthApiUser();
+  const refreshToken = useCookie("refreshToken");
+  const accessToken = useCookie("accessToken");
 
-  if (user.value)
-    user.value = undefined;
+  user.value = undefined;
+  refreshToken.value = undefined;
+  accessToken.value = undefined;
 });
