@@ -27,11 +27,11 @@ async function onAction(action: LayoutHeaderWidgetAction) {
     <div />
     <div class="w-full flex justify-end gap-5">
       <UButton
-        v-for="action in actions" :key="action"
-        :icon="layoutHeaderWidgetActionIcon[action].icon"
-        :class="{ 'rotate-45': action === 'toggle' && toggleValue, 'max-md:hidden': mdActions.some((arr) => arr.includes(action)) }"
-        color="neutral" size="sm"
-        @click="onAction(action)"
+        v-for="a in actions" :key="a"
+        :icon="layoutHeaderWidgetActionIcon[a].icon"
+        :class="{ 'rotate-45': a === 'toggle' && toggleValue, 'max-md:hidden': mdActions.some((arr) => arr.includes(a)) }"
+        :color="a.replace('-mode', '') === action ? 'primary' : 'neutral'" size="sm"
+        @click="onAction(a)"
       />
 
       <AuthUserIdFeature v-if="userId === undefined" />
@@ -59,22 +59,22 @@ async function onAction(action: LayoutHeaderWidgetAction) {
       class="flex justify-start gap-2.5"
     >
       <template
-        v-for="action in actionGroup" :key="action"
+        v-for="a in actionGroup" :key="a"
       >
         <UButton
-          v-if="layoutHeaderWidgetActionIcon[action].text"
-          :icon="layoutHeaderWidgetActionIcon[action].icon"
+          v-if="layoutHeaderWidgetActionIcon[a].text"
+          :icon="layoutHeaderWidgetActionIcon[a].icon"
           size="sm"
-          @click="onAction(action)"
+          @click="onAction(a)"
         >
-          {{ layoutHeaderWidgetActionIcon[action].text }}
+          {{ layoutHeaderWidgetActionIcon[a].text }}
         </UButton>
         <UButton
           v-else
-          :icon="layoutHeaderWidgetActionIcon[action].icon"
+          :icon="layoutHeaderWidgetActionIcon[a].icon"
           :class="{ 'rotate-45': action === 'toggle' && toggleValue }"
-          size="sm"
-          @click="onAction(action)"
+          :color="a.replace('-mode', '') === action ? 'neutral' : 'primary'" size="sm"
+          @click="onAction(a)"
         />
       </template>
     </div>

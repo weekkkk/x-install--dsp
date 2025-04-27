@@ -17,8 +17,6 @@ export class UserApiService {
 
   static async getAll() {
     const data = await $user<{ userResponse: UserResDto[] }>("/users");
-    console.log(data);
-
     return data.userResponse.toSorted(({ id: a }, { id: b }) => b - a);
   }
 

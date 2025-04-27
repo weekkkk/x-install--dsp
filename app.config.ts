@@ -74,11 +74,12 @@ export default defineAppConfig({
     checkbox: {
       slots: {
         icon: "opacity-0",
-        base: "ring-0",
+        base: "!ring-0 bg-(--ui-color-neutral-700)",
       },
       variants: {
         color: {
-          primary: "bg-(--ui-color-neutral-700) aria-checked:bg-linear-to-r from-(--ui-secondary) to-(--ui-primary)",
+          primary: "aria-checked:bg-linear-to-r from-(--ui-secondary) to-(--ui-primary)",
+          error: "aria-checked:bg-linear-to-r from-(--ui-color-error-400) to-(--ui-color-error-500)",
         },
       },
     },
