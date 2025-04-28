@@ -1,3 +1,14 @@
+<script setup lang="ts">
+const route = useRoute();
+
+const userId = computed(() => {
+  const id = route.params.userId;
+  if (!id)
+    return;
+  return Number(id);
+});
+</script>
+
 <template>
-  <h1>panel</h1>
+  <InstallStatTableWidget :user-id="userId" />
 </template>
