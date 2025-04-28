@@ -5,7 +5,7 @@ defineProps<UserIdProps>();
 </script>
 
 <template>
-  <UButton color="neutral" size="sm">
+  <UButton color="neutral" size="sm" class="whitespace-nowrap">
     Id: {{ id }}
   </UButton>
 </template>

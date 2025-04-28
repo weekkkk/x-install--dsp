@@ -98,7 +98,6 @@ export default defineNuxtConfig({
     layouts: "./src/app/layouts",
     assets: "./src/app/assets",
     middleware: "./src/app/middlewares",
-    app: "./src/app/app",
   },
   compatibilityDate: "2024-11-01",
   eslint: {
@@ -115,7 +114,7 @@ export default defineNuxtConfig({
   nitro: {
     devProxy: {
       "/server": {
-        target: "https://xinstallbotprofile.onrender.com/api",
+        target: "https://api.x-instals.com/api",
         changeOrigin: true,
         headers: { "Access-Control-Allow-Origin": "*" },
       },

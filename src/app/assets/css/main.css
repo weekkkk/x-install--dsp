@@ -38,8 +38,8 @@
   /* --text-6xl: 4rem;
   --text-6xl--line-height: 4.375rem; */
 
-  /* 20px */
-  --radius-2xl: 1.25rem;
+  --radius-xl: 0.625rem; /* 10px */
+  --radius-2xl: 1.25rem;  /* 20px */
   /* rounded - 40px */
   /* --radius-5xl: 2.5rem; */
 }
@@ -54,13 +54,14 @@
 
   --ui-color-success-400: #6AE15F;
 
-  --ui-color-error-400: #FF0000;
-  /* --ui-color-error-500: #d5393b; */
+  --ui-color-error-400: #F21919;
+  --ui-color-error-500: #B50000;
 
   --ui-color-neutral-200: #ffffff;
   /* --ui-color-neutral-400: #ebebf5; */
   /* --ui-color-neutral-500: #999999; */
   /* --ui-color-neutral-700: #262626; */
+  --ui-color-neutral-700: #1F1F1F;
   --ui-color-neutral-800: #1D1D1D;
   --ui-color-neutral-900: #0A0A0A;
 

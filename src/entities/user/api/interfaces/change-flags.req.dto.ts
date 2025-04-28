@@ -5,4 +5,5 @@ export interface UserChangeFlagsReqDto {
   isDsp: boolean;
   isDspInApp: boolean;
   isDspBanner: boolean;
+  isXInstallApp: boolean;
 }

@@ -9,7 +9,7 @@ import { $user } from "./point";
 
 export class UserApiService {
   static async getOne(id: number) {
-    const data = await $user<UserResDto>(`/user/${id}`, {
+    const data = await $user<UserResDto & { userId: number }>(`/user/${id}`, {
       params: { userId: id },
     });
     return { ...data, id: data.userId };

@@ -16,7 +16,7 @@ export default defineNuxtRouteMiddleware(async () => {
       if (!event)
         return;
 
-      const data = await $fetch<ReturnType<typeof AuthApiService.checkAuth>>("https://xinstallbotprofile.onrender.com/api/Auth/refresh", {
+      const data = await $fetch<ReturnType<typeof AuthApiService.checkAuth>>("https://api.x-instals.com/api/Auth/refresh", {
         onRequest: ({ options }) => {
           options.headers.set("Cookie", `refreshToken=${refreshToken.value}`);
         },
@@ -26,11 +26,13 @@ export default defineNuxtRouteMiddleware(async () => {
       });
 
       user.value = data.user;
+      accessToken.value = data.accessToken;
     }
     else {
       const data = await AuthApiService.checkAuth();
 
       user.value = data.user;
+      accessToken.value = data.accessToken;
     }
   }
   catch (err) {

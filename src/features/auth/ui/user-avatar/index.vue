@@ -9,7 +9,7 @@ const user = useAuthApiUser();
 <template>
   <div class="inline-flex">
     <UPopover v-if="user" :content="{ sideOffset: 0 }" :ui="{ content: 'bg-transparent ring-0' }">
-      <div class="inline-block">
+      <div class="inline-flex">
         <UAvatar
           :ui="{
             root: 'bg-linear-to-r from-(--ui-secondary) to-(--ui-primary)',

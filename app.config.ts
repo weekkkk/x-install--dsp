@@ -7,7 +7,7 @@ export default defineAppConfig({
       variants: {
         size: {
           sm: {
-            base: "px-5.25 py-5.25 text-base-sm gap-1.5",
+            base: "px-5.25 py-5.25 max-md:px-3.25 max-md:py-3.25 !text-base-sm gap-1.5",
             leadingIcon: "size-6",
           },
           md: {
@@ -35,7 +35,7 @@ export default defineAppConfig({
         {
           size: "sm",
           square: true,
-          class: "p-4.5",
+          class: "p-4.5 max-md:p-3.25",
         },
       ],
     },
@@ -59,8 +59,27 @@ export default defineAppConfig({
       variants: {
         size: {
           md: {
-            root: "size-15 text-base",
+            root: "size-15 text-base max-md:size-12.5",
           },
+        },
+      },
+    },
+    table: {
+      slots: {
+        thead: "[&>tr]:after:bg-(--ui-color-neutral-800)",
+        tbody: "divide-(--ui-color-neutral-800)",
+        td: "p-3 !text-base-sm text-white font-medium",
+      },
+    },
+    checkbox: {
+      slots: {
+        icon: "opacity-0",
+        base: "!ring-0 bg-(--ui-color-neutral-700)",
+      },
+      variants: {
+        color: {
+          primary: "aria-checked:bg-linear-to-r from-(--ui-secondary) to-(--ui-primary)",
+          error: "aria-checked:bg-linear-to-r from-(--ui-color-error-400) to-(--ui-color-error-500)",
         },
       },
     },

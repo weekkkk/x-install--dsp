@@ -1,9 +1,10 @@
 export interface UserResDto {
-  userId: number;
+  id: number;
   username?: string;
   createdAt: string;
   isDsp: boolean;
   isDspInApp: boolean;
   isDspBanner: boolean;
+  isXInstallApp: boolean;
   password: string;
 }

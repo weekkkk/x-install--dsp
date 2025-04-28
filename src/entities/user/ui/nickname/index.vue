@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { UserNicknameProps } from "./interfaces";
 
-withDefaults(defineProps<UserNicknameProps>(), { nickname: "nickname" });
+withDefaults(defineProps<UserNicknameProps>(), { nickname: "nickname", color: "neutral" });
 </script>
 
 <template>
-  <UButton color="neutral" size="sm">
+  <UButton :color="color" size="sm">
     {{ nickname }}
   </UButton>
 </template>

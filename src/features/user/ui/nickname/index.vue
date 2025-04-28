@@ -8,5 +8,5 @@ const { data: user } = useAsyncData(`user-${props.id}`, () => UserApiService.get
 </script>
 
 <template>
-  <UserNickname v-if="user" :nickname="user.username" />
+  <UserNickname v-if="user" :nickname="user.username" :color="color" />
 </template>
