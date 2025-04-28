@@ -15,7 +15,7 @@ async function onAction(action: LayoutHeaderWidgetAction) {
 </script>
 
 <template>
-  <header class="flex justify-between mx-12.5 mt-8.75 mb-10 max-md:mx-5 max-md:mt-5">
+  <header class="flex justify-between mx-12.5 mt-8.75 mb-10 max-md:mx-5 max-md:mt-5 z-30">
     <div class="w-full flex justify-start">
       <UButton
         to="/" variant="ghost" :ui="{
@@ -53,7 +53,7 @@ async function onAction(action: LayoutHeaderWidgetAction) {
     {{ layoutHeaderWidgetActionIcon[action].text }}
   </UButton>
 
-  <footer class="flex justify-between md:hidden mx-5 mb-5 fixed bottom-0 left-0 right-0 gap-2.5">
+  <footer class="flex justify-between md:hidden mx-5 mb-5 fixed bottom-0 left-0 right-0 gap-2.5 z-30">
     <div
       v-for="(actionGroup, index) in mdActions" :key="index"
       class="flex justify-start gap-2.5"

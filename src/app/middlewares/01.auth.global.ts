@@ -26,11 +26,13 @@ export default defineNuxtRouteMiddleware(async () => {
       });
 
       user.value = data.user;
+      accessToken.value = data.accessToken;
     }
     else {
       const data = await AuthApiService.checkAuth();
 
       user.value = data.user;
+      accessToken.value = data.accessToken;
     }
   }
   catch (err) {

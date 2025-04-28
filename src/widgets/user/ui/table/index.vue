@@ -113,7 +113,7 @@ async function changeNickname(original: UserResDto, name: string) {
   <UTable
     v-model:row-selection="rowSelection"
     :get-row-id="(row) => row.id.toString()"
-    :ui="{ th: 'not-[:first-child]:text-right', td: 'not-[:first-child]:text-right' }" :data="users" :columns="columns"
+    :ui="{ base: 'max-md:mx-5', th: 'not-[:first-child]:text-right whitespace-nowrap', td: 'not-[:first-child]:text-right' }" :data="users" :columns="columns"
   >
     <template #username-cell="{ row: { original } }">
       <UInput

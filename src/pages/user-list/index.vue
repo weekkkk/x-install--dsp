@@ -10,7 +10,7 @@ function updateUserIds(ids: number[]) {
 </script>
 
 <template>
-  <article class="bg-neutral-900 rounded-t-xl p-10 h-full">
-    <UserTableWidget :model-value="userIds" :mode="mode" @update:model-value="updateUserIds" />
+  <article class="bg-neutral-900 rounded-t-2xl p-10 h-full max-md:px-0 max-md:pt-5 pb-17.5">
+    <UserTableWidget class="-mt-3" :model-value="userIds" :mode="mode" @update:model-value="updateUserIds" />
   </article>
 </template>
