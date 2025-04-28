@@ -49,6 +49,10 @@ function onToggle() {
   const _onToggle = route.meta.onToggle as () => void;
   _onToggle();
 }
+function onAdd() {
+  const _onAdd = route.meta.onAdd as () => void;
+  _onAdd();
+}
 </script>
 
 <template>
@@ -56,6 +60,7 @@ function onToggle() {
     :user-id="userId" :actions="actions" :action="action" :md-actions="mdActions" :toggle-value="toggleValue" @delete-mode="onDeleteMode"
     @delete="onDelete"
     @toggle="onToggle"
+    @add="onAdd"
     @login="goToLogin()" @logout="goToLogin()"
   />
   <main class="px-2.5 max-md:px-0 grow">
