@@ -19,6 +19,10 @@ definePageMeta({
       return;
     navigateTo(`/user-${ids[0]}/panel-test`);
   },
+  onAdd: () => {
+    // const _ids = useRoute().query.ids;
+    navigateTo({ path: `/user-create`, query: { ...useRoute().query } });
+  },
 });
 
 useSeoMeta({

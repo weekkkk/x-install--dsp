@@ -1,10 +1,12 @@
 import type {
   UserChangeFlagsReqDto,
   UserChangeNameReqDto,
-  UserCreateReqDto,
   UserGenerateResDto,
   UserResDto,
 } from "./interfaces";
+import type {
+  UserCreateReqDto,
+} from "./schemes";
 import { $user } from "./point";
 
 export class UserApiService {

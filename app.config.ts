@@ -14,6 +14,10 @@ export default defineAppConfig({
             base: "px-6.25 py-6.25 text-base gap-1.5",
             leadingIcon: "size-6",
           },
+          lg: {
+            base: "px-6.25 py-6.25 text-base gap-1.5",
+            leadingIcon: "size-10",
+          },
         },
       },
       compoundVariants: [
