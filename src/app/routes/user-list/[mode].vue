@@ -17,7 +17,7 @@ definePageMeta({
     const ids = _ids ? JSON.parse(_ids.toString()) as number[] : undefined;
     if (!ids || !ids.length || ids.length > 1)
       return;
-    navigateTo(`/user-${ids[0]}/panel-test`);
+    navigateTo(`/user-${ids[0]}/panel-test/view`);
   },
   onAdd: () => {
     // const _ids = useRoute().query.ids;
