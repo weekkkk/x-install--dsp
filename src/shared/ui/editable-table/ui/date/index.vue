@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { CalendarDate, DateFormatter, getLocalTimeZone } from "@internationalized/date";
-
-const df = new DateFormatter("en-US", {
-  dateStyle: "medium",
-});
+import { format } from "date-fns";
 
 const modelValue = defineModel<string>();
 
@@ -25,11 +22,12 @@ const _modelValue = computed({
 </script>
 
 <template>
-  {{ modelValue }}
   <UPopover>
-    <UButton>
-      {{ _modelValue ? df.format(_modelValue.toDate(getLocalTimeZone())) : 'Select a date' }}
-    </UButton>
+    <template #default="{ open }">
+      <div class="h">
+        {{ modelValue ? format(modelValue, 'dd.MM.yyyy') : 'Select a date' }}
+      </div>
+    </template>
 
     <template #content>
       <UCalendar v-model="_modelValue" class="p-2" />
