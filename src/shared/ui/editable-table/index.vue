@@ -112,10 +112,22 @@ const editableColumns = computed(() => props.columns.filter((c): c is Extract<Ed
     :columns="_columns"
   >
     <template v-for="column in editableColumns" :key="column.accessorKey" #[`${column.accessorKey.toString()}-cell`]="{ row }">
-      <UiEditableTableDate v-if="column.type === 'date'" :model-value="(row.original[column.accessorKey] as string)" />
-      <UiEditableTableString v-if="column.type === 'string'" :model-value="(row.original[column.accessorKey] as string)" />
-      <UiEditableTableNumber v-if="column.type === 'number'" :model-value="(row.original[column.accessorKey] as number)" />
-      <UiEditableTablePercent v-if="column.type === 'percent'" :model-value="(row.original[column.accessorKey] as number)" />
+      <UiEditableTableDate
+        v-if="column.type === 'date'"
+        :model-value="(row.original[column.accessorKey] as string)"
+      />
+      <UiEditableTableString
+        v-else-if="column.type === 'string'"
+        :model-value="(row.original[column.accessorKey] as string)"
+      />
+      <UiEditableTableNumber
+        v-else-if="column.type === 'number'"
+        :model-value="(row.original[column.accessorKey] as number)"
+      />
+      <UiEditableTablePercent
+        v-else-if="column.type === 'percent'"
+        :model-value="(row.original[column.accessorKey] as number)"
+      />
     </template>
     <!-- <template #username-cell="{ row: { original } }">
       <UInput

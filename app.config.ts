@@ -6,6 +6,10 @@ export default defineAppConfig({
       },
       variants: {
         size: {
+          xs: {
+            base: "px-0.75 py-0.75 text-base gap-1.5",
+            leadingIcon: "size-6",
+          },
           sm: {
             base: "px-5.25 py-5.25 max-md:px-3.25 max-md:py-3.25 !text-base-sm gap-1.5",
             leadingIcon: "size-6",
@@ -40,6 +44,11 @@ export default defineAppConfig({
           size: "sm",
           square: true,
           class: "p-4.5 max-md:p-3.25",
+        },
+        {
+          size: "xs",
+          square: true,
+          class: "p-0.75",
         },
       ],
     },
@@ -84,6 +93,34 @@ export default defineAppConfig({
         color: {
           primary: "aria-checked:bg-linear-to-r from-(--ui-secondary) to-(--ui-primary)",
           error: "aria-checked:bg-linear-to-r from-(--ui-color-error-400) to-(--ui-color-error-500)",
+        },
+      },
+    },
+    calendar: {
+      slots: {
+        header: "justify-stretch",
+        heading: "mx-0 text-left grow font-medium",
+        headCell: "font-medium",
+        cell: "font-semibold",
+        body: "pt-5",
+        grid: "space-y-0",
+        gridWeekDaysRow: "mb-4.25",
+        cellTrigger: "m-1 mx-auto",
+      },
+      variants: {
+        color: {
+          primary: {
+            headCell: "text-white",
+            cellTrigger: "data-[selected]:bg-linear-to-r from-(--ui-secondary) to-(--ui-primary)",
+          },
+        },
+        size: {
+          md: {
+            heading: "text-2xl",
+            headCell: "!text-base-sm font-medium",
+            cell: "!text-base-sm",
+            cellTrigger: "size-8.75",
+          },
         },
       },
     },
