@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import type { EditableTableFieldProps } from "../../interfaces";
+
+defineProps<EditableTableFieldProps>();
+
 const modelValue = defineModel<number>();
 
 // function onBlur(e: FocusEvent) {
@@ -19,6 +23,7 @@ const modelValue = defineModel<number>();
 <template>
   <UInputNumber
     v-model="modelValue"
+    :placeholder="placeholder"
     class="absolute inset-0" :ui="{ base: 'text-right !text-base-sm font-medium p-3 rounded-none' }"
     variant="ghost"
     :format-options="{

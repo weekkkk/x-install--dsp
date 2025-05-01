@@ -68,6 +68,17 @@ export default defineAppConfig({
         },
       },
     },
+    inputNumber: {
+      slots: {
+        base: "font-semibold placeholder:text-(--ui-text)/20",
+      },
+    },
+    selectMenu: {
+      slots: {
+        base: "font-semibold",
+        placeholder: "text-(--ui-text)/20",
+      },
+    },
     avatar: {
       variants: {
         size: {
@@ -81,7 +92,7 @@ export default defineAppConfig({
       slots: {
         thead: "[&>tr]:after:bg-(--ui-color-neutral-800)",
         tbody: "divide-(--ui-color-neutral-800)",
-        td: "p-3 !text-base-sm text-white font-medium",
+        td: "p-3 relative !text-base-sm text-white font-medium h-10.5",
       },
     },
     checkbox: {

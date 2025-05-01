@@ -1,6 +1,10 @@
 <script setup lang="ts">
+import type { EditableTableFieldProps } from "../../interfaces";
 import { CalendarDate, getLocalTimeZone } from "@internationalized/date";
+
 import { format, isEqual, startOfDay } from "date-fns";
+
+defineProps<EditableTableFieldProps>();
 
 const modelValue = defineModel<string>();
 
@@ -33,7 +37,7 @@ function onOpen(value: boolean) {
           'text-white/50': !modelValue || !isEqual(_modelValue.toDate(getLocalTimeZone()), startOfDay(modelValue)),
         }"
       >
-        {{ (modelValue && isEqual(_modelValue.toDate(getLocalTimeZone()), startOfDay(modelValue))) || open ? format(_modelValue.toString(), 'dd.MM.yyyy') : 'Select a date' }}
+        {{ (modelValue && isEqual(_modelValue.toDate(getLocalTimeZone()), startOfDay(modelValue))) || open ? format(_modelValue.toString(), 'dd.MM.yyyy') : placeholder ?? 'Select a date' }}
       </div>
     </template>
 

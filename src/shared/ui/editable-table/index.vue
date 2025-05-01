@@ -1,7 +1,7 @@
 <script setup lang="ts" generic="Row extends EditableTableRow<keyof Row>">
 import type { TableColumn } from "@nuxt/ui";
 import type { EditableTableProps, EditableTableRow } from "./interfaces";
-import type { EditableTableColumn, EditableTableColumnDataType } from "./types";
+import type { EditableTableColumn } from "./types";
 
 const props = withDefaults(defineProps<EditableTableProps<Row>>(), { mode: "view" });
 
@@ -67,40 +67,6 @@ const _columns = computed((): [TableColumn<Row>, ...EditableTableColumn<Row>[]] 
 });
 
 const editableColumns = computed(() => props.columns.filter((c): c is Extract<EditableTableColumn<Row>, { editable: true }> => !!c.editable));
-
-// function getComponent(type: EditableTableColumnDataType) {
-//   switch (type) {
-//     case "string":
-//       return UiEditableTableString;
-//   }
-// }
-
-// const stringEditableCols = computed(() => )
-
-// const nicknameLoadings = reactive<Record<number, boolean>>({});
-
-// function onBlur(e: FocusEvent, original: UserResDto) {
-//   const newValue = (e.target as HTMLInputElement).value;
-//   if (original.username === newValue)
-//     return;
-//   changeNickname(original, newValue);
-// }
-
-// async function changeNickname(original: UserResDto, name: string) {
-//   const id = original.id;
-//   const oName = original.username;
-//   try {
-//     original.username = name;
-//     nicknameLoadings[id] = true;
-//     await UserApiService.changeName({ id, name });
-//   }
-//   catch {
-//     original.username = oName;
-//   }
-//   finally {
-//     nicknameLoadings[id] = false;
-//   }
-// }
 </script>
 
 <template>
@@ -115,40 +81,28 @@ const editableColumns = computed(() => props.columns.filter((c): c is Extract<Ed
       <UiEditableTableDate
         v-if="column.type === 'date'"
         :model-value="(row.original[column.accessorKey] as string)"
+        :placeholder="column.header?.toString() ?? column.accessorKey"
       />
       <UiEditableTableString
         v-else-if="column.type === 'string'"
         :model-value="(row.original[column.accessorKey] as string)"
+        :placeholder="column.header?.toString() ?? column.accessorKey"
       />
       <UiEditableTableNumber
         v-else-if="column.type === 'number'"
         :model-value="(row.original[column.accessorKey] as number)"
+        :placeholder="column.header?.toString() ?? column.accessorKey"
       />
       <UiEditableTablePercent
         v-else-if="column.type === 'percent'"
         :model-value="(row.original[column.accessorKey] as number)"
+        :placeholder="column.header?.toString() ?? column.accessorKey"
+      />
+      <UiEditableTableStringArray
+        v-else-if="column.type === 'string-array'"
+        :model-value="(row.original[column.accessorKey] as string[])"
+        :placeholder="column.header?.toString() ?? column.accessorKey"
       />
     </template>
-    <!-- <template #username-cell="{ row: { original } }">
-      <UInput
-        :model-value="original.username" :ui="{ base: 'text-right text-base-sm font-medium p-3 rounded-none', root: '-m-3' }"
-        variant="ghost"
-        :loading="nicknameLoadings[original.id]"
-        @blur="onBlur($event, original)"
-      />
-    </template>
-    <template #unlocked-cell="{ row: { original } }">
-      <div class="flex justify-end">
-        <UserPanelEditorFeature
-          :id="original.id"
-          :default-values="{
-            isXInstallApp: original.isXInstallApp,
-            isDsp: original.isDsp,
-            isDspInApp: original.isDspInApp,
-            isDspBanner: original.isDspBanner,
-          }"
-        />
-      </div>
-    </template> -->
   </UTable>
 </template>

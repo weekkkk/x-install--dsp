@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import type { EditableTableFieldProps } from "../../interfaces";
+
+defineProps<EditableTableFieldProps>();
+
 const modelValue = defineModel<string>({ default: "" });
 
 function onBlur(e: FocusEvent) {
@@ -7,12 +11,11 @@ function onBlur(e: FocusEvent) {
     return;
   modelValue.value = newValue;
 }
-
-// :loading="nicknameLoadings[original.id]"
 </script>
 
 <template>
   <UInput
+    :placeholder="placeholder"
     class="absolute inset-0"
     :model-value="modelValue" :ui="{ base: 'text-right text-base-sm font-medium p-3 rounded-none' }"
     variant="ghost"

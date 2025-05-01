@@ -48,6 +48,7 @@ const columns: EditableTableColumn<InstallStatResDto>[] = [
   {
     accessorKey: "keywords",
     type: "string-array",
+    editable: true,
   },
   {
     accessorKey: "totalInstall",

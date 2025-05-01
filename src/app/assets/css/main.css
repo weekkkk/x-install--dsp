@@ -20,8 +20,8 @@
   --text-base: 1rem;
   --text-base--line-height: 1.25rem; /* 20px */
   /* 18px */
-  /* --text-lg: 1.125rem;
-  --text-lg--line-height: 1.25rem; */
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.25rem;
   /* 20px */
   /* --text-xl: 1.25rem;
   --text-xl--line-height: 1.375rem; */
@@ -74,9 +74,9 @@ input:-webkit-autofill,
     transition: background-color 0s 600000s, color 0s 600000s !important;
   }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 0;
-}
+} */
 * {
   outline: none;
 }
