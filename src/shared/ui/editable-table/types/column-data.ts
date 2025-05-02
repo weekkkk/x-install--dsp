@@ -1,1 +1,1 @@
-export type EditableTableColumnData = string | number | string[] | Date;
+export type EditableTableColumnData = string | number | string[];

@@ -6,7 +6,7 @@ import { format, isEqual, startOfDay } from "date-fns";
 
 defineProps<EditableTableFieldProps>();
 
-const modelValue = defineModel<string>();
+const modelValue = defineModel<string>({ default: "" });
 
 function getDefaultValue(value?: string) {
   let date = new Date();
@@ -24,7 +24,7 @@ const _modelValue = shallowRef(getDefaultValue(modelValue.value));
 function onOpen(value: boolean) {
   if (value)
     return;
-  modelValue.value = _modelValue.value.toString();
+  modelValue.value = _modelValue.value.toDate(getLocalTimeZone()).toISOString();
 }
 </script>
 
@@ -32,7 +32,7 @@ function onOpen(value: boolean) {
   <UPopover :ui="{ content: 'ring-0 px-5 py-6.25 bg-neutral-900 rounded-3xl' }" @update:open="onOpen">
     <template #default="{ open }">
       <div
-        class="absolute inset-0 p-3 hover:bg-neutral-800 cursor-text" :class="{
+        class="absolute inset-0 p-3 hover:bg-neutral-800 cursor-text overflow-hidden" :class="{
           'bg-neutral-800': open,
           'text-white/50': !modelValue || !isEqual(_modelValue.toDate(getLocalTimeZone()), startOfDay(modelValue)),
         }"

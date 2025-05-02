@@ -124,12 +124,10 @@ async function changeNickname(original: UserResDto, name: string) {
       <div class="flex justify-end">
         <UserPanelEditorFeature
           :id="original.id"
-          :default-values="{
-            isXInstallApp: original.isXInstallApp,
-            isDsp: original.isDsp,
-            isDspInApp: original.isDspInApp,
-            isDspBanner: original.isDspBanner,
-          }"
+          v-model:install="original.isXInstallApp"
+          v-model:dsp="original.isDsp"
+          v-model:dsp-in-app="original.isDspInApp"
+          v-model:dsp-banner="original.isDspBanner"
         />
       </div>
     </template>

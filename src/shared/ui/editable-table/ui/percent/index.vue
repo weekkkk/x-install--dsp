@@ -3,7 +3,7 @@ import type { EditableTableFieldProps } from "../../interfaces";
 
 defineProps<EditableTableFieldProps>();
 
-const modelValue = defineModel<number>();
+const modelValue = defineModel<number>({ default: undefined, get: v => v / 100, set: v => v * 100 });
 </script>
 
 <template>
@@ -17,7 +17,7 @@ const modelValue = defineModel<number>();
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     }"
-    :step="0.01"
+    :step="0.0001"
     :highlight="false"
     locale="ru"
   >

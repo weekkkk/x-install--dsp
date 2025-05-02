@@ -1,5 +1,3 @@
-import type { EditableTableColumnData } from "../types";
-
-export type EditableTableRow<Key extends string | number | symbol> = {
+export interface EditableTableRow {
   id: number;
-} & Partial<Record<Exclude<Key, "id">, EditableTableColumnData>>;
+}

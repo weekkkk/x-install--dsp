@@ -3,7 +3,9 @@ import type { EditableTableFieldProps } from "../../interfaces";
 
 defineProps<EditableTableFieldProps>();
 
-const items = defineModel<string[]>({ default: () => [] });
+const modelValue = defineModel<string[]>({ default: () => [] });
+
+const items = ref([...modelValue.value]);
 
 const searchTerm = ref<string>();
 
@@ -16,6 +18,16 @@ function onDelete(index: number) {
 }
 
 const open = ref(false);
+
+watch(modelValue, (v) => {
+  items.value = [...v];
+});
+
+watch(open, (v) => {
+  if (v)
+    return;
+  modelValue.value = [...items.value];
+});
 </script>
 
 <template>

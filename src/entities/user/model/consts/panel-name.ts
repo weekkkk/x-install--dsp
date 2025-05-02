@@ -4,5 +4,5 @@ export const userPanelName: Record<UserPanel, string> = {
   "install": "X-instal App",
   "dsp": "DSP",
   "dsp-in-app": "DSP In App",
-  "dsp-in-banner": "DSP In Banner",
+  "dsp-banner": "DSP Banner",
 };

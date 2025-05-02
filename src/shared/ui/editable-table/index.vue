@@ -1,9 +1,11 @@
-<script setup lang="ts" generic="Row extends EditableTableRow<keyof Row>">
+<script setup lang="ts" generic="Row extends EditableTableRow = EditableTableRow & Partial<Record<string, EditableTableColumnData>>">
 import type { TableColumn } from "@nuxt/ui";
-import type { EditableTableProps, EditableTableRow } from "./interfaces";
-import type { EditableTableColumn } from "./types";
+import type { EditableTableEmits, EditableTableProps, EditableTableRow } from "./interfaces";
+import type { EditableTableColumn, EditableTableColumnData } from "./types";
 
 const props = withDefaults(defineProps<EditableTableProps<Row>>(), { mode: "view" });
+
+const emit = defineEmits<EditableTableEmits<Row>>();
 
 const UCheckbox = resolveComponent("UCheckbox");
 
@@ -66,7 +68,13 @@ const _columns = computed((): [TableColumn<Row>, ...EditableTableColumn<Row>[]] 
   }
 });
 
-const editableColumns = computed(() => props.columns.filter((c): c is Extract<EditableTableColumn<Row>, { editable: true }> => !!c.editable));
+const editableColumns = computed(() => props.columns.filter((c): c is EditableTableColumn<Row> => !!c.editable));
+function onUpdateModelValue(r: Row, key: keyof Row, value?: EditableTableColumnData) {
+  if (r.id !== -1)
+    emit("change", r.id, key, value);
+
+  r[key] = value as Row[keyof Row];
+}
 </script>
 
 <template>
@@ -81,27 +89,32 @@ const editableColumns = computed(() => props.columns.filter((c): c is Extract<Ed
       <UiEditableTableDate
         v-if="column.type === 'date'"
         :model-value="(row.original[column.accessorKey] as string)"
-        :placeholder="column.header?.toString() ?? column.accessorKey"
+        :placeholder="column.header ?? column.accessorKey"
+        @update:model-value="onUpdateModelValue(row.original, column.accessorKey, $event)"
       />
       <UiEditableTableString
         v-else-if="column.type === 'string'"
         :model-value="(row.original[column.accessorKey] as string)"
-        :placeholder="column.header?.toString() ?? column.accessorKey"
+        :placeholder="column.header ?? column.accessorKey"
+        @update:model-value="onUpdateModelValue(row.original, column.accessorKey, $event)"
       />
       <UiEditableTableNumber
         v-else-if="column.type === 'number'"
         :model-value="(row.original[column.accessorKey] as number)"
-        :placeholder="column.header?.toString() ?? column.accessorKey"
+        :placeholder="column.header ?? column.accessorKey"
+        @update:model-value="onUpdateModelValue(row.original, column.accessorKey, $event)"
       />
       <UiEditableTablePercent
         v-else-if="column.type === 'percent'"
         :model-value="(row.original[column.accessorKey] as number)"
-        :placeholder="column.header?.toString() ?? column.accessorKey"
+        :placeholder="column.header ?? column.accessorKey"
+        @update:model-value="onUpdateModelValue(row.original, column.accessorKey, $event)"
       />
       <UiEditableTableStringArray
         v-else-if="column.type === 'string-array'"
         :model-value="(row.original[column.accessorKey] as string[])"
-        :placeholder="column.header?.toString() ?? column.accessorKey"
+        :placeholder="column.header ?? column.accessorKey"
+        @update:model-value="onUpdateModelValue(row.original, column.accessorKey, $event)"
       />
     </template>
   </UTable>

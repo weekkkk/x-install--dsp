@@ -3,22 +3,32 @@ import type { UserPanelEditorFeatureProps } from "./interfaces";
 
 const props = defineProps<UserPanelEditorFeatureProps>();
 
-const panels: UserPanel[] = ["install", "dsp", "dsp-in-app", "dsp-in-banner"];
+const panels: UserPanel[] = ["install", "dsp", "dsp-in-app", "dsp-banner"];
+
+const isXInstallApp = defineModel<UserResDto["isXInstallApp"]>("install");
+const isDsp = defineModel<UserResDto["isDsp"]>("dsp");
+const isDspInApp = defineModel<UserResDto["isDspInApp"]>("dsp-in-app");
+const isDspBanner = defineModel<UserResDto["isDspBanner"]>("dsp-banner");
 
 const values = reactive<Record<UserPanel, boolean>>({
-  "install": !!props.defaultValues?.isXInstallApp,
-  "dsp": !!props.defaultValues?.isDsp,
-  "dsp-in-app": !!props.defaultValues?.isDspInApp,
-  "dsp-in-banner": !!props.defaultValues?.isDsp,
+  "install": !!isXInstallApp.value,
+  "dsp": !!isDsp.value,
+  "dsp-in-app": !!isDspInApp.value,
+  "dsp-banner": !!isDspBanner.value,
 });
 
 watch(values, (_values) => {
+  isXInstallApp.value = _values.install;
+  isDsp.value = _values.dsp;
+  isDspInApp.value = _values["dsp-in-app"];
+  isDspBanner.value = _values["dsp-banner"];
+
   UserApiService.changeFlags({
     id: props.id,
     isXInstallApp: _values.install,
     isDsp: _values.dsp,
     isDspInApp: _values["dsp-in-app"],
-    isDspBanner: _values["dsp-in-banner"],
+    isDspBanner: _values["dsp-banner"],
   });
 });
 </script>

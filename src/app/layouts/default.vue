@@ -20,6 +20,8 @@ const action = computed((): LayoutHeaderWidgetProps["action"] => {
   switch (_mode) {
     case "delete":
       return "delete";
+    case "create":
+      return "create";
     default:
       return undefined;
   }
@@ -31,11 +33,14 @@ const mdActions = computed((): LayoutHeaderWidgetProps["mdActions"] => {
 const toggleValue = computed((): LayoutHeaderWidgetProps["toggleValue"] => {
   return !!route.meta.toggleValue;
 });
+const defaultMode = computed((): string | undefined => {
+  return `${route.meta.defaultMode}`;
+});
 
 function onDeleteMode() {
   const mode = route.params.mode;
   if (mode === "delete")
-    navigateTo({ params: { mode: "select" } });
+    navigateTo({ params: { mode: defaultMode.value } });
   else
     navigateTo({ params: { mode: "delete" } });
 }
@@ -53,6 +58,10 @@ function onAdd() {
   const _onAdd = route.meta.onAdd as () => void;
   _onAdd();
 }
+function onCreate() {
+  const _onCreate = route.meta.onCreate as () => void;
+  _onCreate();
+}
 </script>
 
 <template>
@@ -62,6 +71,7 @@ function onAdd() {
     @toggle="onToggle"
     @add="onAdd"
     @login="goToLogin()" @logout="goToLogin()"
+    @create="onCreate"
   />
   <main class="px-2.5 max-md:px-0 grow">
     <NuxtPage />

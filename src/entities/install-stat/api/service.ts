@@ -12,25 +12,23 @@ export class InstallStatApiService {
     const data = await $installStat<InstallStatGetAllResDto>("/Statistic/statistic-xinstall", {
       params,
     });
-    console.log(data);
     return data;
   }
 
-  static async create({ userId: UserId, ...body }: InstallStatCreateReqDto) {
+  static async create(body: InstallStatCreateReqDto) {
     return $installStat<InstallStatResDto[]>("/admin/createUserRecord-xinstallapp", {
       method: "POST",
       body,
-      params: {
-        UserId,
-      },
     });
   }
 
-  static async change({ id, ...rest }: InstallStatChangeReqDto) {
+  static async change({ id, value: _value, ...rest }: InstallStatChangeReqDto) {
+    const value = Array.isArray(_value) ? JSON.stringify(_value) : _value.toString();
     return $installStat<InstallStatResDto[]>(`/admin/statistic-xinstall`, {
       method: "PATCH",
       body: {
         id,
+        value,
         ...rest,
       },
     });

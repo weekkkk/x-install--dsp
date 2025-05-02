@@ -78,7 +78,7 @@ async function onAction(action: LayoutHeaderWidgetAction) {
         />
       </template>
     </div>
-    <div v-if="userId !== undefined" class="flex justify-end">
+    <div v-if="userId !== undefined" class="flex justify-end overflow-hidden">
       <UserNicknameFeature :id="userId" color="primary" />
     </div>
   </footer>

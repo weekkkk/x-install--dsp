@@ -7,8 +7,24 @@ const userId = computed(() => {
     return;
   return Number(id);
 });
+const mode = computed(() => {
+  return route.params.mode as "create" | "view" | "delete" | undefined;
+});
+
+const ids = computed({
+  get: () => {
+    return route.query.ids ? JSON.parse(`${route.query.ids}`) as number[] : [];
+  },
+  set: (v) => {
+    navigateTo({ query: { ids: JSON.stringify(v) } });
+  },
+});
+
+const panel = computed(() => route.params.panel as UserPanel);
 </script>
 
 <template>
-  <InstallStatTableWidget :user-id="userId" />
+  <article class="bg-neutral-900 rounded-t-2xl p-10 pb-27.5 h-full max-md:px-0 max-md:pt-5 max-md:pb-17.5">
+    <InstallStatTableWidget v-if="panel === 'install'" v-model="ids" :mode="mode" :user-id="userId" />
+  </article>
 </template>

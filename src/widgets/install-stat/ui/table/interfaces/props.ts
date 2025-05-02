@@ -1,4 +1,4 @@
 export interface InstallStatTableWidgetProps {
   userId?: number;
-  mode?: "delete" | "view";
+  mode?: "delete" | "view" | "create";
 }

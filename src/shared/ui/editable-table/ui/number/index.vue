@@ -3,21 +3,7 @@ import type { EditableTableFieldProps } from "../../interfaces";
 
 defineProps<EditableTableFieldProps>();
 
-const modelValue = defineModel<number>();
-
-// function onBlur(e: FocusEvent) {
-//   const v = (e.target as HTMLInputElement).value;
-//   console.log(v);
-
-//   const newValue = v ? Number.parseFloat(v.replaceAll(/\s/g, "").replaceAll(",", ".")) : undefined;
-//   console.log(newValue);
-
-//   if (modelValue.value === newValue)
-//     return;
-//   modelValue.value = newValue;
-// }
-
-// :loading="nicknameLoadings[original.id]"
+const modelValue = defineModel<number>({ default: undefined });
 </script>
 
 <template>
