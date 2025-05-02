@@ -21,8 +21,10 @@ async function onAction(action: LayoutHeaderWidgetAction) {
         to="/" variant="ghost" :ui="{
           leadingIcon: 'size-10.5',
           base: 'p-2.25 max-md:p-1',
-        }" class="-mx-3.5" icon="xii:logo"
+        }" class="-mx-2.25" icon="xii:logo"
       />
+
+      <UiDateRangeFilter v-if="dateFilter" class="ml-27.75" />
     </div>
     <div />
     <div class="w-full flex justify-end gap-5">

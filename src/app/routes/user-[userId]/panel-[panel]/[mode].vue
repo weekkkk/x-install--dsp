@@ -5,6 +5,7 @@ definePageMeta({
   mdActions: [["toggle", "delete-mode"], ["create"]] as LayoutHeaderWidgetProps["mdActions"],
   toggleValue: false,
   defaultMode: "create",
+  dateFilter: true,
   onToggle: () => {
     const userId = Number(useRoute().params.userId);
     if (!userId && userId !== 0)

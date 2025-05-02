@@ -37,6 +37,10 @@ const defaultMode = computed((): string | undefined => {
   return `${route.meta.defaultMode}`;
 });
 
+const dateFilter = computed(() => {
+  return route.meta.dateFilter as boolean;
+});
+
 function onDeleteMode() {
   const mode = route.params.mode;
   if (mode === "delete")
@@ -66,7 +70,9 @@ function onCreate() {
 
 <template>
   <LayoutHeaderWidget
-    :user-id="userId" :actions="actions" :action="action" :md-actions="mdActions" :toggle-value="toggleValue" @delete-mode="onDeleteMode"
+    :user-id="userId"
+    :date-filter="dateFilter"
+    :actions="actions" :action="action" :md-actions="mdActions" :toggle-value="toggleValue" @delete-mode="onDeleteMode"
     @delete="onDelete"
     @toggle="onToggle"
     @add="onAdd"

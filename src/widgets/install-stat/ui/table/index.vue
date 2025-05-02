@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import type { InstallStatTableWidgetProps } from "./interfaces";
+import { startOfToday, startOfTomorrow } from "date-fns";
 
-const props = defineProps<InstallStatTableWidgetProps>();
+const props = withDefaults(defineProps<InstallStatTableWidgetProps>(), {
+  dateRange: () => {
+    return { start: startOfToday(), end: startOfTomorrow() };
+  },
+});
 
 const user = useAuthApiUser();
 
@@ -10,12 +15,20 @@ const { data: installStats } = useAsyncData("install-stat-list", async () => {
     throw new Error("Нет юзера");
 
   const UserId = props.userId ?? user.value.id;
+  const { start, end } = props.dateRange;
 
-  const data = await InstallStatApiService.getAll({ UserId });
+  const data = await InstallStatApiService.getAll({
+    UserId,
+    StartDate: start.toISOString(),
+    EndDate: end.toISOString(),
+  });
   if (props.mode === "create")
     data.userStatistics.unshift({ id: -1 });
   return data;
-}, { default: () => ({ userStatistics: [] }) });
+}, {
+  default: () => ({ userStatistics: [] }),
+  watch: [() => props.dateRange],
+});
 
 const columns: EditableTableColumn<InstallStatResDto>[] = [
   {
