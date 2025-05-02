@@ -7,4 +7,5 @@ export interface LayoutHeaderWidgetProps {
   action?: LayoutHeaderWidgetAction;
   mdActions?: LayoutHeaderWidgetAction[][];
   toggleValue?: boolean;
+  dateFilter?: boolean;
 }

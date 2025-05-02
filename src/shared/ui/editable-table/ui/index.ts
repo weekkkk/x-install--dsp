@@ -1,0 +1,1 @@
+export { UiEditableTableString } from "./string";

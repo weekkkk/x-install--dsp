@@ -21,10 +21,14 @@ async function onAction(action: LayoutHeaderWidgetAction) {
         to="/" variant="ghost" :ui="{
           leadingIcon: 'size-10.5',
           base: 'p-2.25 max-md:p-1',
-        }" class="-mx-3.5" icon="xii:logo"
+        }" class="-mx-2.25" icon="xii:logo"
       />
+
+      <UiDateRangeFilter v-if="dateFilter" class="ml-27.75" />
     </div>
-    <div />
+    <div>
+      <UserPanelFilterFeature />
+    </div>
     <div class="w-full flex justify-end gap-5">
       <UButton
         v-for="a in actions" :key="a"
@@ -78,7 +82,7 @@ async function onAction(action: LayoutHeaderWidgetAction) {
         />
       </template>
     </div>
-    <div v-if="userId !== undefined" class="flex justify-end">
+    <div v-if="userId !== undefined" class="flex justify-end overflow-hidden">
       <UserNicknameFeature :id="userId" color="primary" />
     </div>
   </footer>

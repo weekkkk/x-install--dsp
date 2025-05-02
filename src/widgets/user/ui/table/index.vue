@@ -11,6 +11,15 @@ const { data: users } = useAsyncData("user-list", () => UserApiService.getAll(),
 
 const selectedUserIds = defineModel<UserResDto["id"][]>({ default: () => [] });
 
+const rowSelection = computed<Record<string, boolean>>({
+  get: () => {
+    return selectedUserIds.value.reduce((acc, id) => ({ ...acc, [id.toString()]: true }), {});
+  },
+  set: (v) => {
+    selectedUserIds.value = Object.entries(v).filter(([,v]) => v).map(([k]) => Number(k));
+  },
+});
+
 const defaultColumns: TableColumn<UserResDto>[] = [
   {
     accessorKey: "createdAt",
@@ -35,15 +44,6 @@ const defaultColumns: TableColumn<UserResDto>[] = [
   },
 ];
 
-const rowSelection = computed<Record<string, boolean>>({
-  get: () => {
-    return selectedUserIds.value.reduce((acc, id) => ({ ...acc, [id.toString()]: true }), {});
-  },
-  set: (v) => {
-    selectedUserIds.value = Object.entries(v).filter(([,v]) => v).map(([k]) => Number(k));
-  },
-});
-
 const columns = computed(() => {
   switch (props.mode) {
     case "select":
@@ -55,10 +55,7 @@ const columns = computed(() => {
             "onUpdate:modelValue": (value: boolean | "indeterminate") => {
               const v = !!value;
               const key = row.id.toString();
-              // if (v)
               rowSelection.value = { [key]: v };
-              // else
-              // delete rowSelection.value[key];
             },
             "aria-label": "Select row",
             "ui": { container: "h-6", base: "size-6 rounded-xl" },
@@ -127,12 +124,10 @@ async function changeNickname(original: UserResDto, name: string) {
       <div class="flex justify-end">
         <UserPanelEditorFeature
           :id="original.id"
-          :default-values="{
-            isXInstallApp: original.isXInstallApp,
-            isDsp: original.isDsp,
-            isDspInApp: original.isDspInApp,
-            isDspBanner: original.isDspBanner,
-          }"
+          v-model:install="original.isXInstallApp"
+          v-model:dsp="original.isDsp"
+          v-model:dsp-in-app="original.isDspInApp"
+          v-model:dsp-banner="original.isDspBanner"
         />
       </div>
     </template>

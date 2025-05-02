@@ -6,6 +6,10 @@ export default defineAppConfig({
       },
       variants: {
         size: {
+          xs: {
+            base: "px-0.75 py-0.75 text-base gap-1.5",
+            leadingIcon: "size-6",
+          },
           sm: {
             base: "px-5.25 py-5.25 max-md:px-3.25 max-md:py-3.25 !text-base-sm gap-1.5",
             leadingIcon: "size-6",
@@ -41,6 +45,11 @@ export default defineAppConfig({
           square: true,
           class: "p-4.5 max-md:p-3.25",
         },
+        {
+          size: "xs",
+          square: true,
+          class: "p-0.75",
+        },
       ],
     },
     input: {
@@ -59,6 +68,17 @@ export default defineAppConfig({
         },
       },
     },
+    inputNumber: {
+      slots: {
+        base: "font-semibold placeholder:text-(--ui-text)/20",
+      },
+    },
+    selectMenu: {
+      slots: {
+        base: "font-semibold",
+        placeholder: "text-(--ui-text)/20",
+      },
+    },
     avatar: {
       variants: {
         size: {
@@ -72,7 +92,7 @@ export default defineAppConfig({
       slots: {
         thead: "[&>tr]:after:bg-(--ui-color-neutral-800)",
         tbody: "divide-(--ui-color-neutral-800)",
-        td: "p-3 !text-base-sm text-white font-medium",
+        td: "p-3 relative !text-base-sm text-white font-medium h-10.5",
       },
     },
     checkbox: {
@@ -84,6 +104,34 @@ export default defineAppConfig({
         color: {
           primary: "aria-checked:bg-linear-to-r from-(--ui-secondary) to-(--ui-primary)",
           error: "aria-checked:bg-linear-to-r from-(--ui-color-error-400) to-(--ui-color-error-500)",
+        },
+      },
+    },
+    calendar: {
+      slots: {
+        header: "justify-stretch",
+        heading: "mx-0 text-left grow font-medium",
+        headCell: "font-medium",
+        cell: "font-semibold",
+        body: "pt-5",
+        grid: "space-y-0",
+        gridWeekDaysRow: "mb-4.25",
+        cellTrigger: "m-1 mx-auto",
+      },
+      variants: {
+        color: {
+          primary: {
+            headCell: "text-white",
+            cellTrigger: "data-[selected]:bg-linear-to-r from-(--ui-secondary) to-(--ui-primary)",
+          },
+        },
+        size: {
+          md: {
+            heading: "text-2xl",
+            headCell: "!text-base-sm font-medium",
+            cell: "!text-base-sm",
+            cellTrigger: "size-8.75",
+          },
         },
       },
     },
