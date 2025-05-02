@@ -26,7 +26,9 @@ async function onAction(action: LayoutHeaderWidgetAction) {
 
       <UiDateRangeFilter v-if="dateFilter" class="ml-27.75" />
     </div>
-    <div />
+    <div>
+      <UserPanelFilterFeature />
+    </div>
     <div class="w-full flex justify-end gap-5">
       <UButton
         v-for="a in actions" :key="a"
