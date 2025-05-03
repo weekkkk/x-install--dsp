@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<InstallStatTableWidgetProps>(), {
 
 const user = useAuthApiUser();
 
-const { data: installStats, status } = useAsyncData("install-stat-list", async () => {
+const { data: installStats, status, refresh } = useAsyncData("install-stat-list", async () => {
   if (!user.value)
     throw new Error("Нет юзера");
 
@@ -26,7 +26,7 @@ const { data: installStats, status } = useAsyncData("install-stat-list", async (
     data.userStatistics.unshift({ id: -1 });
   return data;
 }, {
-  default: () => ({ userStatistics: [] }),
+  default: () => ({ userStatistics: [], total: { total: 0, totalInstall: 0 } }),
   watch: [() => props.dateRange],
 });
 
@@ -110,8 +110,9 @@ const columns = computed((): EditableTableColumn<InstallStatResDto>[] => [
   },
 ]);
 
-function onChange(id: number, key: keyof InstallStatResDto, value: any) {
-  InstallStatApiService.change({ id, key, value });
+async function onChange(id: number, key: keyof InstallStatResDto, value: any) {
+  await InstallStatApiService.change({ id, key, value });
+  refresh();
 }
 
 const _mode = computed(() => {
@@ -121,11 +122,22 @@ const _mode = computed(() => {
 });
 
 const selectedIds = defineModel<number[]>({ default: () => [] });
+
+const total = computed(() => {
+  const { total, totalInstall, totalIntasll } = installStats.value.total as any;
+  const _totalInstall = totalInstall ?? totalIntasll;
+  return ({
+    date: "Total",
+    total: total || total === 0 ? n.format(total) : undefined,
+    totalInstall: _totalInstall || _totalInstall === 0 ? n.format(_totalInstall) : undefined,
+  });
+});
 </script>
 
 <template>
   <UiEditableTable
     v-model="selectedIds" class="-mt-3"
+    :total-row="total"
     :loading="status === 'pending'"
     :mode="_mode" :columns="columns" :rows="installStats.userStatistics" @change="onChange"
   />

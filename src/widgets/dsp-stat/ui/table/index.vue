@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<DspStatTableWidgetProps>(), {
 
 const user = useAuthApiUser();
 
-const { data: dspStats, status } = useAsyncData(`${props.panel}-stat-list`, async () => {
+const { data: dspStats, status, refresh } = useAsyncData(`${props.panel}-stat-list`, async () => {
   if (!user.value)
     throw new Error("Нет юзера");
 
@@ -29,7 +29,7 @@ const { data: dspStats, status } = useAsyncData(`${props.panel}-stat-list`, asyn
     data.userStatistics.unshift({ id: -1 });
   return data;
 }, {
-  default: () => ({ userStatistics: [] }),
+  default: () => ({ userStatistics: [], total: {}, totalAllTime: 0 } as Awaited<ReturnType<typeof DspStatApiService.getAll>>),
   watch: [() => props.dateRange],
 });
 
@@ -115,8 +115,9 @@ const columns = computed((): EditableTableColumn<DspStatResDto>[] => [
   },
 ]);
 
-function onChange(id: number, key: keyof DspStatResDto, value: any) {
-  DspStatApiService.change({ id, key, value });
+async function onChange(id: number, key: keyof DspStatResDto, value: any) {
+  await DspStatApiService.change({ id, key, value });
+  refresh();
 }
 
 const _mode = computed(() => {
@@ -126,12 +127,28 @@ const _mode = computed(() => {
 });
 
 const selectedIds = defineModel<number[]>({ default: () => [] });
+
+const total = computed(() => {
+  const { ack, clicksCount, completesCount, impsCount, startsCount, total, win } = dspStats.value.total;
+  return ({
+    date: "Total",
+    ack: ack || ack === 0 ? n.format(ack) : undefined,
+    clicksCount: clicksCount || clicksCount === 0 ? n.format(clicksCount) : undefined,
+    completesCount: completesCount || completesCount === 0 ? n.format(completesCount) : undefined,
+    impsCount: impsCount || impsCount === 0 ? n.format(impsCount) : undefined,
+    startsCount: startsCount || startsCount === 0 ? n.format(startsCount) : undefined,
+    total: total || total === 0 ? n.format(total) : undefined,
+    win: win || win === 0 ? n.format(win) : undefined,
+  });
+});
 </script>
 
 <template>
   <UiEditableTable
     v-model="selectedIds" class="-mt-3"
     :loading="status === 'pending'"
-    :mode="_mode" :columns="columns" :rows="dspStats.userStatistics" @change="onChange"
+    :total-row="total"
+    :mode="_mode" :columns="columns" :rows="dspStats.userStatistics"
+    @change="onChange"
   />
 </template>

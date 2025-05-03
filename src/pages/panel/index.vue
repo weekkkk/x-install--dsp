@@ -36,7 +36,7 @@ const panel = computed(() => route.params.panel as UserPanel);
 </script>
 
 <template>
-  <article class="bg-neutral-900 rounded-t-2xl p-10 pb-27.5 h-full max-md:px-0 max-md:pt-5 max-md:pb-17.5">
+  <article class="shirk grow bg-neutral-900 rounded-t-2xl p-10 pb-27.5 max-md:px-0 max-md:pt-5 max-md:pb-17.5 flex flex-col overflow-hidden">
     <InstallStatTableWidget
       v-if="panel === 'install'"
       v-model="ids" :mode="mode" :user-id="userId ?? user?.id"
