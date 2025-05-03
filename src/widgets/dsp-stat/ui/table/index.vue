@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { InstallStatTableWidgetProps } from "./interfaces";
+import type { DspStatTableWidgetProps } from "./interfaces";
 import { startOfToday, startOfTomorrow } from "date-fns";
 
-const props = withDefaults(defineProps<InstallStatTableWidgetProps>(), {
+const props = withDefaults(defineProps<DspStatTableWidgetProps>(), {
   dateRange: () => {
     return { start: startOfToday(), end: startOfTomorrow() };
   },
@@ -10,17 +10,20 @@ const props = withDefaults(defineProps<InstallStatTableWidgetProps>(), {
 
 const user = useAuthApiUser();
 
-const { data: installStats, status } = useAsyncData("install-stat-list", async () => {
+const { data: dspStats, status } = useAsyncData(`${props.panel}-stat-list`, async () => {
   if (!user.value)
     throw new Error("Нет юзера");
 
   const UserId = props.userId ?? user.value.id;
   const { start, end } = props.dateRange;
 
-  const data = await InstallStatApiService.getAll({
+  const data = await DspStatApiService.getAll({
     UserId,
     StartDate: start.toISOString(),
     EndDate: end.toISOString(),
+    IsDsp: props.panel === "dsp",
+    IsDspInApp: props.panel === "dsp-in-app",
+    IsDspBanner: props.panel === "dsp-banner",
   });
   if (props.mode === "create")
     data.userStatistics.unshift({ id: -1 });
@@ -30,7 +33,7 @@ const { data: installStats, status } = useAsyncData("install-stat-list", async (
   watch: [() => props.dateRange],
 });
 
-const columns: EditableTableColumn<InstallStatResDto>[] = [
+const columns: EditableTableColumn<DspStatResDto>[] = [
   {
     accessorKey: "date",
     header: "date",
@@ -43,43 +46,59 @@ const columns: EditableTableColumn<InstallStatResDto>[] = [
     editable: true,
   },
   {
-    accessorKey: "appLink",
-    header: "app link",
-    type: "string",
-    editable: true,
-  },
-  {
-    accessorKey: "appName",
-    header: "app name",
-    type: "string",
-    editable: true,
-  },
-  {
-    accessorKey: "region",
-    type: "string",
-    editable: true,
-  },
-  {
-    accessorKey: "keywords",
-    type: "string-array",
-    editable: true,
-  },
-  {
-    accessorKey: "totalInstall",
-    header: "total install",
+    accessorKey: "ack",
     type: "number",
     editable: true,
   },
   {
-    accessorKey: "complited",
-    header: "% complited",
+    accessorKey: "win",
+    type: "number",
+    editable: true,
+  },
+  {
+    accessorKey: "impsCount",
+    header: "imps count",
+    type: "number",
+    editable: true,
+  },
+  {
+    accessorKey: "showRate",
+    header: "show rate",
+    type: "percent",
+    editable: true,
+  },
+  {
+    accessorKey: "clicksCount",
+    header: "clicks count",
+    type: "number",
+    editable: true,
+  },
+  {
+    accessorKey: "ctr",
+    type: "percent",
+    editable: true,
+  },
+  {
+    accessorKey: "startsCount",
+    header: "starts count",
+    type: "number",
+    editable: true,
+  },
+  {
+    accessorKey: "completesCount",
+    header: "completes count",
+    type: "number",
+    editable: true,
+  },
+  {
+    accessorKey: "vtr",
     type: "percent",
     editable: true,
   },
 ];
 
-function onChange(id: number, key: keyof InstallStatResDto, value: any) {
-  InstallStatApiService.change({ id, key, value });
+function onChange(id: number, key: keyof DspStatResDto, value: any) {
+  DspStatApiService.change({ id, key, value });
 }
 
 const _mode = computed(() => {
@@ -95,6 +114,6 @@ const selectedIds = defineModel<number[]>({ default: () => [] });
   <UiEditableTable
     v-model="selectedIds" class="-mt-3"
     :loading="status === 'pending'"
-    :mode="_mode" :columns="columns" :rows="installStats.userStatistics" @change="onChange"
+    :mode="_mode" :columns="columns" :rows="dspStats.userStatistics" @change="onChange"
   />
 </template>

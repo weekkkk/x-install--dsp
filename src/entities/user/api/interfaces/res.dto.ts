@@ -6,5 +6,6 @@ export interface UserResDto {
   isDspInApp: boolean;
   isDspBanner: boolean;
   isXInstallApp: boolean;
+  login: string;
   password: string;
 }

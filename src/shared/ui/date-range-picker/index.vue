@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { CalendarDate, getLocalTimeZone } from "@internationalized/date";
 
-import { format, toDate } from "date-fns";
+import { endOfDay, format, toDate } from "date-fns";
 
 const modelValue = defineModel<{ start?: string; end?: string }>({ default: () => ({}) });
 
@@ -31,23 +31,14 @@ const _modelValue = computed({
   set: ({ start, end }) => {
     modelValue.value = {
       start: start.toDate(getLocalTimeZone()).toISOString(),
-      end: end.toDate(getLocalTimeZone()).toISOString(),
+      end: endOfDay(end.toDate(getLocalTimeZone())).toISOString(),
     };
   },
 });
-
-function onOpen(value: boolean) {
-  if (value)
-    return;
-  modelValue.value = {
-    start: _modelValue.value.start.toDate(getLocalTimeZone()).toISOString(),
-    end: _modelValue.value.end.toDate(getLocalTimeZone()).toISOString(),
-  };
-}
 </script>
 
 <template>
-  <UPopover :ui="{ content: 'ring-0 px-5 py-6.25 bg-neutral-900 rounded-3xl' }" @update:open="onOpen">
+  <UPopover :ui="{ content: 'ring-0 px-5 py-6.25 bg-neutral-900 rounded-3xl' }">
     <template #default>
       <UButton size="sm" color="neutral">
         {{ format(_modelValue.start.toString(), 'dd.MM.yyyy') }} - {{ format(_modelValue.end.toString(), 'dd.MM.yyyy') }}

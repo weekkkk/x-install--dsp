@@ -40,5 +40,11 @@ const panel = computed(() => route.params.panel as UserPanel);
       v-model="ids" :mode="mode" :user-id="userId"
       :date-range="dateRange"
     />
+    <DspStatTableWidget
+      v-else
+      v-model="ids" :mode="mode" :user-id="userId"
+      :date-range="dateRange"
+      :panel="panel"
+    />
   </article>
 </template>
