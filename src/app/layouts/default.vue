@@ -82,7 +82,7 @@ function onCreate() {
     @login="goToLogin()" @logout="goToLogin()"
     @create="onCreate"
   />
-  <main class="px-2.5 max-md:px-0 grow shirk flex flex-col overflow-hidden">
+  <main class="px-2.5 max-md:px-0 grow shirk flex flex-col">
     <NuxtPage />
   </main>
 </template>

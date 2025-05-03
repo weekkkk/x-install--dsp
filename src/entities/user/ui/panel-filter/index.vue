@@ -28,5 +28,6 @@ const tab = computed({
 </script>
 
 <template>
-  <UiButtonTabs v-model="tab" :tabs="_tabs" />
+  <UiButtonTabs v-model="tab" class="max-md:hidden" :tabs="_tabs" />
+  <UiButtonSelect v-model="tab" class="md:hidden" :options="_tabs" />
 </template>

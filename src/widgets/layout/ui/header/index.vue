@@ -15,8 +15,8 @@ async function onAction(action: LayoutHeaderWidgetAction) {
 </script>
 
 <template>
-  <header class="flex justify-between mx-12.5 mt-8.75 mb-10 max-md:mx-5 max-md:mt-5 z-30">
-    <div class="w-full flex justify-start">
+  <header class="flex justify-between mx-12.5 mt-8.75 mb-10 max-md:mx-5 max-md:mt-5 z-30 gap-5 max-md:gap-2.5">
+    <div class="w-full flex justify-start max-md:w-fit">
       <UButton
         to="/" variant="ghost" :ui="{
           leadingIcon: 'size-10.5',
@@ -24,7 +24,7 @@ async function onAction(action: LayoutHeaderWidgetAction) {
         }" class="-mx-2.25" icon="xii:logo"
       />
 
-      <UiDateRangeFilter v-if="dateFilter" class="ml-27.75" />
+      <UiDateRangeFilter v-if="dateFilter" class="ml-27.75 max-md:hidden" />
     </div>
     <div>
       <template v-if="panelFilter">
@@ -32,7 +32,7 @@ async function onAction(action: LayoutHeaderWidgetAction) {
         <AuthUserPanelFilterFeature v-else />
       </template>
     </div>
-    <div class="w-full flex justify-end gap-5">
+    <div class="w-full flex justify-end gap-5 max-md:gap-2.5">
       <UButton
         v-for="a in actions" :key="a"
         :icon="layoutHeaderWidgetActionIcon[a].icon"
@@ -50,6 +50,9 @@ async function onAction(action: LayoutHeaderWidgetAction) {
       <AuthUserAvatarFeature @login="emit('login')" @logout="emit('logout')" />
     </div>
   </header>
+  <div class="md:hidden flex mb-10 mx-5 z-30">
+    <UiDateRangeFilter v-if="dateFilter" />
+  </div>
 
   <UButton
     v-if="action"

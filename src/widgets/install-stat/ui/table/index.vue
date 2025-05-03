@@ -26,7 +26,7 @@ const { data: installStats, status, refresh } = useAsyncData("install-stat-list"
     data.userStatistics.unshift({ id: -1 });
   return data;
 }, {
-  default: () => ({ userStatistics: [], total: { total: 0, totalInstall: 0 } }),
+  default: () => ({ userStatistics: [], total: { total: 0, totalInstall: 0 }, totalAllTime: 0 } as Awaited<ReturnType<typeof InstallStatApiService.getAll>>),
   watch: [() => props.dateRange],
 });
 

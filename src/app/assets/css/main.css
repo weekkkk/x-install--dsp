@@ -31,6 +31,16 @@
   /* 30px */
   --text-3xl: 1.875rem;
   --text-3xl--line-height: 2.1875rem;
+  /* 35px */
+  --text-4xl: 2.1875rem;
+  --text-4xl--line-height: 2.625rem;
+  /* 50px */
+  --text-5xl: 3.125rem;
+  --text-5xl--line-height: 3.75rem;
+  /* 100px */
+  --text-10xl: 6.25rem;
+  --text-10xl--line-height: 5rem;
+
   /* 36px */
   /* --text-4xl: 2.25rem;
   --text-4xl--line-height: 2.6875rem; */
@@ -90,7 +100,7 @@ body {
 :root,
 body,
 #__nuxt {
-  @apply h-full overflow-hidden;
+  @apply h-full;
 }
 #__nuxt {
   @apply flex flex-col;

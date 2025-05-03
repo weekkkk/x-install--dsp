@@ -40,7 +40,7 @@ const _modelValue = computed({
 <template>
   <UPopover :ui="{ content: 'ring-0 px-5 py-6.25 bg-neutral-900 rounded-3xl' }">
     <template #default>
-      <UButton size="sm" color="neutral">
+      <UButton size="sm" color="neutral" class="whitespace-nowrap">
         {{ format(_modelValue.start.toString(), 'dd.MM.yyyy') }} - {{ format(_modelValue.end.toString(), 'dd.MM.yyyy') }}
       </UButton>
     </template>

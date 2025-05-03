@@ -29,7 +29,7 @@ const { data: dspStats, status, refresh } = useAsyncData(`${props.panel}-stat-li
     data.userStatistics.unshift({ id: -1 });
   return data;
 }, {
-  default: () => ({ userStatistics: [], total: {}, totalAllTime: 0 } as Awaited<ReturnType<typeof DspStatApiService.getAll>>),
+  default: () => ({ userStatistics: [], total: {}, totalAllTime: 0, averages: {} } as Awaited<ReturnType<typeof DspStatApiService.getAll>>),
   watch: [() => props.dateRange],
 });
 

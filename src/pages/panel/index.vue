@@ -36,19 +36,40 @@ const panel = computed(() => route.params.panel as UserPanel);
 </script>
 
 <template>
-  <article class="shirk grow bg-neutral-900 rounded-t-2xl p-10 pb-27.5 max-md:px-0 max-md:pt-5 max-md:pb-17.5 flex flex-col overflow-hidden">
-    <InstallStatTableWidget
-      v-if="panel === 'install'"
-      v-model="ids" :mode="mode" :user-id="userId ?? user?.id"
-      :date-range="dateRange"
-      :readonly="userId === undefined"
-    />
-    <DspStatTableWidget
-      v-else
-      v-model="ids" :mode="mode" :user-id="userId ?? user?.id"
-      :date-range="dateRange"
-      :panel="panel"
-      :readonly="userId === undefined"
-    />
-  </article>
+  <div class="flex flex-col justify-between grow shrink gap-10">
+    <article>
+      <InstallStatIndicatorsWidget
+        v-if="panel === 'install'"
+        v-model="ids" :mode="mode" :user-id="userId ?? user?.id"
+        :date-range="dateRange"
+      />
+      <DspStatIndicatorsWidget
+        v-else
+        v-model="ids"
+        :panel="panel" :mode="mode" :user-id="userId ?? user?.id"
+        :date-range="dateRange"
+      />
+    </article>
+    <article
+      class="shirk grow max-h-2/3 bg-neutral-900 rounded-t-2xl p-10 max-md:px-0 max-md:pt-5 flex flex-col"
+      :class="{ 'pb-27.5 max-md:pb-17.5': mode === 'create' || mode === 'delete' }"
+    >
+      <InstallStatTableWidget
+        v-if="panel === 'install'"
+        v-model="ids"
+        class="-my-3"
+        :mode="mode" :user-id="userId ?? user?.id"
+        :date-range="dateRange"
+        :readonly="userId === undefined"
+      />
+      <DspStatTableWidget
+        v-else
+        v-model="ids" :mode="mode" :user-id="userId ?? user?.id"
+        class="-my-3"
+        :date-range="dateRange"
+        :panel="panel"
+        :readonly="userId === undefined"
+      />
+    </article>
+  </div>
 </template>

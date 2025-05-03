@@ -5,6 +5,10 @@ export interface DspStatGetAllResDto {
     DspStatResDto,
     "total" | "ack" | "win" | "impsCount" | "clicksCount" | "startsCount" | "completesCount"
   >;
+  averages: Pick<
+    DspStatResDto,
+    "ctr" | "showRate"
+  >;
   totalAllTime: number;
   userStatistics: DspStatResDto[];
 }
