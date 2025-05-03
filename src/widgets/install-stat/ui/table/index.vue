@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { InstallStatTableWidgetProps } from "./interfaces";
-import { startOfToday, startOfTomorrow } from "date-fns";
+import { format, startOfToday, startOfTomorrow } from "date-fns";
 
 const props = withDefaults(defineProps<InstallStatTableWidgetProps>(), {
   dateRange: () => {
@@ -30,53 +30,85 @@ const { data: installStats, status } = useAsyncData("install-stat-list", async (
   watch: [() => props.dateRange],
 });
 
-const columns: EditableTableColumn<InstallStatResDto>[] = [
+const n = new Intl.NumberFormat("ru-RU");
+const p = new Intl.NumberFormat("ru-RU", {
+  style: "percent",
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+
+const columns = computed((): EditableTableColumn<InstallStatResDto>[] => [
   {
     accessorKey: "date",
     header: "date",
     type: "date",
-    editable: true,
+    editable: !props.readonly,
+    cell: ({ row }) => {
+      const v = row.getValue<string | undefined>("date");
+      if (!v)
+        return;
+      return format(v, "dd.MM.yy");
+    },
   },
   {
     accessorKey: "total",
     type: "number",
-    editable: true,
+    editable: !props.readonly,
+    cell: ({ row }) => {
+      const v = row.getValue<number | undefined>("total");
+      if (!v)
+        return;
+      return n.format(v);
+    },
   },
   {
     accessorKey: "appLink",
     header: "app link",
     type: "string",
-    editable: true,
+    editable: !props.readonly,
   },
   {
     accessorKey: "appName",
     header: "app name",
     type: "string",
-    editable: true,
+    editable: !props.readonly,
   },
   {
     accessorKey: "region",
     type: "string",
-    editable: true,
+    editable: !props.readonly,
   },
   {
     accessorKey: "keywords",
     type: "string-array",
-    editable: true,
+    editable: !props.readonly,
+    cell: ({ row }) => row.getValue<string[] | undefined>("keywords")?.join(", "),
   },
   {
     accessorKey: "totalInstall",
     header: "total install",
     type: "number",
-    editable: true,
+    editable: !props.readonly,
+    cell: ({ row }) => {
+      const v = row.getValue<number | undefined>("totalInstall");
+      if (!v)
+        return;
+      return n.format(v);
+    },
   },
   {
     accessorKey: "complited",
     header: "% complited",
     type: "percent",
-    editable: true,
+    editable: !props.readonly,
+    cell: ({ row }) => {
+      const v = row.getValue<number | undefined>("complited");
+      if (!v)
+        return;
+      return p.format(v);
+    },
   },
-];
+]);
 
 function onChange(id: number, key: keyof InstallStatResDto, value: any) {
   InstallStatApiService.change({ id, key, value });

@@ -40,6 +40,9 @@ const defaultMode = computed((): string | undefined => {
 const dateFilter = computed(() => {
   return route.meta.dateFilter as boolean;
 });
+const panelFilter = computed(() => {
+  return route.meta.panelFilter as boolean;
+});
 
 function onDeleteMode() {
   const mode = route.params.mode;
@@ -71,7 +74,7 @@ function onCreate() {
 <template>
   <LayoutHeaderWidget
     :user-id="userId"
-    :date-filter="dateFilter"
+    :date-filter="dateFilter" :panel-filter="panelFilter"
     :actions="actions" :action="action" :md-actions="mdActions" :toggle-value="toggleValue" @delete-mode="onDeleteMode"
     @delete="onDelete"
     @toggle="onToggle"

@@ -6,6 +6,7 @@ definePageMeta({
   toggleValue: false,
   defaultMode: "create",
   dateFilter: true,
+  panelFilter: true,
   onToggle: () => {
     const userId = Number(useRoute().params.userId);
     if (!userId && userId !== 0)

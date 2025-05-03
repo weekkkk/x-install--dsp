@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { DspStatTableWidgetProps } from "./interfaces";
-import { startOfToday, startOfTomorrow } from "date-fns";
+import { format, startOfToday, startOfTomorrow } from "date-fns";
 
 const props = withDefaults(defineProps<DspStatTableWidgetProps>(), {
   dateRange: () => {
@@ -33,69 +33,87 @@ const { data: dspStats, status } = useAsyncData(`${props.panel}-stat-list`, asyn
   watch: [() => props.dateRange],
 });
 
-const columns: EditableTableColumn<DspStatResDto>[] = [
+const n = new Intl.NumberFormat("ru-RU");
+const p = new Intl.NumberFormat("ru-RU", {
+  style: "percent",
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+
+const columns = computed((): EditableTableColumn<DspStatResDto>[] => [
   {
     accessorKey: "date",
     header: "date",
     type: "date",
-    editable: true,
+    editable: !props.readonly,
+    cell: ({ row }) => `${format(row.getValue<string>("date"), "dd.MM.yy")}`,
   },
   {
     accessorKey: "total",
     type: "number",
-    editable: true,
+    editable: !props.readonly,
+    cell: ({ row }) => `${n.format(row.getValue<number>("total"))}`,
   },
   {
     accessorKey: "ack",
     type: "number",
-    editable: true,
+    editable: !props.readonly,
+    cell: ({ row }) => `${n.format(row.getValue<number>("ack"))}`,
   },
   {
     accessorKey: "win",
     type: "number",
-    editable: true,
+    editable: !props.readonly,
+    cell: ({ row }) => `${n.format(row.getValue<number>("win"))}`,
   },
   {
     accessorKey: "impsCount",
     header: "imps count",
     type: "number",
-    editable: true,
+    editable: !props.readonly,
+    cell: ({ row }) => `${n.format(row.getValue<number>("impsCount"))}`,
   },
   {
     accessorKey: "showRate",
     header: "show rate",
     type: "percent",
-    editable: true,
+    editable: !props.readonly,
+    cell: ({ row }) => `${p.format(row.getValue<number>("impsCount"))}`,
   },
   {
     accessorKey: "clicksCount",
     header: "clicks count",
     type: "number",
-    editable: true,
+    editable: !props.readonly,
+    cell: ({ row }) => `${n.format(row.getValue<number>("clicksCount"))}`,
   },
   {
     accessorKey: "ctr",
     type: "percent",
-    editable: true,
+    editable: !props.readonly,
+    cell: ({ row }) => `${p.format(row.getValue<number>("ctr"))}`,
   },
   {
     accessorKey: "startsCount",
     header: "starts count",
     type: "number",
-    editable: true,
+    editable: !props.readonly,
+    cell: ({ row }) => `${n.format(row.getValue<number>("startsCount"))}`,
   },
   {
     accessorKey: "completesCount",
     header: "completes count",
     type: "number",
-    editable: true,
+    editable: !props.readonly,
+    cell: ({ row }) => `${n.format(row.getValue<number>("completesCount"))}`,
   },
   {
     accessorKey: "vtr",
     type: "percent",
-    editable: true,
+    editable: !props.readonly,
+    cell: ({ row }) => `${p.format(row.getValue<number>("vtr"))}`,
   },
-];
+]);
 
 function onChange(id: number, key: keyof DspStatResDto, value: any) {
   DspStatApiService.change({ id, key, value });

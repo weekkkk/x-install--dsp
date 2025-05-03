@@ -3,6 +3,8 @@ import { toDate } from "date-fns";
 
 const route = useRoute();
 
+const user = useAuthApiUser();
+
 const userId = computed(() => {
   const id = route.params.userId;
   if (!id)
@@ -37,14 +39,16 @@ const panel = computed(() => route.params.panel as UserPanel);
   <article class="bg-neutral-900 rounded-t-2xl p-10 pb-27.5 h-full max-md:px-0 max-md:pt-5 max-md:pb-17.5">
     <InstallStatTableWidget
       v-if="panel === 'install'"
-      v-model="ids" :mode="mode" :user-id="userId"
+      v-model="ids" :mode="mode" :user-id="userId ?? user?.id"
       :date-range="dateRange"
+      :readonly="userId === undefined"
     />
     <DspStatTableWidget
       v-else
-      v-model="ids" :mode="mode" :user-id="userId"
+      v-model="ids" :mode="mode" :user-id="userId ?? user?.id"
       :date-range="dateRange"
       :panel="panel"
+      :readonly="userId === undefined"
     />
   </article>
 </template>

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 definePageMeta({
-  layout: "form",
   middleware: "user",
+  dateFilter: true,
+  panelFilter: true,
 });
 
 useSeoMeta({
@@ -10,5 +11,5 @@ useSeoMeta({
 </script>
 
 <template>
-  <h1>src\app\routes\panel-[key].vue</h1>
+  <PanelPage />
 </template>

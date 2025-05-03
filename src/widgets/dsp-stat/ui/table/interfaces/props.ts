@@ -3,4 +3,5 @@ export interface DspStatTableWidgetProps {
   mode?: "delete" | "view" | "create";
   dateRange?: { start: Date; end: Date };
   panel: Exclude<UserPanel, "install">;
+  readonly?: boolean;
 }

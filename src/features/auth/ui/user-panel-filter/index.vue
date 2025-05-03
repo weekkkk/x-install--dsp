@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import type { UserPanelFilterFeatureProps } from "./interfaces";
-
-const props = defineProps<UserPanelFilterFeatureProps>();
-
-const { data: user } = useAsyncData(`user-${props.id}`, () => UserApiService.getOne(props.id));
+const user = useAuthApiUser();
 </script>
 
 <template>
