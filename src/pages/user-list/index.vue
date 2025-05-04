@@ -11,7 +11,10 @@ const search = computed(() => route.query.search?.toString());
 </script>
 
 <template>
-  <article class="shirk grow bg-neutral-900 rounded-t-2xl p-10 pb-27.5 max-md:px-0 max-md:pt-5 max-md:pb-17.5 flex flex-col overflow-hidden">
-    <UserTableWidget :search="search" :model-value="userIds" :mode="mode" @update:model-value="updateUserIds" />
+  <article
+    class="shirk grow bg-neutral-900 rounded-t-2xl p-10 max-md:px-0 max-md:pt-5 flex flex-col overflow-hidden max-md:pb-23.5"
+    :class="{ 'pb-30.5': mode === 'delete' }"
+  >
+    <UserTableWidget class="-my-3" :search="search" :model-value="userIds" :mode="mode" @update:model-value="updateUserIds" />
   </article>
 </template>

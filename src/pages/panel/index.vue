@@ -52,7 +52,7 @@ const panel = computed(() => route.params.panel as UserPanel);
     </article>
     <article
       class="shirk grow max-h-2/3 bg-neutral-900 rounded-t-2xl p-10 max-md:px-0 max-md:pt-5 flex flex-col"
-      :class="{ 'pb-27.5 max-md:pb-26.5': mode === 'create' || mode === 'delete' }"
+      :class="{ 'pb-30.5 max-md:pb-23.5': mode === 'create' || mode === 'delete' }"
     >
       <InstallStatTableWidget
         v-if="panel === 'install'"
