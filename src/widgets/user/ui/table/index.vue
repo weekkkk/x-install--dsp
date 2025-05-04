@@ -2,7 +2,7 @@
 import type { UserTableWidgetProps } from "./interfaces";
 import { format } from "date-fns";
 
-defineProps<UserTableWidgetProps>();
+const props = defineProps<UserTableWidgetProps>();
 
 const { data: users, status } = useAsyncData("user-list", () => UserApiService.getAll(), { default: () => [] });
 
@@ -35,6 +35,13 @@ const columns: EditableTableColumn<UserResDto>[] = [
 async function changeNickname(id: number, name: string) {
   await UserApiService.changeName({ id, name });
 }
+
+const _users = computed(() => {
+  const _search = props.search;
+  if (!_search)
+    return users.value;
+  return users.value.filter(({ username }) => username?.toLowerCase().includes(_search));
+});
 </script>
 
 <template>
@@ -42,7 +49,7 @@ async function changeNickname(id: number, name: string) {
     v-model="selectedUserIds"
     :columns="columns"
     :loading="status === 'pending'"
-    :rows="users"
+    :rows="_users"
     :custom-columns="[{
       accessorKey: 'unlocked',
     }]"

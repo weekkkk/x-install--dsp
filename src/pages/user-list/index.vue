@@ -7,10 +7,11 @@ const userIds = computed(() => route.query.ids ? (JSON.parse(route.query.ids.toS
 function updateUserIds(ids: number[]) {
   navigateTo({ query: { ids: JSON.stringify(ids) } });
 }
+const search = computed(() => route.query.search?.toString());
 </script>
 
 <template>
   <article class="shirk grow bg-neutral-900 rounded-t-2xl p-10 pb-27.5 max-md:px-0 max-md:pt-5 max-md:pb-17.5 flex flex-col overflow-hidden">
-    <UserTableWidget :model-value="userIds" :mode="mode" @update:model-value="updateUserIds" />
+    <UserTableWidget :search="search" :model-value="userIds" :mode="mode" @update:model-value="updateUserIds" />
   </article>
 </template>
