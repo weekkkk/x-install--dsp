@@ -1,1 +1,1 @@
-export type LayoutHeaderWidgetAction = "search" | "delete-mode" | "add" | "toggle" | "create" | "delete";
+export type LayoutHeaderWidgetAction = "export" | "search" | "delete-mode" | "add" | "toggle" | "create" | "delete";

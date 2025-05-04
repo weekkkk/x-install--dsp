@@ -9,4 +9,6 @@ export interface LayoutHeaderWidgetProps {
   toggleValue?: boolean;
   dateFilter?: boolean;
   panelFilter?: boolean;
+  installExport?: boolean;
+  dspExport?: boolean;
 }

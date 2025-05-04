@@ -10,5 +10,5 @@ async function onClick() {
 </script>
 
 <template>
-  <UButton loading-auto icon="xii:logout" color="neutral" class="text-white" @click="onClick" />
+  <UButton loading-auto icon="xii:logout" size="sm" color="neutral" class="text-white" @click="onClick" />
 </template>

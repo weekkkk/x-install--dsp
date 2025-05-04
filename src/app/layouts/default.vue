@@ -74,6 +74,10 @@ function onCreate() {
   const _onCreate = route.meta.onCreate as () => void;
   _onCreate();
 }
+function onExport(key: "excel" | "pdf") {
+  const _onExport = route.meta.onExport as (key: "excel" | "pdf") => void;
+  _onExport(key);
+}
 </script>
 
 <template>
@@ -86,6 +90,7 @@ function onCreate() {
     @add="onAdd"
     @login="goToLogin()" @logout="goToLogin()"
     @create="onCreate"
+    @export="onExport"
   />
   <main class="px-2.5 max-md:px-0 grow shirk flex flex-col">
     <NuxtPage />

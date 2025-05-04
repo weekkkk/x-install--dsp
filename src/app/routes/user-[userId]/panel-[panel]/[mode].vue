@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { startOfToday, startOfTomorrow } from "date-fns";
+
 definePageMeta({
   middleware: "admin",
-  actions: ["delete-mode", "toggle"] as LayoutHeaderWidgetProps["actions"],
+  actions: ["delete-mode", "toggle", "export"] as LayoutHeaderWidgetProps["actions"],
   mdActions: [["toggle", "delete-mode"]] as LayoutHeaderWidgetProps["mdActions"],
   toggleValue: false,
   defaultMode: "create",
@@ -54,6 +56,39 @@ definePageMeta({
       await DspStatApiService.deleteByIds(ids);
 
     refreshNuxtData(`${panel}-stat-list`);
+  },
+  onExport: async (key: "pdf" | "excel") => {
+    const route = useRoute();
+    const panel = route.params.panel as UserPanel;
+
+    const { data } = useNuxtData(`${panel}-stat-list`);
+
+    if (!data.value)
+      return;
+
+    const userId = route.params.userId;
+    const rangeQuery = route.query.dateRange as string | undefined;
+    let range = { start: startOfToday().toISOString(), end: startOfTomorrow().toISOString() };
+    if (rangeQuery) {
+      const [start, end] = rangeQuery.split(" - ");
+      range = { start, end };
+    }
+
+    if (typeof userId !== "string")
+      return;
+    let blob: Blob | undefined;
+    if (panel === "install") {
+      blob = await InstallStatApiService[key === "excel" ? "exportExcel" : "exportPdf"]({ UserId: Number(userId), StartDate: range.start, EndDate: range.end });
+    }
+    else {
+      blob = await DspStatApiService[key === "excel" ? "exportExcel" : "exportPdf"]({ UserId: Number(userId), StartDate: range.start, EndDate: range.end, IsDsp: panel === "dsp", IsDspInApp: panel === "dsp-in-app", IsDspBanner: panel === "dsp-banner" });
+    }
+    if (!blob)
+      return;
+
+    const name = key === "excel" ? "Excel.xlsx" : "PDF.pdf";
+
+    donwload(blob, name);
   },
 });
 

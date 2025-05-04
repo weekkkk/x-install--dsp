@@ -7,4 +7,5 @@ export interface LayoutHeaderWidgetEmits {
   "toggle": [];
   "create": [];
   "delete": [];
+  "export": [type: "pdf" | "excel"];
 }
