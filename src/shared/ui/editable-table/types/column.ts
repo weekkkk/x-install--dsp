@@ -6,6 +6,6 @@ export type EditableTableColumn<Row extends EditableTableRow> = Omit<TableColumn
   accessorKey: Extract<keyof Row, string>;
   header?: string;
 } & {
-  editable: boolean;
-  type: EditableTableColumnDataType;
+  editable?: boolean;
+  type?: EditableTableColumnDataType;
 };

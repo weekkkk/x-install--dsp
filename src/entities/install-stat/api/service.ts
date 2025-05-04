@@ -5,6 +5,7 @@ import type {
   InstallStatGetAllResDto,
   InstallStatResDto,
 } from "./interfaces";
+import { getTime } from "date-fns";
 import { $installStat } from "./point";
 
 export class InstallStatApiService {
@@ -12,13 +13,14 @@ export class InstallStatApiService {
     const data = await $installStat<InstallStatGetAllResDto>("/Statistic/statistic-xinstall", {
       params,
     });
+    data.userStatistics = data.userStatistics.sort(({ date: a = "" }, { date: b = "" }) => getTime(b) - getTime(a));
     return data;
   }
 
-  static async create(body: InstallStatCreateReqDto) {
+  static async create({ date, ...body }: InstallStatCreateReqDto) {
     return $installStat<InstallStatResDto[]>("/admin/createUserRecord-xinstallapp", {
       method: "POST",
-      body,
+      body: { date: date ?? new Date().toISOString(), ...body },
     });
   }
 

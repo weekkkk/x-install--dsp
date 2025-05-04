@@ -15,28 +15,36 @@ async function onAction(action: LayoutHeaderWidgetAction) {
 </script>
 
 <template>
-  <header class="flex justify-between mx-12.5 mt-8.75 mb-10 max-md:mx-5 max-md:mt-5 z-30">
-    <div class="w-full flex justify-start">
+  <header class="flex justify-between mx-12.5 mt-8.75 mb-10 max-md:mx-5 max-md:mt-5 z-30 gap-5 max-md:gap-2.5">
+    <div class="w-full flex justify-start max-md:w-fit">
       <UButton
         to="/" variant="ghost" :ui="{
-          leadingIcon: 'size-10.5',
+          leadingIcon: 'size-10.5 max-md:size-7.5',
           base: 'p-2.25 max-md:p-1',
-        }" class="-mx-2.25" icon="xii:logo"
+        }" class="-mx-2.25 max-md:-mx-1" icon="xii:logo"
       />
 
-      <UiDateRangeFilter v-if="dateFilter" class="ml-27.75" />
+      <UiDateRangeFilter v-if="dateFilter" class="ml-27.75 max-md:hidden" />
     </div>
     <div>
-      <UserPanelFilterFeature />
+      <template v-if="panelFilter">
+        <UserPanelFilterFeature v-if="userId !== undefined" :id="userId" />
+        <AuthUserPanelFilterFeature v-else />
+      </template>
     </div>
-    <div class="w-full flex justify-end gap-5">
-      <UButton
+    <div class="w-full flex justify-end gap-5 max-md:gap-2.5">
+      <template
         v-for="a in actions" :key="a"
-        :icon="layoutHeaderWidgetActionIcon[a].icon"
-        :class="{ 'rotate-45': a === 'toggle' && toggleValue, 'max-md:hidden': mdActions.some((arr) => arr.includes(a)) }"
-        :color="a.replace('-mode', '') === action ? 'primary' : 'neutral'" size="sm"
-        @click="onAction(a)"
-      />
+      >
+        <UiSearch v-if="a === 'search'" />
+        <UButton
+          v-else
+          :icon="layoutHeaderWidgetActionIcon[a].icon"
+          :class="{ 'rotate-45': a === 'toggle' && toggleValue, 'max-md:hidden': mdActions.some((arr) => arr.includes(a)) }"
+          :color="a.replace('-mode', '') === action ? 'primary' : 'neutral'" size="sm"
+          @click="onAction(a)"
+        />
+      </template>
 
       <AuthUserIdFeature v-if="userId === undefined" />
       <template v-else>
@@ -47,6 +55,9 @@ async function onAction(action: LayoutHeaderWidgetAction) {
       <AuthUserAvatarFeature @login="emit('login')" @logout="emit('logout')" />
     </div>
   </header>
+  <div class="md:hidden flex mb-10 mx-5 z-30">
+    <UiDateRangeFilter v-if="dateFilter" />
+  </div>
 
   <UButton
     v-if="action"

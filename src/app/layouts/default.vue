@@ -27,7 +27,12 @@ const action = computed((): LayoutHeaderWidgetProps["action"] => {
   }
 });
 const mdActions = computed((): LayoutHeaderWidgetProps["mdActions"] => {
-  return route.meta.mdActions as LayoutHeaderWidgetProps["mdActions"];
+  const _actions = route.meta.mdActions as LayoutHeaderWidgetProps["mdActions"];
+  if (!action.value)
+    return _actions;
+  if (!_actions)
+    return [[action.value]] as LayoutHeaderWidgetProps["mdActions"];
+  return [..._actions, [action.value]] as LayoutHeaderWidgetProps["mdActions"];
 });
 
 const toggleValue = computed((): LayoutHeaderWidgetProps["toggleValue"] => {
@@ -39,6 +44,9 @@ const defaultMode = computed((): string | undefined => {
 
 const dateFilter = computed(() => {
   return route.meta.dateFilter as boolean;
+});
+const panelFilter = computed(() => {
+  return route.meta.panelFilter as boolean;
 });
 
 function onDeleteMode() {
@@ -71,7 +79,7 @@ function onCreate() {
 <template>
   <LayoutHeaderWidget
     :user-id="userId"
-    :date-filter="dateFilter"
+    :date-filter="dateFilter" :panel-filter="panelFilter"
     :actions="actions" :action="action" :md-actions="mdActions" :toggle-value="toggleValue" @delete-mode="onDeleteMode"
     @delete="onDelete"
     @toggle="onToggle"
@@ -79,7 +87,7 @@ function onCreate() {
     @login="goToLogin()" @logout="goToLogin()"
     @create="onCreate"
   />
-  <main class="px-2.5 max-md:px-0 grow">
+  <main class="px-2.5 max-md:px-0 grow shirk flex flex-col">
     <NuxtPage />
   </main>
 </template>

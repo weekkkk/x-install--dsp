@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { addDays, endOfMonth, endOfWeek, format, startOfDay, startOfMonth, startOfToday, startOfTomorrow, startOfWeek, toDate } from "date-fns";
+import { addDays, endOfDay, endOfMonth, endOfToday, endOfTomorrow, endOfWeek, format, startOfDay, startOfMonth, startOfToday, startOfTomorrow, startOfWeek, toDate } from "date-fns";
 
 const route = useRoute();
 
@@ -12,15 +12,15 @@ const options = computed(() => {
   return [
     {
       label: "By Day",
-      value: `${formatDate(startOfToday())} - ${formatDate(startOfTomorrow())}`,
+      value: `${formatDate(startOfToday())} - ${formatDate(endOfToday())}`,
     },
     {
       label: "By Week",
-      value: `${formatDate(startOfWeek(date))} - ${formatDate(startOfDay(endOfWeek(date)))}`,
+      value: `${formatDate(startOfWeek(date))} - ${formatDate(endOfDay(endOfWeek(date)))}`,
     },
     {
       label: "By Month",
-      value: `${formatDate(startOfMonth(date))} - ${formatDate(startOfDay(endOfMonth(date)))}`,
+      value: `${formatDate(startOfMonth(date))} - ${formatDate(endOfDay(endOfMonth(date)))}`,
     },
   ];
 });

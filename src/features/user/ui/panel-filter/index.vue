@@ -1,21 +1,16 @@
 <script setup lang="ts">
-const tabs: { value: UserPanel; label: string }[] = [
-  { value: "install", label: userPanelName.install },
-  { value: "dsp", label: userPanelName.dsp },
-  { value: "dsp-in-app", label: userPanelName["dsp-in-app"] },
-  { value: "dsp-banner", label: userPanelName["dsp-banner"] },
-];
+import type { UserPanelFilterFeatureProps } from "./interfaces";
 
-const route = useRoute();
+const props = defineProps<UserPanelFilterFeatureProps>();
 
-const tab = computed({
-  get: () => route.params.panel as string,
-  set: (panel) => {
-    navigateTo({ params: { panel }, query: { ...route.query } });
-  },
-});
+const { data: user } = useAsyncData(`user-${props.id}`, () => UserApiService.getOne(props.id));
 </script>
 
 <template>
-  <UiButtonTabs v-model="tab" :tabs="tabs" />
+  <UserPanelFilter
+    :is-x-install-app="user?.isXInstallApp"
+    :is-dsp="user?.isDsp"
+    :is-dsp-in-app="user?.isDspInApp"
+    :is-dsp-banner="user?.isDspBanner"
+  />
 </template>

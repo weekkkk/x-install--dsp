@@ -16,6 +16,7 @@ const option = computed(() => props.options.find(({ value }) => value === model.
         <UButton
           v-for="{ value, label } in _options" :key="value"
           size="sm" color="neutral"
+          class="whitespace-nowrap"
           @click="model = value"
         >
           {{ label }}
@@ -23,7 +24,7 @@ const option = computed(() => props.options.find(({ value }) => value === model.
       </div>
     </template>
 
-    <UButton size="sm" color="neutral">
+    <UButton size="sm" color="neutral" class="whitespace-nowrap">
       {{ option?.label ?? 'Select' }}
     </UButton>
   </UPopover>

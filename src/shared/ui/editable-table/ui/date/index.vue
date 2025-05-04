@@ -44,7 +44,7 @@ function onOpen(value: boolean) {
     <template #content>
       <UCalendar
         v-model="_modelValue"
-        class="w-98"
+        class="w-98 max-md:w-75"
         :year-controls="false"
         :month-controls="false"
         weekday-format="short"

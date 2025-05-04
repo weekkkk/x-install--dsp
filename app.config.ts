@@ -11,7 +11,7 @@ export default defineAppConfig({
             leadingIcon: "size-6",
           },
           sm: {
-            base: "px-5.25 py-5.25 max-md:px-3.25 max-md:py-3.25 !text-base-sm gap-1.5",
+            base: "px-5.25 py-5.25 max-md:px-4 max-md:py-4 !text-base-sm gap-1.5",
             leadingIcon: "size-6",
           },
           md: {

@@ -3,7 +3,7 @@ import type { TableColumn } from "@nuxt/ui";
 import type { EditableTableEmits, EditableTableProps, EditableTableRow } from "./interfaces";
 import type { EditableTableColumn, EditableTableColumnData } from "./types";
 
-const props = withDefaults(defineProps<EditableTableProps<Row>>(), { mode: "view" });
+const props = withDefaults(defineProps<EditableTableProps<Row>>(), { mode: "view", customColumns: () => [] });
 
 const emit = defineEmits<EditableTableEmits<Row>>();
 
@@ -75,15 +75,54 @@ function onUpdateModelValue(r: Row, key: keyof Row, value?: EditableTableColumnD
 
   r[key] = value as Row[keyof Row];
 }
+
+function setTotalRow(total?: typeof props.totalRow) {
+  const table = document.querySelector("#table table");
+  if (!table)
+    return;
+
+  // Удалим старый tfoot если есть
+  const oldFoot = table.querySelector("tfoot");
+  if (oldFoot)
+    oldFoot.remove();
+  if (!total)
+    return;
+
+  const tfoot = document.createElement("tfoot");
+  tfoot.classList.add();
+  const row = document.createElement("tr");
+  row.classList.add("sticky", "bottom-0", "x-10", "bg-neutral-900");
+  [..._columns.value, ...props.customColumns].forEach((col) => {
+    const accessorKey = (col as { accessorKey: string }).accessorKey;
+    const td = document.createElement("td");
+    td.textContent = total[accessorKey] || "";
+    td.classList.add("text-right", "first:text-left", "p-3", "text-base-sm", "text-white", "font-medium", "h-10.5");
+    row.appendChild(td);
+  });
+
+  tfoot.appendChild(row);
+  table.appendChild(tfoot);
+}
+
+onMounted(() => {
+  setTotalRow(props.totalRow);
+});
+
+watch(() => props.totalRow, (total) => {
+  setTotalRow(total);
+});
 </script>
 
 <template>
   <UTable
+    id="table"
     v-model:row-selection="rowSelection"
     :get-row-id="(row) => row.id.toString()"
-    :ui="{ base: 'max-md:mx-5', th: 'not-[:first-child]:text-right whitespace-nowrap', td: 'not-[:first-child]:text-right relative' }"
+    class="grow shrink !overflow-visible max-md:min-h-fit max-md:!overflow-auto"
+    :ui="{ base: 'max-md:mx-5 min-h-full after:h-full after:table-row-group', th: 'not-[:first-child]:text-right whitespace-nowrap', td: 'not-[:first-child]:text-right relative' }"
     :data="rows"
-    :columns="_columns"
+    :loading="loading"
+    :columns="[..._columns, ...customColumns] as typeof _columns"
   >
     <template v-for="column in editableColumns" :key="column.accessorKey" #[`${column.accessorKey.toString()}-cell`]="{ row }">
       <UiEditableTableDate
@@ -116,6 +155,10 @@ function onUpdateModelValue(r: Row, key: keyof Row, value?: EditableTableColumnD
         :placeholder="column.header ?? column.accessorKey"
         @update:model-value="onUpdateModelValue(row.original, column.accessorKey, $event)"
       />
+    </template>
+
+    <template v-for="customColumn in customColumns" :key="customColumn.accessorKey" #[`${customColumn.accessorKey.toString()}-cell`]="{ row }">
+      <slot :name="`${customColumn.accessorKey}-cell`" :row="row" />
     </template>
   </UTable>
 </template>
