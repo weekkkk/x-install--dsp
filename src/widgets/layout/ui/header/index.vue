@@ -26,7 +26,7 @@ async function onAction(action: LayoutHeaderWidgetAction) {
 
       <UiDateRangeFilter v-if="dateFilter" class="ml-27.75 max-md:hidden" />
     </div>
-    <div>
+    <div class="max-md:hidden">
       <template v-if="panelFilter">
         <UserPanelFilterFeature v-if="userId !== undefined" :id="userId" />
         <AuthUserPanelFilterFeature v-else />
@@ -37,6 +37,7 @@ async function onAction(action: LayoutHeaderWidgetAction) {
         v-for="a in actions" :key="a"
       >
         <UiSearch v-if="a === 'search'" />
+        <UiExport v-else-if="a === 'export'" :class="{ 'max-md:hidden': mdActions.some((arr) => arr.includes(a)) }" @pdf="emit('export', 'pdf')" @excel="emit('export', 'excel')" />
         <UButton
           v-else
           :icon="layoutHeaderWidgetActionIcon[a].icon"
@@ -55,8 +56,13 @@ async function onAction(action: LayoutHeaderWidgetAction) {
       <AuthUserAvatarFeature @login="emit('login')" @logout="emit('logout')" />
     </div>
   </header>
-  <div class="md:hidden flex mb-10 mx-5 z-30">
+  <div class="md:hidden flex gap-2.5 flex-wrap mb-10 mx-5 z-30">
     <UiDateRangeFilter v-if="dateFilter" />
+
+    <template v-if="panelFilter">
+      <UserPanelFilterFeature v-if="userId !== undefined" :id="userId" class="max-md:hidden" />
+      <AuthUserPanelFilterFeature v-else class="max-md:hidden" />
+    </template>
   </div>
 
   <UButton
@@ -76,8 +82,9 @@ async function onAction(action: LayoutHeaderWidgetAction) {
       <template
         v-for="a in actionGroup" :key="a"
       >
+        <UiExport v-if="a === 'export'" @pdf="emit('export', 'pdf')" @excel="emit('export', 'pdf')" />
         <UButton
-          v-if="layoutHeaderWidgetActionIcon[a].text"
+          v-else-if="layoutHeaderWidgetActionIcon[a].text"
           :icon="layoutHeaderWidgetActionIcon[a].icon"
           size="sm"
           @click="onAction(a)"

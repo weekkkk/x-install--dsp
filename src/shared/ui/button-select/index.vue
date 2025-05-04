@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ButtonSelectProps } from "./interfaces";
 
-const props = defineProps<ButtonSelectProps>();
+const props = withDefaults(defineProps<ButtonSelectProps>(), { selectedColor: "neutral" });
 
 const model = defineModel<string>();
 
@@ -24,8 +24,11 @@ const option = computed(() => props.options.find(({ value }) => value === model.
       </div>
     </template>
 
-    <UButton size="sm" color="neutral" class="whitespace-nowrap">
-      {{ option?.label ?? 'Select' }}
-    </UButton>
+    <div class="inline-flex">
+      <UButton v-if="!option || !option.mdIcon" size="sm" :class="{ 'max-md:hidden': option?.mdIcon }" :color="selectedColor" class="whitespace-nowrap">
+        {{ option?.label ?? 'Select' }}
+      </UButton>
+      <UButton v-else-if="option" size="sm" :class="{ 'md:hidden': option.mdIcon, 'hidden': !option.mdIcon }" :color="selectedColor" :icon="option.mdIcon" />
+    </div>
   </UPopover>
 </template>
