@@ -19,9 +19,9 @@ async function onAction(action: LayoutHeaderWidgetAction) {
     <div class="w-full flex justify-start max-md:w-fit">
       <UButton
         to="/" variant="ghost" :ui="{
-          leadingIcon: 'size-10.5',
+          leadingIcon: 'size-10.5 max-md:size-7.5',
           base: 'p-2.25 max-md:p-1',
-        }" class="-mx-2.25" icon="xii:logo"
+        }" class="-mx-2.25 max-md:-mx-1" icon="xii:logo"
       />
 
       <UiDateRangeFilter v-if="dateFilter" class="ml-27.75 max-md:hidden" />
@@ -33,13 +33,18 @@ async function onAction(action: LayoutHeaderWidgetAction) {
       </template>
     </div>
     <div class="w-full flex justify-end gap-5 max-md:gap-2.5">
-      <UButton
+      <template
         v-for="a in actions" :key="a"
-        :icon="layoutHeaderWidgetActionIcon[a].icon"
-        :class="{ 'rotate-45': a === 'toggle' && toggleValue, 'max-md:hidden': mdActions.some((arr) => arr.includes(a)) }"
-        :color="a.replace('-mode', '') === action ? 'primary' : 'neutral'" size="sm"
-        @click="onAction(a)"
-      />
+      >
+        <UiSearch v-if="a === 'search'" />
+        <UButton
+          v-else
+          :icon="layoutHeaderWidgetActionIcon[a].icon"
+          :class="{ 'rotate-45': a === 'toggle' && toggleValue, 'max-md:hidden': mdActions.some((arr) => arr.includes(a)) }"
+          :color="a.replace('-mode', '') === action ? 'primary' : 'neutral'" size="sm"
+          @click="onAction(a)"
+        />
+      </template>
 
       <AuthUserIdFeature v-if="userId === undefined" />
       <template v-else>

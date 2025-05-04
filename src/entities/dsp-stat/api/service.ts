@@ -5,6 +5,7 @@ import type {
   DspStatGetAllResDto,
   DspStatResDto,
 } from "./interfaces";
+import { getTime } from "date-fns";
 import { $dspStat } from "./point";
 
 export class DspStatApiService {
@@ -12,6 +13,7 @@ export class DspStatApiService {
     const data = await $dspStat<DspStatGetAllResDto>("/Statistic/statistic", {
       params,
     });
+    data.userStatistics = data.userStatistics.sort(({ date: a = "" }, { date: b = "" }) => getTime(b) - getTime(a));
     return data;
   }
 

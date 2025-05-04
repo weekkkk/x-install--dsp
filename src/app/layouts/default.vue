@@ -27,7 +27,12 @@ const action = computed((): LayoutHeaderWidgetProps["action"] => {
   }
 });
 const mdActions = computed((): LayoutHeaderWidgetProps["mdActions"] => {
-  return route.meta.mdActions as LayoutHeaderWidgetProps["mdActions"];
+  const _actions = route.meta.mdActions as LayoutHeaderWidgetProps["mdActions"];
+  if (!action.value)
+    return _actions;
+  if (!_actions)
+    return [[action.value]] as LayoutHeaderWidgetProps["mdActions"];
+  return [..._actions, [action.value]] as LayoutHeaderWidgetProps["mdActions"];
 });
 
 const toggleValue = computed((): LayoutHeaderWidgetProps["toggleValue"] => {

@@ -118,7 +118,7 @@ watch(() => props.totalRow, (total) => {
     id="table"
     v-model:row-selection="rowSelection"
     :get-row-id="(row) => row.id.toString()"
-    class="grow shrink !overflow-visible max-md:!overflow-auto"
+    class="grow shrink !overflow-visible max-md:min-h-fit max-md:!overflow-auto"
     :ui="{ base: 'max-md:mx-5 min-h-full after:h-full after:table-row-group', th: 'not-[:first-child]:text-right whitespace-nowrap', td: 'not-[:first-child]:text-right relative' }"
     :data="rows"
     :loading="loading"

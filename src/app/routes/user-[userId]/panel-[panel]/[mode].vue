@@ -2,7 +2,7 @@
 definePageMeta({
   middleware: "admin",
   actions: ["delete-mode", "toggle"] as LayoutHeaderWidgetProps["actions"],
-  mdActions: [["toggle", "delete-mode"], ["create"]] as LayoutHeaderWidgetProps["mdActions"],
+  mdActions: [["toggle", "delete-mode"]] as LayoutHeaderWidgetProps["mdActions"],
   toggleValue: false,
   defaultMode: "create",
   dateFilter: true,

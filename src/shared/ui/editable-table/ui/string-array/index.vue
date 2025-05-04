@@ -38,7 +38,7 @@ watch(open, (v) => {
     :placeholder="placeholder"
     :ui="{
       base: 'rounded-none font-medium justify-end',
-      content: 'bg-neutral-900 ring-0 rounded-2xl',
+      content: 'bg-neutral-900 ring-0 rounded-2xl max-md:min-w-75',
       itemTrailingIcon: 'hidden',
       group: 'px-5 py-0 divide-y divide-neutral-800',
       input: 'border-none pt-2.5 [&>input]:px-5 [&>input]:py-2.5 [&>input]:!text-base-sm [&>input]:font-medium',
@@ -64,7 +64,7 @@ watch(open, (v) => {
       <UButton
         size="xs" color="neutral" variant="ghost"
         icon="xii:trash"
-        class="opacity-0 group-hover:opacity-100 -my-1.5"
+        class="opacity-0 group-hover:opacity-100 group-data-highlighted:opacity-100 -my-1.5"
         @click="onDelete(index)"
       />
     </template>

@@ -12,7 +12,7 @@ const p = new Intl.NumberFormat("ru-RU", {
 </script>
 
 <template>
-  <div class="flex flex-col text-center gap-5">
+  <div class="flex flex-col text-center gap-5 max-md:gap-1.25">
     <div class="text-base-sm font-semibold">
       {{ label }}
     </div>
