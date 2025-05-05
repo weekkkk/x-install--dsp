@@ -1,15 +1,15 @@
-export const AUTH_API_URL =
-  process.env.NODE_ENV === "production"
-    ? "https://xinstallbotprofile.onrender.com/api/admin"
+export const USER_API_URL
+  = import.meta.env.PROD || import.meta.env.SSR
+    ? "https://api.x-instals.com/api/admin"
     : "/server/admin";
 
 export const $user = $fetch.create({
-  baseURL: AUTH_API_URL,
+  baseURL: USER_API_URL,
   credentials: "include",
-  onRequest: ({ request, options }) => {
+  onRequest: ({ options }) => {
     options.headers.set(
       "Authorization",
-      `Bearer ${localStorage.getItem("token")}`
+      `Bearer ${useCookie("accessToken").value}`,
     );
   },
 });

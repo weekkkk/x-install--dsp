@@ -1,51 +1,24 @@
 <script setup lang="ts">
-const expanded = ref(false);
-const onClick = () => (expanded.value = !expanded.value);
+const $input = useTemplateRef<{ inputRef: HTMLInputElement }>("input");
 
-const model = defineModel<string>();
+function open() {
+  $input.value?.inputRef.focus();
+}
+
+const route = useRoute();
+
+const value = computed({
+  get: () => route.query.search?.toString(),
+  set: (v) => {
+    navigateTo({ query: { ...route.query, search: v || undefined } });
+  },
+});
 </script>
 
 <template>
-  <div
-    class="transition-all overflow-hidden rounded-full w-full min-w-24 max-md:min-w-20"
-    :class="{
-      'max-w-24 max-md:max-w-20': !expanded,
-      'max-w-[22.5rem] p-2 -m-2': expanded,
-    }"
-  >
-    <UInput
-      v-model="model"
-      :ui="{
-        base: 'font-semibold',
-        rounded: 'rounded-full',
-        size: {
-          sm: 'text-xl',
-        },
-        padding: {
-          sm: 'py-[2.15rem] px-8 max-md:py-[1.65rem] max-md:px-6',
-        },
-        leading: {
-          padding: {
-            sm: 'ps-24 max-md:ps-20',
-          },
-        },
-        icon: {
-          leading: {
-            pointer: 'pointer-events-auto',
-            padding: {
-              sm: 'p-0',
-            },
-          },
-        },
-        color: {
-          white: { outline: 'dark:bg-dark-50 ring-0' },
-        },
-      }"
-      class="w-full"
-    >
-      <template #leading>
-        <UButton icon="xi:search" color="gray" @click="onClick" />
-      </template>
-    </UInput>
-  </div>
+  <UInput ref="input" v-model="value" placeholder="Search..." :ui="{ base: 'p-0 h-15 max-md:h-12.5 rounded-full ps-15 max-md:ps-12.5 ring-0 w-0 focus:w-80 max-md:focus:w-full focus:z-10 bg-transparent focus:pr-3', root: 'w-fit bg-neutral-900 rounded-full', leading: 'ps-0.5' }">
+    <template #leading>
+      <UButton icon="xii:search" color="neutral" size="sm" @click="open" />
+    </template>
+  </UInput>
 </template>

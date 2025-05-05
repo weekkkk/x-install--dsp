@@ -1,1 +1,1 @@
-export type { TUiButtonSelectOption } from "./button-select";
+export type { EditableTableColumn } from "./editable-table";

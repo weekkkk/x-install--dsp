@@ -1,46 +1,34 @@
 <script setup lang="ts">
-import type { TUiButtonSelectOption, TUiButtonSelectProps } from "./types";
+import type { ButtonSelectProps } from "./interfaces";
 
-const props = defineProps<TUiButtonSelectProps>();
+const props = withDefaults(defineProps<ButtonSelectProps>(), { selectedColor: "neutral" });
 
-const model = defineModel<TUiButtonSelectOption>();
-const _options = computed(() =>
-  model.value
-    ? props.options.filter(({ key }) => key !== model.value?.key)
-    : props.options
-);
+const model = defineModel<string>();
 
-const _selectedColor = computed(() =>
-  model.value ? props.selectedColor ?? "gray" : "gray"
-);
+const _options = computed(() => model.value ? props.options.filter(({ value }) => value !== model.value) : props.options);
+const option = computed(() => props.options.find(({ value }) => value === model.value));
 </script>
 
 <template>
-  <USelectMenu
-    v-model="model"
-    :options="_options"
-    :popper="{ offsetDistance: 0 }"
-    variant="none"
-    :ui-menu="{
-      padding: 'p-0',
-      background: 'dark:bg-[transparent]',
-      ring: 'ring-0',
-      option: {
-        base: 'mt-2',
-        padding: 'p-0',
-        rounded: 'rounded-full',
-      },
-      height: 'max-h-96',
-    }"
-  >
-    <UButton :color="_selectedColor" class="w-32">
-      {{ model?.label ?? "Select" }}
-    </UButton>
-    <template #option="{ option }">
-      <UButton color="gray" class="w-32" v-if="!option.disabled">
-        {{ option.label }}
-      </UButton>
-      <span v-else></span>
+  <UPopover :ui="{ content: 'ring-0 bg-transparent' }" :content="{ sideOffset: 0 }">
+    <template #content>
+      <div class="flex flex-col mt-1.25 gap-1.25">
+        <UButton
+          v-for="{ value, label } in _options" :key="value"
+          size="sm" color="neutral"
+          class="whitespace-nowrap"
+          @click="model = value"
+        >
+          {{ label }}
+        </UButton>
+      </div>
     </template>
-  </USelectMenu>
+
+    <div class="inline-flex">
+      <UButton v-if="!option || !option.mdIcon" size="sm" :class="{ 'max-md:hidden': option?.mdIcon }" :color="selectedColor" class="whitespace-nowrap">
+        {{ option?.label ?? 'Select' }}
+      </UButton>
+      <UButton v-else-if="option" size="sm" :class="{ 'md:hidden': option.mdIcon, 'hidden': !option.mdIcon }" :color="selectedColor" :icon="option.mdIcon" />
+    </div>
+  </UPopover>
 </template>

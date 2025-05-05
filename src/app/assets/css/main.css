@@ -1,0 +1,111 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme static {
+  --font-sans: "pp-neue-montreal", sans-serif;
+
+  /* 5px */
+  /* --text-xxs: 0.3125rem;
+  --text-xxs--line-height: 0.3125rem; */
+  /* 10px */
+  /* --text-xs: 0.625rem;
+  --text-xs--line-height: 0.625rem; */
+  /* 14px */
+  /* --text-sm: 0.875rem;
+  --text-sm--line-height: 0.9375rem; */
+  /* 15px */
+  --text-base-sm: 0.9375rem;
+  --text-base-sm--line-height: 1.125rem; /* 18px */
+  /* 16px */
+  --text-base: 1rem;
+  --text-base--line-height: 1.25rem; /* 20px */
+  /* 18px */
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.25rem;
+  /* 20px */
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.5rem;
+  /* 25px */
+  --text-2xl: 1.5625rem;
+  --text-2xl--line-height: 1.875rem;
+  /* 30px */
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 2.1875rem;
+  /* 35px */
+  --text-4xl: 2.1875rem;
+  --text-4xl--line-height: 2.625rem;
+  /* 50px */
+  --text-5xl: 3.125rem;
+  --text-5xl--line-height: 3.75rem;
+  /* 100px */
+  --text-10xl: 6.25rem;
+  --text-10xl--line-height: 5rem;
+
+  /* 36px */
+  /* --text-4xl: 2.25rem;
+  --text-4xl--line-height: 2.6875rem; */
+  /* 64px */
+  /* --text-6xl: 4rem;
+  --text-6xl--line-height: 4.375rem; */
+
+  --radius-xl: 0.625rem; /* 10px */
+  --radius-2xl: 1.25rem;  /* 20px */
+  /* rounded - 40px */
+  /* --radius-5xl: 2.5rem; */
+}
+
+.dark {
+  --ui-color-primary-400: #6AE15F;
+
+  --ui-color-secondary-400: #19F2C8;
+  /* --ui-color-secondary-200: #2fcdac; */
+
+  /* --ui-color-info-400: #6883d7; */
+
+  --ui-color-success-400: #6AE15F;
+
+  --ui-color-error-400: #F21919;
+  --ui-color-error-500: #B50000;
+
+  --ui-color-neutral-200: #ffffff;
+  /* --ui-color-neutral-400: #ebebf5; */
+  /* --ui-color-neutral-500: #999999; */
+  /* --ui-color-neutral-700: #262626; */
+  --ui-color-neutral-700: #1F1F1F;
+  --ui-color-neutral-800: #1D1D1D;
+  --ui-color-neutral-900: #0A0A0A;
+
+  --ui-bg-inverted: var(--ui-color-neutral-900);
+
+  --ui-bg: #000000;
+}
+input:-webkit-autofill,
+  input:-webkit-autofill:focus {
+    transition: background-color 0s 600000s, color 0s 600000s !important;
+  }
+
+/* ::-webkit-scrollbar {
+  width: 0;
+} */
+* {
+  outline: none;
+}
+body {
+  /* @apply py-12.5 px-25 max-md:py-4 max-md:px-5; */
+}
+
+:root {
+  @apply text-[calc((16/(1920/100))*1vw)] max-md:text-[calc((16/(375/100))*1vw)];
+}
+:root,
+body,
+#__nuxt {
+  @apply h-full;
+}
+#__nuxt {
+  @apply flex flex-col;
+}
+
+.primary-gradient {
+  @apply from-secondary-400 to-primary-400;
+}
