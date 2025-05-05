@@ -110,13 +110,13 @@ export default defineNuxtConfig({
       titleTemplate: "%s | X-Install DSP",
     },
   },
-  nitro: {
-    devProxy: {
-      "/server": {
-        target: "https://api.x-instals.com/api",
-        changeOrigin: true,
-        headers: { "Access-Control-Allow-Origin": "*" },
-      },
-    },
-  },
+  // nitro: {
+  //   devProxy: {
+  //     "/server": {
+  //       target: "https://api.x-instals.com/api",
+  //       changeOrigin: true,
+  //       headers: { "Access-Control-Allow-Origin": "*" },
+  //     },
+  //   },
+  // },
 });
