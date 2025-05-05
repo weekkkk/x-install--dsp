@@ -88,7 +88,6 @@ export default defineNuxtConfig({
         dir: "./src/app/assets/icons",
       },
     ],
-
   },
   fonts: {
     families: [{ name: "pp-neue-montreal", provider: "local", global: true }],
