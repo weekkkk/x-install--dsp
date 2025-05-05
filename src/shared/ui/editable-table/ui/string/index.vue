@@ -18,7 +18,7 @@ function onBlur(e: FocusEvent) {
     :placeholder="placeholder"
     class="absolute inset-0"
     :model-value="modelValue" :ui="{ base: 'text-right text-base-sm font-medium p-3 rounded-none' }"
-    variant="ghost"
+    variant="none"
     @blur="onBlur"
   />
 </template>

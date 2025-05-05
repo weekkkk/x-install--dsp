@@ -11,7 +11,7 @@ const modelValue = defineModel<number>({ default: undefined, get: v => v / 100, 
     v-model="modelValue"
     :placeholder="placeholder"
     class="absolute inset-0" :ui="{ base: 'text-right text-base-sm font-medium p-3 rounded-none' }"
-    variant="ghost"
+    variant="none"
     :format-options="{
       style: 'percent',
       minimumFractionDigits: 2,

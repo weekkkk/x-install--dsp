@@ -91,15 +91,26 @@ function setTotalRow(total?: typeof props.totalRow) {
   const tfoot = document.createElement("tfoot");
   tfoot.classList.add();
   const row = document.createElement("tr");
-  row.classList.add("sticky", "bottom-0", "x-10", "bg-neutral-900");
+  row.classList.add("sticky", "bottom-0", "x-10");
   [..._columns.value, ...props.customColumns].forEach((col) => {
     const accessorKey = (col as { accessorKey: string }).accessorKey;
     const td = document.createElement("td");
     td.textContent = total[accessorKey] || "";
-    td.classList.add("text-right", "first:text-left", "p-3", "text-base-sm", "text-white", "font-medium", "h-10.5");
+    td.classList.add("text-right", "first:text-left", "p-3", "text-base-sm", "text-white", "font-medium");
+    if (total[accessorKey])
+      td.classList.add("bg-neutral-900");
     row.appendChild(td);
   });
 
+  if (props.hasAction) {
+    const row2 = document.createElement("tr");
+    [..._columns.value, ...props.customColumns].forEach(() => {
+      const td = document.createElement("td");
+      td.classList.add("h-15", "max-md:h-0");
+      row2.appendChild(td);
+    });
+    tfoot.appendChild(row2);
+  }
   tfoot.appendChild(row);
   table.appendChild(tfoot);
 }

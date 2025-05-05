@@ -36,12 +36,13 @@ const panel = computed(() => route.params.panel as UserPanel);
 </script>
 
 <template>
-  <div class="flex flex-col justify-between grow shrink gap-10">
-    <article>
+  <div class="flex flex-col justify-between shrink gap-10 grow">
+    <article class="grow max-h-75 flex flex-col justify-center">
       <InstallStatIndicatorsWidget
         v-if="panel === 'install'"
         v-model="ids" :mode="mode" :user-id="userId ?? user?.id"
         :date-range="dateRange"
+        class="pb-15"
       />
       <DspStatIndicatorsWidget
         v-else
@@ -51,8 +52,8 @@ const panel = computed(() => route.params.panel as UserPanel);
       />
     </article>
     <article
-      class="shirk grow max-h-2/3 bg-neutral-900 rounded-t-2xl p-10 max-md:px-0 max-md:pt-5 flex flex-col"
-      :class="{ 'pb-30.5 max-md:pb-23.5': mode === 'create' || mode === 'delete' }"
+      class="shirk-0 grow bg-neutral-900 rounded-t-2xl p-10 max-md:px-0 max-md:pt-5 flex flex-col"
+      :class="{ 'pb-8 max-md:pb-22.5': mode === 'create' || mode === 'delete' }"
     >
       <InstallStatTableWidget
         v-if="panel === 'install'"

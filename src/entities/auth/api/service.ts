@@ -1,5 +1,6 @@
 import type { AuthResDto } from "./interfaces";
 import type { AuthLoginReqDto } from "./schemes";
+import { useAuthApiUser } from "./composables";
 import { $auth, AUTH_API_URL } from "./point";
 
 export class AuthApiService {

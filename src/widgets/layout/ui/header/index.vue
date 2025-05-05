@@ -16,7 +16,7 @@ async function onAction(action: LayoutHeaderWidgetAction) {
 
 <template>
   <header class="flex justify-between mx-12.5 mt-8.75 mb-10 max-md:mx-5 max-md:mt-5 z-30 gap-5 max-md:gap-2.5">
-    <div class="w-full flex justify-start max-md:w-fit">
+    <div class="w-full flex justify-start max-md:w-fit gap-5 max-md:gap-2.5">
       <UButton
         to="/" variant="ghost" :ui="{
           leadingIcon: 'size-10.5 max-md:size-7.5',
@@ -25,6 +25,8 @@ async function onAction(action: LayoutHeaderWidgetAction) {
       />
 
       <UiDateRangeFilter v-if="dateFilter" class="ml-27.75 max-md:hidden" />
+
+      <UiExport v-if="actions.includes('export')" :class="{ 'max-md:hidden': mdActions.some((arr) => arr.includes('export')) }" @pdf="emit('export', 'pdf')" @excel="emit('export', 'excel')" />
     </div>
     <div class="max-md:hidden">
       <template v-if="panelFilter">
@@ -34,10 +36,9 @@ async function onAction(action: LayoutHeaderWidgetAction) {
     </div>
     <div class="w-full flex justify-end gap-5 max-md:gap-2.5">
       <template
-        v-for="a in actions" :key="a"
+        v-for="a in actions.filter(a => a !== 'export')" :key="a"
       >
         <UiSearch v-if="a === 'search'" />
-        <UiExport v-else-if="a === 'export'" :class="{ 'max-md:hidden': mdActions.some((arr) => arr.includes(a)) }" @pdf="emit('export', 'pdf')" @excel="emit('export', 'excel')" />
         <UButton
           v-else
           :icon="layoutHeaderWidgetActionIcon[a].icon"

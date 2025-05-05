@@ -91,7 +91,8 @@ export default defineAppConfig({
     table: {
       slots: {
         thead: "[&>tr]:after:bg-(--ui-color-neutral-800)",
-        tbody: "divide-(--ui-color-neutral-800)",
+        tbody: "divide-(--ui-color-neutral-800) [&>tr]:data-[selectable=true]:hover:bg-transparent",
+        tr: "data-[selected=true]:bg-transparent",
         td: "p-3 relative !text-base-sm text-white font-medium h-10.5",
       },
     },

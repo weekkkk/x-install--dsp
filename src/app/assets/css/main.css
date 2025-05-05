@@ -2,7 +2,7 @@
 @import "@nuxt/ui";
 
 @theme static {
-  --font-sans: "pp-neue-montreal", sans-serif;
+  --font-sans: "ppneuemontreal", "Times New Roman";
 
   /* 5px */
   /* --text-xxs: 0.3125rem;
@@ -84,9 +84,9 @@ input:-webkit-autofill,
     transition: background-color 0s 600000s, color 0s 600000s !important;
   }
 
-/* ::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 0;
-} */
+}
 * {
   outline: none;
 }
@@ -96,6 +96,7 @@ body {
 
 :root {
   @apply text-[calc((16/(1920/100))*1vw)] max-md:text-[calc((16/(375/100))*1vw)];
+  letter-spacing: -0.02em;
 }
 :root,
 body,

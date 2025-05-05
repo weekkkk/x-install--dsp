@@ -50,10 +50,7 @@ watch(open, (v) => {
     multiple
     :create-item="{ position: 'top', when: 'always' }"
     :items="items"
-    :class="{
-      'bg-neutral-800': open,
-    }"
-    class="absolute inset-0 hover:bg-neutral-800"
+    class="absolute inset-0"
     @create="onCreate"
   >
     <template #trailing>

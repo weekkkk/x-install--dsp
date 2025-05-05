@@ -9,4 +9,5 @@ export interface EditableTableProps<Row extends EditableTableRow> {
   columns: EditableTableColumn<Row>[];
   customColumns?: Extract<TableColumn<Row>, { accessorKey: string }>[];
   loading?: boolean;
+  hasAction?: boolean;
 }

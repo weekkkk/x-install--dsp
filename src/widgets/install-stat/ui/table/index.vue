@@ -138,6 +138,7 @@ const total = computed(() => {
   <UiEditableTable
     v-model="selectedIds" class="-mt-3"
     :total-row="total"
+    :has-action="!readonly"
     :loading="status === 'pending'"
     :mode="_mode" :columns="columns" :rows="installStats.userStatistics" @change="onChange"
   />

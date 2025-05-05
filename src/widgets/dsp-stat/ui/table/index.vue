@@ -148,6 +148,7 @@ const total = computed(() => {
     v-model="selectedIds" class="-mt-3"
     :loading="status === 'pending'"
     :total-row="total"
+    :has-action="!readonly"
     :mode="_mode" :columns="columns" :rows="dspStats.userStatistics"
     @change="onChange"
   />

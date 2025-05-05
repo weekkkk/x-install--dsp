@@ -90,7 +90,7 @@ export default defineNuxtConfig({
     ],
   },
   fonts: {
-    families: [{ name: "pp-neue-montreal", provider: "local", global: true }],
+    families: [{ name: "ppneuemontreal", provider: "local", global: true }],
   },
   dir: {
     pages: "./src/app/routes",
@@ -110,13 +110,14 @@ export default defineNuxtConfig({
       titleTemplate: "%s | X-Install DSP",
     },
   },
-  // nitro: {
-  //   devProxy: {
-  //     "/server": {
-  //       target: "https://api.x-instals.com/api",
-  //       changeOrigin: true,
-  //       headers: { "Access-Control-Allow-Origin": "*" },
-  //     },
-  //   },
-  // },
+  nitro: {
+    devProxy: {
+      "/server": {
+        target: "https://api.x-instals.com/api",
+        changeOrigin: true,
+        headers: { "Access-Control-Allow-Origin": "*" },
+      },
+    },
+    logLevel: "info",
+  },
 });

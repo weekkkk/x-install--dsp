@@ -19,6 +19,6 @@ export default defineNuxtRouteMiddleware(async () => {
         return;
       return navigateTo(`panel-${panel}`);
     case "Admin":
-      return navigateTo(`user-list/select`);
+      return navigateTo(`/user-list/select`);
   }
 });

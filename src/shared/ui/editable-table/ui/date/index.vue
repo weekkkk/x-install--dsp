@@ -32,8 +32,7 @@ function onOpen(value: boolean) {
   <UPopover :ui="{ content: 'ring-0 px-5 py-6.25 bg-neutral-900 rounded-3xl' }" @update:open="onOpen">
     <template #default="{ open }">
       <div
-        class="absolute inset-0 p-3 hover:bg-neutral-800 cursor-text overflow-hidden" :class="{
-          'bg-neutral-800': open,
+        class="absolute inset-0 p-3 cursor-text overflow-hidden" :class="{
           'text-white/50': !modelValue || !isEqual(_modelValue.toDate(getLocalTimeZone()), startOfDay(modelValue)),
         }"
       >
