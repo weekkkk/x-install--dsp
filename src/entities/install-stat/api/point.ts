@@ -1,6 +1,6 @@
 export const INSTALL_STAT_API_URL
   = import.meta.env.PROD || import.meta.env.SSR
-    ? "https://xinstallbotprofile.onrender.com/api"
+    ? "https://api.x-instals.com/api"
     : "/server";
 
 export const $installStat = $fetch.create({
