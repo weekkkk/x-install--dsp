@@ -24,11 +24,11 @@ const option = computed(() => props.options.find(({ value }) => value === model.
       </div>
     </template>
 
-    <div class="inline-flex">
-      <UButton v-if="!option || !option.mdIcon" size="sm" :class="{ 'max-md:hidden': option?.mdIcon }" :color="selectedColor" class="whitespace-nowrap">
-        {{ option?.label ?? 'Select' }}
-      </UButton>
-      <UButton v-else-if="option" size="sm" :class="{ 'md:hidden': option.mdIcon, 'hidden': !option.mdIcon }" :color="selectedColor" :icon="option.mdIcon" />
-    </div>
+    <!-- <div class="inline-flex"> -->
+    <UButton v-if="!option || !option.mdIcon" size="sm" :class="{ 'max-md:hidden': option?.mdIcon }" :color="selectedColor" class="whitespace-nowrap">
+      {{ option?.label ?? 'Select' }}
+    </UButton>
+    <UButton v-else-if="option" size="sm" :class="{ 'md:hidden': option.mdIcon, 'hidden': !option.mdIcon }" :color="selectedColor" :icon="option.mdIcon" />
+    <!-- </div> -->
   </UPopover>
 </template>
