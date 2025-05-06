@@ -82,7 +82,8 @@ const columns = computed((): EditableTableColumn<InstallStatResDto>[] => [
     accessorKey: "keywordsWithTotalInstall",
     header: "keywords",
     type: "string-number-deep-array",
-    editable: !props.readonly,
+    editable: true,
+    readonly: props.readonly,
     cell: ({ row }) => row.getValue<[string, number | undefined][] | undefined>("keywordsWithTotalInstall")?.map(([key]) => key).join(", "),
   },
   {

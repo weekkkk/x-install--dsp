@@ -7,5 +7,6 @@ export type EditableTableColumn<Row extends EditableTableRow> = Omit<TableColumn
   header?: string;
 } & {
   editable?: boolean;
+  readonly?: boolean;
   type?: EditableTableColumnDataType;
 };

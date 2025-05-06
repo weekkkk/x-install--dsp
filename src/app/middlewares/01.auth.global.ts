@@ -34,6 +34,7 @@ export default defineNuxtRouteMiddleware(async () => {
       user.value = data.user;
       accessToken.value = data.accessToken;
     }
+    console.log(user.value);
   }
   catch (err) {
     user.value = undefined;

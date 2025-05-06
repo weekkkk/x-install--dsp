@@ -4,7 +4,7 @@ import type { EditableTableFieldProps } from "../../interfaces";
 type Item = [key: string, totalInstall: number | undefined];
 type ItemsObj = Record<string, number | undefined>;
 
-defineProps<EditableTableFieldProps>();
+const props = defineProps<EditableTableFieldProps>();
 
 function mapItemToObj([key, totalInstall]: Item) {
   return { [key]: totalInstall };
@@ -51,7 +51,7 @@ function onDelete(key: string) {
     }"
     variant="none"
     multiple
-    :create-item="{ position: 'top', when: 'always' }"
+    :create-item="!readonly && { position: 'top', when: 'always' }"
     :items="items"
     class="absolute inset-0"
     @create="onCreate"
@@ -67,13 +67,14 @@ function onDelete(key: string) {
           -
         </span>
         <div class="relative w-full">
-          <UiEditableTableNumber :model-value="modelValue[key]" placeholder="total install" align="left" @update:model-value="modelValue = { ...modelValue, [key]: $event }" />
+          <UiEditableTableNumber :readonly="readonly" :model-value="modelValue[key]" placeholder="total install" align="left" @update:model-value="modelValue = { ...modelValue, [key]: $event }" />
         </div>
       </div>
     </template>
 
     <template #item-trailing="{ item: key }">
       <UButton
+        v-if="!readonly"
         size="xs" color="neutral" variant="ghost"
         icon="xii:trash"
         class="opacity-0 group-hover:opacity-100 group-data-highlighted:opacity-100 -my-1.5"
@@ -83,7 +84,7 @@ function onDelete(key: string) {
 
     <template #empty>
       <div class="text-white/20 text-base-sm py-0.5">
-        No data, search and create item
+        {{ props.readonly ? "No data" : "No data, search and create item" }}
       </div>
     </template>
   </USelectMenu>

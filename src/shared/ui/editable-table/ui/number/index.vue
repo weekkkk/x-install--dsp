@@ -3,7 +3,11 @@ import type { EditableTableFieldProps } from "../../interfaces";
 
 const props = withDefaults(defineProps<EditableTableFieldProps>(), { align: "right" });
 
-const modelValue = defineModel<number>({ default: undefined });
+const modelValue = defineModel<number>({ default: undefined, get(v) {
+  if (props.readonly && !v)
+    return 0;
+  return v;
+} });
 
 const textAlign = computed(() => {
   switch (props.align) {
@@ -21,11 +25,12 @@ const textAlign = computed(() => {
   <UInputNumber
     v-model="modelValue"
     :placeholder="placeholder"
-    class="absolute inset-0" :ui="{ base: `${textAlign} !text-base-sm font-medium p-3 rounded-none` }"
+    class="absolute inset-0" :ui="{ base: `${textAlign} !text-base-sm font-medium p-3 rounded-none disabled:cursor-text disabled:opacity-100` }"
     variant="none"
     :format-options="{
       style: 'decimal',
     }"
+    :disabled="readonly"
     :step="1"
     :highlight="false"
     locale="ru"
