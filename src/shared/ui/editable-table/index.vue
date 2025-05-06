@@ -178,6 +178,13 @@ watch(() => props.totalRow, (total) => {
         :readonly="column.readonly"
         @update:model-value="onUpdateModelValue(row.original, column.accessorKey, $event)"
       />
+      <UiEditableTableRegion
+        v-else-if="column.type === 'region'"
+        :model-value="(row.original[column.accessorKey] as string[])"
+        :placeholder="column.header ?? column.accessorKey"
+        :readonly="column.readonly"
+        @update:model-value="onUpdateModelValue(row.original, column.accessorKey, $event)"
+      />
     </template>
 
     <template v-for="customColumn in customColumns" :key="customColumn.accessorKey" #[`${customColumn.accessorKey.toString()}-cell`]="{ row }">

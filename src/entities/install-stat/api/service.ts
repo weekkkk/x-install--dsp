@@ -13,7 +13,15 @@ export class InstallStatApiService {
     const data = await $installStat<InstallStatGetAllResDto>("/Statistic/statistic-xinstall", {
       params,
     });
-    data.userStatistics = data.userStatistics.sort(({ date: a = "" }, { date: b = "" }) => getTime(b) - getTime(a)).map(({ keywords, ...rest }) => {
+    data.userStatistics = data.userStatistics.sort(({ date: a = "" }, { date: b = "" }) => getTime(b) - getTime(a)).map(({ keywords, region, ...rest }) => {
+      let regionList: string[] | undefined;
+      try {
+        const _regionList = region && JSON.parse(region);
+        if (Array.isArray(_regionList))
+          regionList = _regionList as string[];
+      }
+      catch {}
+
       let totalInstall = 0;
       const keywordsWithTotalInstall = keywords?.map((key): [string, number | undefined] => {
         try {
@@ -22,7 +30,7 @@ export class InstallStatApiService {
             const [key, value] = w as [string, number | undefined];
             if (value)
               totalInstall += value;
-            return [key, value];
+            return [key, value === null ? undefined : value];
           }
           return ["none", undefined];
         }
@@ -30,20 +38,20 @@ export class InstallStatApiService {
           return [key, undefined];
         }
       });
-      return { ...rest, keywords, keywordsWithTotalInstall, totalInstall };
+      return { ...rest, keywords, keywordsWithTotalInstall, totalInstall, regionList };
     });
 
     return data;
   }
 
-  static async create({ date, keywordsWithTotalInstall, ...body }: InstallStatCreateReqDto) {
+  static async create({ date, keywordsWithTotalInstall, regionList, ...body }: InstallStatCreateReqDto) {
     return $installStat<InstallStatResDto[]>("/admin/createUserRecord-xinstallapp", {
       method: "POST",
-      body: { date: date ?? new Date().toISOString(), keywords: keywordsWithTotalInstall?.map(el => JSON.stringify(el)), ...body },
+      body: { ...body, date: date ?? new Date().toISOString(), keywords: keywordsWithTotalInstall?.map(el => JSON.stringify(el)), region: JSON.stringify(regionList) },
     });
   }
 
-  static async change({ id, value: _value, key }: InstallStatChangeReqDto) {
+  static async change({ id, value: _value, key: _key }: InstallStatChangeReqDto) {
     let value: string | undefined;
     if (Array.isArray(_value)) {
       value = JSON.stringify(_value.map((el) => {
@@ -56,12 +64,23 @@ export class InstallStatApiService {
     else {
       value = _value?.toString();
     }
+    let key: string;
+    switch (_key) {
+      case "keywordsWithTotalInstall":
+        key = "keywords";
+        break;
+      case "regionList":
+        key = "region";
+        break;
+      default:
+        key = _key;
+    }
     return $installStat<InstallStatResDto[]>(`/admin/statistic-xinstall`, {
       method: "PATCH",
       body: {
         id,
         value,
-        key: key === "keywordsWithTotalInstall" ? "keywords" : key,
+        key,
       },
     });
   }

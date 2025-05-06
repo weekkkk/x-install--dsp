@@ -4,7 +4,7 @@ import type { EditableTableFieldProps } from "../../interfaces";
 type Item = [key: string, totalInstall: number | undefined];
 type ItemsObj = Record<string, number | undefined>;
 
-const props = defineProps<EditableTableFieldProps>();
+defineProps<EditableTableFieldProps>();
 
 function mapItemToObj([key, totalInstall]: Item) {
   return { [key]: totalInstall };
@@ -84,7 +84,7 @@ function onDelete(key: string) {
 
     <template #empty>
       <div class="text-white/20 text-base-sm py-0.5">
-        {{ props.readonly ? "No data" : "No data, search and create item" }}
+        {{ !!readonly ? "No data" : "No data, search and create item" }}
       </div>
     </template>
   </USelectMenu>
