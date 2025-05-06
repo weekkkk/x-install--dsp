@@ -116,6 +116,8 @@ const columns = computed((): EditableTableColumn<DspStatResDto>[] => [
 ]);
 
 async function onChange(id: number, key: keyof DspStatResDto, value: any) {
+  if (id === -1)
+    return;
   await DspStatApiService.change({ id, key, value });
   refresh();
 }

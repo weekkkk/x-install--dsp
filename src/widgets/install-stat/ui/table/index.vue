@@ -79,19 +79,18 @@ const columns = computed((): EditableTableColumn<InstallStatResDto>[] => [
     editable: !props.readonly,
   },
   {
-    accessorKey: "keywords",
-    type: "string-array",
+    accessorKey: "keywordsWithTotalInstall",
+    header: "keywords",
+    type: "string-number-deep-array",
     editable: !props.readonly,
-    cell: ({ row }) => row.getValue<string[] | undefined>("keywords")?.join(", "),
+    cell: ({ row }) => row.getValue<[string, number | undefined][] | undefined>("keywordsWithTotalInstall")?.map(([key]) => key).join(", "),
   },
   {
     accessorKey: "totalInstall",
     header: "total install",
-    type: "number",
-    editable: !props.readonly,
     cell: ({ row }) => {
-      const v = row.getValue<number | undefined>("totalInstall");
-      if (!v)
+      const v = row.getValue<[string, number | undefined][] | undefined>("keywordsWithTotalInstall")?.reduce((acc, [,v]) => acc + (v ?? 0), 0);
+      if (v === undefined)
         return;
       return n.format(v);
     },
@@ -111,8 +110,13 @@ const columns = computed((): EditableTableColumn<InstallStatResDto>[] => [
 ]);
 
 async function onChange(id: number, key: keyof InstallStatResDto, value: any) {
-  await InstallStatApiService.change({ id, key, value });
-  refresh();
+  if (id !== -1) {
+    await InstallStatApiService.change({ id, key, value });
+    refresh();
+  }
+  else if (key === "keywordsWithTotalInstall") {
+    installStats.value.userStatistics = [...installStats.value.userStatistics];
+  }
 }
 
 const _mode = computed(() => {
@@ -129,7 +133,7 @@ const total = computed(() => {
   return ({
     date: "Total",
     total: total || total === 0 ? n.format(total) : undefined,
-    totalInstall: _totalInstall || _totalInstall === 0 ? n.format(_totalInstall) : undefined,
+    totalInstall: n.format(installStats.value.userStatistics.reduce((acc, { totalInstall }) => acc + (totalInstall ?? 0), 0)),
   });
 });
 </script>

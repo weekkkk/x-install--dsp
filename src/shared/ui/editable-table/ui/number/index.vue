@@ -1,16 +1,27 @@
 <script setup lang="ts">
 import type { EditableTableFieldProps } from "../../interfaces";
 
-defineProps<EditableTableFieldProps>();
+const props = withDefaults(defineProps<EditableTableFieldProps>(), { align: "right" });
 
 const modelValue = defineModel<number>({ default: undefined });
+
+const textAlign = computed(() => {
+  switch (props.align) {
+    case "left":
+      return "text-left";
+    case "right":
+      return "text-right";
+    default:
+      return "text-left";
+  }
+});
 </script>
 
 <template>
   <UInputNumber
     v-model="modelValue"
     :placeholder="placeholder"
-    class="absolute inset-0" :ui="{ base: 'text-right !text-base-sm font-medium p-3 rounded-none' }"
+    class="absolute inset-0" :ui="{ base: `${textAlign} !text-base-sm font-medium p-3 rounded-none` }"
     variant="none"
     :format-options="{
       style: 'decimal',

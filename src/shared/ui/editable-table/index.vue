@@ -68,10 +68,11 @@ const _columns = computed((): [TableColumn<Row>, ...EditableTableColumn<Row>[]] 
   }
 });
 
+const table = useTemplateRef("table");
+
 const editableColumns = computed(() => props.columns.filter((c): c is EditableTableColumn<Row> => !!c.editable));
 function onUpdateModelValue(r: Row, key: keyof Row, value?: EditableTableColumnData) {
-  if (r.id !== -1)
-    emit("change", r.id, key, value);
+  emit("change", r.id, key, value);
 
   r[key] = value as Row[keyof Row];
 }
@@ -127,6 +128,7 @@ watch(() => props.totalRow, (total) => {
 <template>
   <UTable
     id="table"
+    ref="table"
     v-model:row-selection="rowSelection"
     :get-row-id="(row) => row.id.toString()"
     class="grow shrink !overflow-visible max-md:min-h-fit max-md:!overflow-auto"
@@ -163,6 +165,12 @@ watch(() => props.totalRow, (total) => {
       <UiEditableTableStringArray
         v-else-if="column.type === 'string-array'"
         :model-value="(row.original[column.accessorKey] as string[])"
+        :placeholder="column.header ?? column.accessorKey"
+        @update:model-value="onUpdateModelValue(row.original, column.accessorKey, $event)"
+      />
+      <UiEditableTableStringNumberDeepArray
+        v-else-if="column.type === 'string-number-deep-array'"
+        :model-value="(row.original[column.accessorKey] as [string, number | undefined][])"
         :placeholder="column.header ?? column.accessorKey"
         @update:model-value="onUpdateModelValue(row.original, column.accessorKey, $event)"
       />
