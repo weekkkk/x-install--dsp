@@ -5,7 +5,7 @@ export interface InstallStatCreateReqDto {
   appLink?: string;
   appName?: string;
   region?: string;
-  keywords?: string[];
+  keywordsWithTotalInstall?: string[];
   totalInstall?: number;
   complited?: number;
 }

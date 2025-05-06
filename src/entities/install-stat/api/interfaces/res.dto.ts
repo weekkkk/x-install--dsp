@@ -6,6 +6,7 @@ export interface InstallStatResDto {
   appName?: string;
   region?: string;
   keywords?: string[];
+  keywordsWithTotalInstall?: [string, number | undefined][];
   totalInstall?: number;
   complited?: number;
 }

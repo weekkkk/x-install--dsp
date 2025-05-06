@@ -1,23 +1,11 @@
 <script setup lang="ts">
 import type { EditableTableFieldProps } from "../../interfaces";
 
-type Item = [key: string, totalInstall: number];
-
 defineProps<EditableTableFieldProps>();
 
-const modelValue = defineModel<Item[]>({ default: () => [] });
+const modelValue = defineModel<string[]>({ default: () => [] });
 
-function mapItemToObj([key, totalInstall]: Item) {
-  return { [key]: totalInstall };
-}
-
-function mapItemsToObj(items: Item[]) {
-  return items.reduce((acc, item) => ({ ...acc, ...mapItemToObj(item) }), {} as Record<string, number>);
-}
-
-const itemsObj = ref(mapItemsToObj(modelValue.value));
-
-const items = computed(() => Object.keys(itemsObj));
+const items = ref([...modelValue.value]);
 
 const searchTerm = ref<string>();
 
@@ -32,13 +20,13 @@ function onDelete(index: number) {
 const open = ref(false);
 
 watch(modelValue, (v) => {
-  items.value = mapItemsToObj(v);
+  items.value = [...v];
 });
 
 watch(open, (v) => {
   if (v)
     return;
-  modelValue.value = Object.entries(itemsObj);
+  modelValue.value = [...items.value];
 });
 </script>
 
