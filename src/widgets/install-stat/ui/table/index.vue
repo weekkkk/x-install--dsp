@@ -74,9 +74,11 @@ const columns = computed((): EditableTableColumn<InstallStatResDto>[] => [
     editable: !props.readonly,
   },
   {
-    accessorKey: "region",
-    type: "string",
-    editable: !props.readonly,
+    accessorKey: "regionList",
+    header: "region",
+    type: "region",
+    editable: true,
+    readonly: props.readonly,
   },
   {
     accessorKey: "keywordsWithTotalInstall",
@@ -90,7 +92,7 @@ const columns = computed((): EditableTableColumn<InstallStatResDto>[] => [
     accessorKey: "totalInstall",
     header: "total install",
     cell: ({ row }) => {
-      const v = row.getValue<[string, number | undefined][] | undefined>("keywordsWithTotalInstall")?.reduce((acc, [,v]) => acc + (v ?? 0), 0);
+      const v = row.getValue<[string, number | undefined][] | undefined>("keywordsWithTotalInstall")?.reduce((acc, [,v]) => acc + (v || 0), 0);
       if (v === undefined)
         return;
       return n.format(v);
@@ -113,9 +115,10 @@ const columns = computed((): EditableTableColumn<InstallStatResDto>[] => [
 async function onChange(id: number, key: keyof InstallStatResDto, value: any) {
   if (id !== -1) {
     await InstallStatApiService.change({ id, key, value });
-    refresh();
+    if (typeof value === "number")
+      refresh();
   }
-  else if (key === "keywordsWithTotalInstall") {
+  if (key === "keywordsWithTotalInstall") {
     installStats.value.userStatistics = [...installStats.value.userStatistics];
   }
 }

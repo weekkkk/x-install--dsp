@@ -48,7 +48,7 @@ watch(open, (v) => {
     }"
     variant="none"
     multiple
-    :create-item="{ position: 'top', when: 'always' }"
+    :create-item="!readonly && { position: 'top', when: 'always' }"
     :items="items"
     class="absolute inset-0"
     @create="onCreate"
@@ -59,6 +59,7 @@ watch(open, (v) => {
 
     <template #item-trailing="{ index }">
       <UButton
+        v-if="!readonly"
         size="xs" color="neutral" variant="ghost"
         icon="xii:trash"
         class="opacity-0 group-hover:opacity-100 group-data-highlighted:opacity-100 -my-1.5"
@@ -68,7 +69,7 @@ watch(open, (v) => {
 
     <template #empty>
       <div class="text-white/20 text-base-sm py-0.5">
-        No data, search and create item
+        {{ !!readonly ? "No data" : "No data, search and create item" }}
       </div>
     </template>
   </USelectMenu>
