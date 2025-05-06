@@ -92,14 +92,17 @@ function setTotalRow(total?: typeof props.totalRow) {
   const tfoot = document.createElement("tfoot");
   tfoot.classList.add();
   const row = document.createElement("tr");
-  row.classList.add("sticky", "bottom-0", "x-10");
+  row.classList.add("sticky", "bottom-0", "z-10");
   [..._columns.value, ...props.customColumns].forEach((col) => {
     const accessorKey = (col as { accessorKey: string }).accessorKey;
     const td = document.createElement("td");
-    td.textContent = total[accessorKey] || "";
-    td.classList.add("text-right", "first:text-left", "p-3", "text-base-sm", "text-white", "font-medium");
-    if (total[accessorKey])
-      td.classList.add("bg-neutral-900");
+    if (total[accessorKey]) {
+      td.textContent = total[accessorKey];
+      td.classList.add("text-right", "first:text-left", "p-3", "text-base-sm", "text-white", "font-medium", "bg-neutral-900/90");
+    }
+    else {
+      td.classList.add("bg-neutral-900/60");
+    }
     row.appendChild(td);
   });
 
@@ -172,6 +175,7 @@ watch(() => props.totalRow, (total) => {
         v-else-if="column.type === 'string-number-deep-array'"
         :model-value="(row.original[column.accessorKey] as [string, number | undefined][])"
         :placeholder="column.header ?? column.accessorKey"
+        :readonly="column.readonly"
         @update:model-value="onUpdateModelValue(row.original, column.accessorKey, $event)"
       />
     </template>
