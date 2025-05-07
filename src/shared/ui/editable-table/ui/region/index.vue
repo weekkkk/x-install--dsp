@@ -3,15 +3,29 @@ import type { EditableTableFieldProps } from "../../interfaces";
 
 defineProps<EditableTableFieldProps>();
 
-const modelValue = defineModel<string[]>({ default: () => [] });
+const modelValue = defineModel<string>();
 
-const items = ref([...countryCodes]);
+const items = ref(Array.from(modelValue.value ? new Set([...countryCodes, modelValue.value]) : countryCodes));
+
+const searchTerm = ref<string>();
+
+function onCreate(item: string) {
+  items.value.push(item);
+  searchTerm.value = undefined;
+  modelValue.value = item;
+}
+function onDelete(index: number) {
+  const item = items.value.splice(index, 1)[0];
+  if (modelValue.value === item)
+    modelValue.value = undefined;
+}
 </script>
 
 <template>
   <USelectMenu
     v-if="!readonly"
     v-model="modelValue"
+    v-model:search-term="searchTerm"
     :placeholder="placeholder"
     :ui="{
       base: 'rounded-none font-medium justify-end',
@@ -24,12 +38,23 @@ const items = ref([...countryCodes]);
       empty: 'border-t border-neutral-800 mx-5',
     }"
     variant="none"
-    multiple
     :items="items"
     class="absolute inset-0"
+    :create-item="!readonly && { position: 'top', when: 'always' }"
+    @create="onCreate"
   >
     <template #trailing="{ open }">
       <UIcon name="xii:top" class="text-lg transition-transform" :class="{ 'rotate-180': !open }" />
+    </template>
+
+    <template #item-trailing="{ index, item }">
+      <UButton
+        v-if="!readonly && !countryCodes.includes(item)"
+        size="xs" color="neutral" variant="ghost"
+        icon="xii:trash"
+        class="opacity-0 group-hover:opacity-100 group-data-highlighted:opacity-100 -my-1.5"
+        @click.capture.stop="onDelete(index)"
+      />
     </template>
 
     <template #empty>
@@ -40,7 +65,7 @@ const items = ref([...countryCodes]);
   </USelectMenu>
   <UiEditableTableStringArray
     v-else
-    :model-value="modelValue"
+    :model-value="modelValue ? [modelValue] : []"
     :readonly="readonly"
   />
 </template>

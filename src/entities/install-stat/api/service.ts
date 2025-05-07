@@ -14,13 +14,13 @@ export class InstallStatApiService {
       params,
     });
     data.userStatistics = data.userStatistics.sort(({ date: a = "" }, { date: b = "" }) => getTime(b) - getTime(a)).map(({ keywords, region, ...rest }) => {
-      let regionList: string[] | undefined;
-      try {
-        const _regionList = region && JSON.parse(region);
-        if (Array.isArray(_regionList))
-          regionList = _regionList as string[];
-      }
-      catch {}
+      // let regionList: string[] | undefined;
+      // try {
+      //   const _regionList = region && JSON.parse(region);
+      //   if (Array.isArray(_regionList))
+      //     regionList = _regionList as string[];
+      // }
+      // catch {}
 
       let totalInstall = 0;
       const keywordsWithTotalInstall = keywords?.map((key): [string, number | undefined] => {
@@ -38,7 +38,7 @@ export class InstallStatApiService {
           return [key, undefined];
         }
       });
-      return { ...rest, keywords, keywordsWithTotalInstall, totalInstall, regionList };
+      return { ...rest, keywords, keywordsWithTotalInstall, totalInstall, region: region || undefined };
     });
 
     return data;
@@ -79,7 +79,7 @@ export class InstallStatApiService {
       method: "PATCH",
       body: {
         id,
-        value,
+        value: value ?? "",
         key,
       },
     });

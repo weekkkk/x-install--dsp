@@ -31,6 +31,7 @@ const { data: dspStats } = useAsyncData(`${props.panel}-stat-list`, async () => 
 }, {
   default: () => ({ userStatistics: [], total: {}, totalAllTime: 0, averages: {} } as Awaited<ReturnType<typeof DspStatApiService.getAll>>),
   watch: [() => props.dateRange],
+  dedupe: "defer",
 });
 </script>
 

@@ -16,6 +16,7 @@ export const countryCodes = [
   "ID",
   "IN",
   "KG",
+  "KR",
   "KZ",
   "MD",
   "MY",

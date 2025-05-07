@@ -31,6 +31,7 @@ const { data: dspStats, status, refresh } = useAsyncData(`${props.panel}-stat-li
 }, {
   default: () => ({ userStatistics: [], total: {}, totalAllTime: 0, averages: {} } as Awaited<ReturnType<typeof DspStatApiService.getAll>>),
   watch: [() => props.dateRange],
+  dedupe: "defer",
 });
 
 const n = new Intl.NumberFormat("ru-RU");
