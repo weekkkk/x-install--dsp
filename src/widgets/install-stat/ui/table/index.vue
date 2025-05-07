@@ -28,6 +28,7 @@ const { data: installStats, status, refresh } = useAsyncData("install-stat-list"
 }, {
   default: () => ({ userStatistics: [], total: { total: 0, totalInstall: 0 }, totalAllTime: 0 } as Awaited<ReturnType<typeof InstallStatApiService.getAll>>),
   watch: [() => props.dateRange],
+  dedupe: "defer",
 });
 
 const n = new Intl.NumberFormat("ru-RU");
@@ -74,11 +75,9 @@ const columns = computed((): EditableTableColumn<InstallStatResDto>[] => [
     editable: !props.readonly,
   },
   {
-    accessorKey: "regionList",
-    header: "region",
+    accessorKey: "region",
     type: "region",
-    editable: true,
-    readonly: props.readonly,
+    editable: !props.readonly,
   },
   {
     accessorKey: "keywordsWithTotalInstall",

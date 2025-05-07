@@ -28,6 +28,7 @@ const { data: installStats } = useAsyncData("install-stat-list", async () => {
 }, {
   default: () => ({ userStatistics: [], total: { total: 0, totalInstall: 0 }, totalAllTime: 0 } as Awaited<ReturnType<typeof InstallStatApiService.getAll>>),
   watch: [() => props.dateRange],
+  dedupe: "defer",
 });
 </script>
 

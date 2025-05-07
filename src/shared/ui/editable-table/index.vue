@@ -180,7 +180,7 @@ watch(() => props.totalRow, (total) => {
       />
       <UiEditableTableRegion
         v-else-if="column.type === 'region'"
-        :model-value="(row.original[column.accessorKey] as string[])"
+        :model-value="(row.original[column.accessorKey] as string)"
         :placeholder="column.header ?? column.accessorKey"
         :readonly="column.readonly"
         @update:model-value="onUpdateModelValue(row.original, column.accessorKey, $event)"
