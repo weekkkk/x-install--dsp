@@ -1,6 +1,6 @@
 export const AUTH_API_URL
   = import.meta.env.PROD || import.meta.env.SSR
-    ? "https://api.x-instals.com/api/Auth"
+    ? "/proxy-api/Auth"
     : "/server/Auth";
 
 export const $auth = $fetch.create({

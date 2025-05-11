@@ -1,6 +1,6 @@
 export const USER_API_URL
   = import.meta.env.PROD || import.meta.env.SSR
-    ? "https://api.x-instals.com/api/admin"
+    ? "/proxy-api/admin"
     : "/server/admin";
 
 export const $user = $fetch.create({

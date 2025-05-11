@@ -120,6 +120,12 @@ export default defineNuxtConfig({
         headers: { "Access-Control-Allow-Origin": "*" },
       },
     },
-    logLevel: "info",
+    routeRules: {
+      "/proxy-api/**": {
+        proxy: {
+          to: "https://api.x-instals.com/api/**", // make sure this is an ENV driven variable if production does not match
+        },
+      },
+    },
   },
 });
