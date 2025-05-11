@@ -28,7 +28,7 @@ const ids = computed({
     return route.query.ids ? JSON.parse(`${route.query.ids}`) as number[] : [];
   },
   set: (v) => {
-    navigateTo({ query: { ids: JSON.stringify(v) } });
+    navigateTo({ query: { ...route.query, ids: JSON.stringify(v) } });
   },
 });
 

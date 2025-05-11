@@ -50,11 +50,12 @@ const panelFilter = computed(() => {
 });
 
 function onDeleteMode() {
+  const query = route.query;
   const mode = route.params.mode;
   if (mode === "delete")
-    navigateTo({ params: { mode: defaultMode.value } });
+    navigateTo({ params: { mode: defaultMode.value }, query: { ...query, ids: undefined } });
   else
-    navigateTo({ params: { mode: "delete" } });
+    navigateTo({ params: { mode: "delete" }, query: { ...query, ids: undefined } });
 }
 
 async function onDelete() {

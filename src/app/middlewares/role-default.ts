@@ -2,7 +2,7 @@ export default defineNuxtRouteMiddleware(async () => {
   const user = useAuthApiUser();
 
   if (!user.value)
-    return;
+    return navigateTo(`/login`);
 
   let panel: UserPanel | undefined;
   switch (user.value.role) {
