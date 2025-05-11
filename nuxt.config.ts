@@ -1,6 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ["@nuxt/image", "@nuxt/ui", "@nuxt/eslint", "@nuxthub/core"],
+  modules: ["@nuxt/image", "@nuxt/ui", "@nuxt/eslint",
+    // "@nuxthub/core"
+  ],
   components: {
     dirs: [
       {
