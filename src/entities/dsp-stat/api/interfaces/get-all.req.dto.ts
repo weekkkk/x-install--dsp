@@ -5,4 +5,5 @@ export interface DspStatGetAllReqDto {
   IsDsp?: boolean;
   IsDspInApp?: boolean;
   IsDspBanner?: boolean;
+  TimeZone?: string;
 }
