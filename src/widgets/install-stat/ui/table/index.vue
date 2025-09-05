@@ -106,7 +106,7 @@ const columns = computed((): EditableTableColumn<InstallStatResDto>[] => [
       const v = row.getValue<number | undefined>("complited");
       if (!v)
         return;
-      return p.format(v);
+      return p.format(v / 100);
     },
   },
 ]);

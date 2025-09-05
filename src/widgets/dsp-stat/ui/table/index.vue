@@ -79,7 +79,7 @@ const columns = computed((): EditableTableColumn<DspStatResDto>[] => [
     header: "show rate",
     type: "percent",
     editable: !props.readonly,
-    cell: ({ row }) => `${p.format(row.getValue<number>("impsCount"))}`,
+    cell: ({ row }) => `${p.format(row.getValue<number>("showRate") / 100)}`,
   },
   {
     accessorKey: "clicksCount",
@@ -92,7 +92,7 @@ const columns = computed((): EditableTableColumn<DspStatResDto>[] => [
     accessorKey: "ctr",
     type: "percent",
     editable: !props.readonly,
-    cell: ({ row }) => `${p.format(row.getValue<number>("ctr"))}`,
+    cell: ({ row }) => `${p.format(row.getValue<number>("ctr") / 100)}`,
   },
   {
     accessorKey: "startsCount",
@@ -112,7 +112,7 @@ const columns = computed((): EditableTableColumn<DspStatResDto>[] => [
     accessorKey: "vtr",
     type: "percent",
     editable: !props.readonly,
-    cell: ({ row }) => `${p.format(row.getValue<number>("vtr"))}`,
+    cell: ({ row }) => `${p.format(row.getValue<number>("vtr") / 100)}`,
   },
 ]);
 
