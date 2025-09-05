@@ -27,10 +27,23 @@ definePageMeta({
       return;
     let blob: Blob | undefined;
     if (panel === "install") {
-      blob = await InstallStatApiService[key === "excel" ? "exportExcel" : "exportPdf"]({ UserId: userId, StartDate: range.start, EndDate: range.end });
+      blob = await InstallStatApiService[key === "excel" ? "exportExcel" : "exportPdf"]({
+        UserId: userId,
+        StartDate: range.start,
+        EndDate: range.end,
+        TimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      });
     }
     else {
-      blob = await DspStatApiService[key === "excel" ? "exportExcel" : "exportPdf"]({ UserId: userId, StartDate: range.start, EndDate: range.end, IsDsp: panel === "dsp", IsDspInApp: panel === "dsp-in-app", IsDspBanner: panel === "dsp-banner" });
+      blob = await DspStatApiService[key === "excel" ? "exportExcel" : "exportPdf"]({
+        UserId: userId,
+        StartDate: range.start,
+        EndDate: range.end,
+        IsDsp: panel === "dsp",
+        IsDspInApp: panel === "dsp-in-app",
+        IsDspBanner: panel === "dsp-banner",
+        TimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      });
     }
     if (!blob)
       return;
