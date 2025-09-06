@@ -3,6 +3,13 @@ import type { UserPanelFilterProps } from "./interfaces";
 
 const props = defineProps<UserPanelFilterProps>();
 
+const userPanelName: Record<UserPanel, string> = {
+  "install": "X-instal App",
+  "dsp": "DSP",
+  "dsp-in-app": "DSP In App",
+  "dsp-banner": "DSP Banner",
+};
+
 const tabs: { value: UserPanel; label: string }[] = [
   { value: "install", label: userPanelName.install },
   { value: "dsp", label: userPanelName.dsp },

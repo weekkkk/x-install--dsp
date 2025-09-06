@@ -3,6 +3,13 @@ import type { UserPanelEditorFeatureProps } from "./interfaces";
 
 const props = defineProps<UserPanelEditorFeatureProps>();
 
+const userPanelName: Record<UserPanel, string> = {
+  "install": "X-instal App",
+  "dsp": "DSP",
+  "dsp-in-app": "DSP In App",
+  "dsp-banner": "DSP Banner",
+};
+
 const panels: UserPanel[] = ["install", "dsp", "dsp-in-app", "dsp-banner"];
 
 const isXInstallApp = defineModel<UserResDto["isXInstallApp"]>("install");
