@@ -1,1 +1,1 @@
-export { type UserPanel, userPanelName } from "./model";
+export { type UserPanel } from "./model";
