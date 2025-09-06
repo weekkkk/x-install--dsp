@@ -127,5 +127,6 @@ export default defineNuxtConfig({
         },
       },
     },
+    preset: "node_cluster",
   },
 });
