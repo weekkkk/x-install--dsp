@@ -106,12 +106,12 @@ export default defineNuxtConfig({
       standalone: false,
     },
   },
-  app: {
-    head: {
-      title: "Default",
-      titleTemplate: "%s | X-Install DSP",
-    },
-  },
+  // app: {
+  //   head: {
+  //     title: "Default",
+  //     titleTemplate: "%s | X-Install DSP",
+  //   },
+  // },
   nitro: {
     devProxy: {
       "/server": {
