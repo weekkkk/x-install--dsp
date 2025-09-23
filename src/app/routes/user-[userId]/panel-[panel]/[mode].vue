@@ -30,6 +30,14 @@ definePageMeta({
       return;
 
     if (panel === "install") {
+      if (!createStat.region) {
+        const toast = useToast();
+        toast.add({
+          title: "region is required",
+          color: "error",
+        });
+        return;
+      }
       await InstallStatApiService.create({ userId: Number(userId), ...createStat });
     }
     else {

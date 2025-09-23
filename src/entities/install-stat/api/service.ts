@@ -44,10 +44,14 @@ export class InstallStatApiService {
     return data;
   }
 
-  static async create({ date, keywordsWithTotalInstall, regionList, ...body }: InstallStatCreateReqDto) {
+  static async create({ date, keywordsWithTotalInstall, ...body }: InstallStatCreateReqDto) {
     return $installStat<InstallStatResDto[]>("/admin/createUserRecord-xinstallapp", {
       method: "POST",
-      body: { ...body, date: date ?? new Date().toISOString(), keywords: keywordsWithTotalInstall?.map(el => JSON.stringify(el)), region: JSON.stringify(regionList) },
+      body: {
+        ...body,
+        date: date ?? new Date().toISOString(),
+        keywords: keywordsWithTotalInstall?.map(el => JSON.stringify(el)),
+      },
     });
   }
 

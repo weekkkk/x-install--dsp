@@ -90,6 +90,9 @@ const columns = computed((): EditableTableColumn<InstallStatResDto>[] => [
   {
     accessorKey: "totalInstall",
     header: "total install",
+    editable: true,
+    type: "number",
+    readonly: props.readonly,
     cell: ({ row }) => {
       const v = row.getValue<[string, number | undefined][] | undefined>("keywordsWithTotalInstall")?.reduce((acc, [,v]) => acc + (v || 0), 0);
       if (v === undefined)
